@@ -16,6 +16,7 @@ import com.dicoding.academies.utils.GlideApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,6 +69,9 @@ public class DetailCourseActivity extends AppCompatActivity {
         rvModule.setLayoutManager(new LinearLayoutManager(this));
         rvModule.setHasFixedSize(true);
         rvModule.setAdapter(adapter);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvModule.getContext(), DividerItemDecoration.VERTICAL);
+        rvModule.addItemDecoration(dividerItemDecoration);
 
     }
 

@@ -64,8 +64,6 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
             rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
             rvBookmark.setHasFixedSize(true);
             rvBookmark.setAdapter(adapter);
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvBookmark.getContext(), DividerItemDecoration.VERTICAL);
-            rvBookmark.addItemDecoration(dividerItemDecoration);
         }
     }
 

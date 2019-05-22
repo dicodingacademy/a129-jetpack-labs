@@ -63,8 +63,7 @@ public class AcademyFragment extends Fragment {
             rvCourse.setLayoutManager(new LinearLayoutManager(getContext()));
             rvCourse.setHasFixedSize(true);
             rvCourse.setAdapter(academyAdapter);
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvCourse.getContext(), DividerItemDecoration.VERTICAL);
-            rvCourse.addItemDecoration(dividerItemDecoration);
+
         }
     }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_mediumAnimTime">
+    <!-- NOTE: order is important (the first matching state(s) is what is rendered) -->
+    <item android:drawable="@drawable/ic_bookmarked_white" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_bookmark_white" />
+</selector>

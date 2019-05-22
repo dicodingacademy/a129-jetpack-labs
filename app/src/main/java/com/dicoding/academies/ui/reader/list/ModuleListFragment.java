@@ -80,7 +80,6 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     }
 
     private void populateRecyclerView(List<ModuleEntity> modules) {
-        progressBar.setVisibility(View.GONE);
         adapter.setModules(modules);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);

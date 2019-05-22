@@ -2,23 +2,26 @@ package com.dicoding.academies.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.data.ModuleEntity;
 import com.dicoding.academies.dicodingapps.R;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.utils.GlideApp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
 public class DetailCourseActivity extends AppCompatActivity {
 
@@ -31,6 +34,8 @@ public class DetailCourseActivity extends AppCompatActivity {
     private DetailCourseAdapter adapter;
     private ImageView imagePoster;
     private ProgressBar progressBar;
+    private DetailCourseViewModel viewModel;
+    private List<ModuleEntity> modules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,8 @@ public class DetailCourseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        viewModel = ViewModelProviders.of(this).get(DetailCourseViewModel.class);
 
         adapter = new DetailCourseAdapter();
 
@@ -56,13 +63,15 @@ public class DetailCourseActivity extends AppCompatActivity {
         if (extras != null) {
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
-                adapter.setModules(DataDummy.generateDummyModules(courseId));
-
-                populateCourse(courseId);
+                viewModel.setCourseId(courseId);
+                modules = viewModel.getModules();
+                adapter.setModules(modules);
             }
         }
 
-
+        if (viewModel.getCourse() != null) {
+            populateCourse(viewModel.getCourse());
+        }
 
         //Melakukan setup RecyclerView
         rvModule.setNestedScrollingEnabled(false);
@@ -75,8 +84,7 @@ public class DetailCourseActivity extends AppCompatActivity {
 
     }
 
-    private void populateCourse(String courseId) {
-        CourseEntity courseEntity = DataDummy.getCourse(courseId);
+    private void populateCourse(CourseEntity courseEntity) {
         textTitle.setText(courseEntity.getTitle());
         textDesc.setText(courseEntity.getDescription());
         textDate.setText(String.format("Deadline %s", courseEntity.getDeadline()));
@@ -86,7 +94,7 @@ public class DetailCourseActivity extends AppCompatActivity {
         // add listener
         btnStart.setOnClickListener(v -> {
             Intent intent = new Intent(DetailCourseActivity.this, CourseReaderActivity.class);
-            intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID, courseId);
+            intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID, viewModel.getCourseId());
             v.getContext().startActivity(intent);
         });
     }

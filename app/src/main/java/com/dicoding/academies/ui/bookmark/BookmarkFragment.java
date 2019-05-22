@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +19,11 @@ import android.widget.ProgressBar;
 
 import com.dicoding.academies.data.CourseEntity;
 import com.dicoding.academies.dicodingapps.R;
+import com.dicoding.academies.ui.academy.AcademyAdapter;
+import com.dicoding.academies.ui.academy.AcademyViewModel;
 import com.dicoding.academies.utils.DataDummy;
+
+import java.util.List;
 
 
 /**
@@ -28,6 +33,8 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     private BookmarkAdapter adapter;
     private RecyclerView rvBookmark;
     private ProgressBar progressBar;
+    private BookmarkViewModel viewModel;
+    private List<CourseEntity> courses;
 
     public BookmarkFragment() {
         // Required empty public constructor
@@ -56,9 +63,12 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
+            viewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
+            courses = viewModel.getBookmarks();
+
             //Melakukan setup Adapter
             adapter = new BookmarkAdapter(getActivity(), this);
-            adapter.setListCourses(DataDummy.generateDummyCourses());
+            adapter.setListCourses(courses);
 
             //Melakukan setup RecyclerView
             rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));

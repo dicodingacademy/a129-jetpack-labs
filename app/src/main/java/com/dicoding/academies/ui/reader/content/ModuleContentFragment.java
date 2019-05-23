@@ -1,12 +1,12 @@
 package com.dicoding.academies.ui.reader.content;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
@@ -15,9 +15,12 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.data.ContentEntity;
+import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.ui.reader.CourseReaderActivity;
+import com.dicoding.academies.ui.reader.CourseReaderCallback;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
-import com.dicoding.academies.viewmodel.ViewModelFactory;
+import com.dicoding.academies.utils.DataDummy;
 
 
 /**
@@ -55,7 +58,7 @@ public class ModuleContentFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            viewModel = obtainViewModel(getActivity());
+            viewModel = ViewModelProviders.of(getActivity()).get(CourseReaderViewModel.class);
             ModuleEntity module = viewModel.getSelectedModule();
             populateWebView(module);
         }
@@ -63,14 +66,6 @@ public class ModuleContentFragment extends Fragment {
 
     private void populateWebView(ModuleEntity content) {
         webView.loadData(content.contentEntity.getContent(), "text/html", "UTF-8");
-    }
-
-    @NonNull
-    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 
 }

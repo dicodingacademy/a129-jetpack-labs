@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.dicodingapps.R;
 import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;

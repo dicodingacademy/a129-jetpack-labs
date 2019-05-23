@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.data.ModuleEntity;
-import com.dicoding.academies.dicodingapps.R;
+import com.dicoding.academies.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -599,7 +599,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Android Instrumented Tests.AcademyTest">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="CourseReaderActivityTest,loadModules and 1 more" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="app" />
       <option name="TEST_OBJECT" value="pattern" />

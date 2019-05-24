@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.dicoding.academies.data.ModuleEntity;
 
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.ui.reader.CourseReaderCallback;
+import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     private CourseReaderCallback courseReaderCallback;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-
+    private CourseReaderViewModel viewModel;
     public ModuleListFragment() {
         // Required empty public constructor
     }
@@ -64,8 +66,9 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
+            viewModel = ViewModelProviders.of(getActivity()).get(CourseReaderViewModel.class);
             adapter = new ModuleListAdapter(this);
-            populateRecyclerView(DataDummy.generateDummyModules("a14"));
+            populateRecyclerView(viewModel.getModules());
         }
     }
 
@@ -78,6 +81,7 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     @Override
     public void onItemClicked(int position, String moduleId) {
         courseReaderCallback.moveTo(position, moduleId);
+        viewModel.setSelectedModule(moduleId);
     }
 
     private void populateRecyclerView(List<ModuleEntity> modules) {

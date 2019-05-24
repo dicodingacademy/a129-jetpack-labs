@@ -42,6 +42,7 @@ public class ModuleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ModuleViewHolder moduleViewHolder = (ModuleViewHolder) viewHolder;
         moduleViewHolder.bind(module.getTitle());
         moduleViewHolder.itemView.setOnClickListener(v -> {
+
             listener.onItemClicked(viewHolder.getAdapterPosition(), modules.get(moduleViewHolder.getAdapterPosition()).getModuleId());
         });
     }

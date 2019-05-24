@@ -1,6 +1,7 @@
 package com.dicoding.academies.data.source.remote;
 
 import com.dicoding.academies.data.source.remote.response.ContentResponse;
+import com.dicoding.academies.data.source.remote.response.CourseResponse;
 import com.dicoding.academies.data.source.remote.response.ModuleResponse;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class RemoteRepository {
         return INSTANCE;
     }
 
-    public List<com.dicoding.academies.data.source.remote.CourseResponse> getAllCourses() {
+    public List<CourseResponse> getAllCourses() {
         return jsonHelper.loadCourses();
     }
 

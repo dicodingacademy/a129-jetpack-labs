@@ -1,4 +1,4 @@
-package com.dicoding.academies.data.source.remote;
+package com.dicoding.academies.data.source.remote.response;
 
 import android.os.Parcel;
 import android.os.Parcelable;

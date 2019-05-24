@@ -3,6 +3,7 @@ package com.dicoding.academies.data.source.remote;
 import android.app.Application;
 
 import com.dicoding.academies.data.source.remote.response.ContentResponse;
+import com.dicoding.academies.data.source.remote.response.CourseResponse;
 import com.dicoding.academies.data.source.remote.response.ModuleResponse;
 
 import org.json.JSONArray;
@@ -36,8 +37,8 @@ public class JsonHelper {
         }
     }
 
-    public List<com.dicoding.academies.data.source.remote.CourseResponse> loadCourses() {
-        ArrayList<com.dicoding.academies.data.source.remote.CourseResponse> list = new ArrayList<>();
+    public List<CourseResponse> loadCourses() {
+        ArrayList<CourseResponse> list = new ArrayList<>();
 
         try {
             JSONObject responseObject = new JSONObject(parsingFileToString("CourseResponses.json"));
@@ -51,7 +52,7 @@ public class JsonHelper {
                 String date = course.getString("date");
                 String imagePath = course.getString("imagePath");
 
-                com.dicoding.academies.data.source.remote.CourseResponse courseResponse = new com.dicoding.academies.data.source.remote.CourseResponse(id, title, description, date, imagePath);
+                CourseResponse courseResponse = new CourseResponse(id, title, description, date, imagePath);
                 list.add(courseResponse);
             }
         } catch (JSONException e) {

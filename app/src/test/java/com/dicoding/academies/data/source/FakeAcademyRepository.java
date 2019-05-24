@@ -6,30 +6,30 @@ import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.ContentEntity;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
-import com.dicoding.academies.data.source.remote.response.CourseResponse;
+import com.dicoding.academies.data.source.remote.CourseResponse;
 import com.dicoding.academies.data.source.remote.RemoteRepository;
 import com.dicoding.academies.data.source.remote.response.ModuleResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AcademyRepository implements AcademyDataSource {
+public class FakeAcademyRepository implements AcademyDataSource {
 
-    private volatile static AcademyRepository INSTANCE = null;
+    private volatile static FakeAcademyRepository INSTANCE = null;
 
     private final LocalRepository localRepository;
     private final RemoteRepository remoteRepository;
 
-    private AcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository) {
+    FakeAcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository) {
         this.localRepository = localRepository;
         this.remoteRepository = remoteRepository;
     }
 
-    public static AcademyRepository getInstance(LocalRepository localRepository, RemoteRepository remoteData) {
+    public static FakeAcademyRepository getInstance(LocalRepository localRepository, RemoteRepository remoteData) {
         if (INSTANCE == null) {
-            synchronized (AcademyRepository.class) {
+            synchronized (FakeAcademyRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new AcademyRepository(localRepository, remoteData);
+                    INSTANCE = new FakeAcademyRepository(localRepository, remoteData);
                 }
             }
         }

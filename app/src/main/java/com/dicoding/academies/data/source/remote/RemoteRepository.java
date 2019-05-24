@@ -26,6 +26,7 @@ public class RemoteRepository {
         return INSTANCE;
     }
 
+
     public void getAllCourses(LoadCoursesCallback callback) {
         Handler handler = new Handler();
         handler.postDelayed(() -> callback.onAllCoursesReceived(jsonHelper.loadCourses()), SERVICE_LATENCY_IN_MILLIS);

@@ -3,6 +3,10 @@ package com.dicoding.academies.ui.reader.list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,13 +17,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
-import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.R;
+import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.ui.reader.CourseReaderCallback;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
@@ -31,7 +30,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ModuleListFragment extends Fragment implements MyAdapterClickListener{
+public class ModuleListFragment extends Fragment implements MyAdapterClickListener {
 
     public static final String TAG = ModuleListFragment.class.getSimpleName();
     private ModuleListAdapter adapter;
@@ -39,6 +38,7 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private CourseReaderViewModel viewModel;
+
     public ModuleListFragment() {
         // Required empty public constructor
     }

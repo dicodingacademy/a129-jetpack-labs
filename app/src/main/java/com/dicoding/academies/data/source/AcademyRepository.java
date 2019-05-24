@@ -133,7 +133,7 @@ public class AcademyRepository implements AcademyDataSource {
 
     @Override
     public LiveData<List<ModuleEntity>> getAllModulesByCourse(String courseId) {
-        MutableLiveData<List<ModuleEntity>> moduleResults= new MutableLiveData<>();
+        MutableLiveData<List<ModuleEntity>> moduleResults = new MutableLiveData<>();
 
         remoteRepository.getModules(courseId, new RemoteRepository.LoadModulesCallback() {
             @Override

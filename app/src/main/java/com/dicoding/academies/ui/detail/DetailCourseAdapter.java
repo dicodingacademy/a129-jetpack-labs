@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.R;
+import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 
 import java.util.ArrayList;
 import java.util.List;

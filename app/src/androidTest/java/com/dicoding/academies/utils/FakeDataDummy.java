@@ -5,7 +5,7 @@ import com.dicoding.academies.data.ModuleEntity;
 
 import java.util.ArrayList;
 
-public class DataDummy {
+public class FakeDataDummy {
 
     public static ArrayList<CourseEntity> generateDummyCourses() {
 

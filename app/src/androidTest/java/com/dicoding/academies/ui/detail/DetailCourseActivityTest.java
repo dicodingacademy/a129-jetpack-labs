@@ -10,6 +10,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
 import com.dicoding.academies.utils.DataDummy;
+import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.utils.RecyclerViewItemCountAssertion;
 
 import org.junit.After;
@@ -25,7 +26,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class DetailCourseActivityTest {
 
-    private CourseEntity dummyCourse = DataDummy.generateDummyCourses().get(0);
+    private CourseEntity dummyCourse = FakeDataDummy.generateDummyCourses().get(0);
 
     @Rule
     public ActivityTestRule<DetailCourseActivity> activityRule = new ActivityTestRule<DetailCourseActivity>(DetailCourseActivity.class) {

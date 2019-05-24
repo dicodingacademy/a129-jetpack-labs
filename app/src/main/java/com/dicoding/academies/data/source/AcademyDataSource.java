@@ -2,6 +2,9 @@ package com.dicoding.academies.data.source;
 
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.data.source.remote.CourseResponse;
+import com.dicoding.academies.data.source.remote.response.ContentResponse;
+import com.dicoding.academies.data.source.remote.response.ModuleResponse;
 
 import java.util.List;
 

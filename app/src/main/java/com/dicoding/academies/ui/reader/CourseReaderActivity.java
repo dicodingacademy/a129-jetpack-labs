@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 
+import com.dicoding.academies.R;
 import com.dicoding.academies.ui.reader.content.ModuleContentFragment;
 import com.dicoding.academies.ui.reader.list.ModuleListFragment;
 

@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
-import com.dicoding.academies.R;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.utils.GlideApp;
 import com.dicoding.academies.viewmodel.ViewModelFactory;

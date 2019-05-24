@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
-import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class DetailCourseViewModel extends ViewModel {
         this.courseId = courseId;
     }
 
-    public String getCourseId(){
+    public String getCourseId() {
         return courseId;
     }
 }

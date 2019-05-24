@@ -1,5 +1,7 @@
 package com.dicoding.academies.data.source;
 
+import androidx.lifecycle.LiveData;
+
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 
@@ -8,17 +10,17 @@ import java.util.List;
 public interface AcademyDataSource {
 
     // Untuk Halaman Academy
-    List<CourseEntity> getAllCourses();
+    LiveData<List<CourseEntity>> getAllCourses();
 
     // Untuk Halaman Detail
-    CourseEntity getCourseWithModules(String courseId);
+    LiveData<CourseEntity> getCourseWithModules(String courseId);
 
     // Untuk Halaman Reader (fragment list + fragment content)
-    List<ModuleEntity> getAllModulesByCourse(String courseId);
+    LiveData<List<ModuleEntity>> getAllModulesByCourse(String courseId);
 
     // Untuk halaman bookmark (dipakai di modul 3 room (sebelum paging))
-    List<CourseEntity> getBookmarkedCourses();
+    LiveData<List<CourseEntity>> getBookmarkedCourses();
 
     // Untuk mendapatkan detailContent
-    ModuleEntity getContent(String courseId, String moduleId);
+    LiveData<ModuleEntity> getContent(String courseId, String moduleId);
 }

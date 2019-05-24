@@ -2,17 +2,16 @@ package com.dicoding.academies.ui.reader.content;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
@@ -56,8 +55,11 @@ public class ModuleContentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
-            ModuleEntity module = viewModel.getSelectedModule();
-            populateWebView(module);
+            viewModel.getSelectedModule().observe(this, moduleEntity -> {
+                if (moduleEntity != null) {
+                    populateWebView(moduleEntity);
+                }
+            });
         }
     }
 
@@ -72,5 +74,4 @@ public class ModuleContentFragment extends Fragment {
 
         return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
-
 }

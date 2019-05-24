@@ -55,22 +55,26 @@ public class AcademyFragment extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar);
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
+            progressBar.setVisibility(View.VISIBLE);
             viewModel = obtainViewModel(getActivity());
-            courses = viewModel.getCourses();
+
             //Melakukan setup Adapter
             academyAdapter = new AcademyAdapter(getActivity());
-            academyAdapter.setListCourses(courses);
+
+            viewModel.getCourses().observe(this, courses -> {
+                progressBar.setVisibility(View.GONE);
+                academyAdapter.setListCourses(courses);
+                academyAdapter.notifyDataSetChanged();
+            });
 
             //Melakukan setup RecyclerView
             rvCourse.setLayoutManager(new LinearLayoutManager(getContext()));
             rvCourse.setHasFixedSize(true);
             rvCourse.setAdapter(academyAdapter);
-
         }
     }
 

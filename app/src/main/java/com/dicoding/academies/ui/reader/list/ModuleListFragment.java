@@ -66,9 +66,15 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
+            progressBar.setVisibility(View.VISIBLE);
             viewModel = obtainViewModel(getActivity());
             adapter = new ModuleListAdapter(this);
-            populateRecyclerView(viewModel.getModules());
+            viewModel.getModules().observe(this, moduleEntities -> {
+                if (moduleEntities!=null){
+                    progressBar.setVisibility(View.GONE);
+                    populateRecyclerView(moduleEntities);
+                }
+            });
         }
     }
 

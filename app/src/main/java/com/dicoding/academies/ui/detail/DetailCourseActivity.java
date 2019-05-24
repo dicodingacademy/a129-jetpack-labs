@@ -2,6 +2,7 @@ package com.dicoding.academies.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -15,9 +16,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
-import com.dicoding.academies.R;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.utils.GlideApp;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
@@ -64,15 +65,22 @@ public class DetailCourseActivity extends AppCompatActivity {
         if (extras != null) {
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
+                progressBar.setVisibility(View.VISIBLE);
                 viewModel.setCourseId(courseId);
-                modules = viewModel.getModules();
-                adapter.setModules(modules);
             }
         }
 
-        if (viewModel.getCourse() != null) {
-            populateCourse(viewModel.getCourse());
-        }
+        viewModel.getModules().observe(this, moduleEntities -> {
+            progressBar.setVisibility(View.GONE);
+            adapter.setModules(moduleEntities);
+            adapter.notifyDataSetChanged();
+        });
+
+        viewModel.getCourse().observe(this, courseEntity -> {
+            if (courseEntity != null) {
+                populateCourse(courseEntity);
+            }
+        });
 
         //Melakukan setup RecyclerView
         rvModule.setNestedScrollingEnabled(false);

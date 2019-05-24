@@ -2,23 +2,20 @@ package com.dicoding.academies.ui.academy;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.dicodingapps.R;
-import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;
 
@@ -32,6 +29,7 @@ public class AcademyFragment extends Fragment {
     private AcademyAdapter academyAdapter;
     private AcademyViewModel viewModel;
     private List<CourseEntity> courses;
+
     public AcademyFragment() {
         // Required empty public constructor
     }

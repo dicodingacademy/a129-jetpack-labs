@@ -1,26 +1,21 @@
 package com.dicoding.academies.ui.reader.content;
 
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-
-import com.dicoding.academies.data.ContentEntity;
+import com.dicoding.academies.R;
 import com.dicoding.academies.data.ModuleEntity;
-import com.dicoding.academies.dicodingapps.R;
-import com.dicoding.academies.ui.reader.CourseReaderActivity;
-import com.dicoding.academies.ui.reader.CourseReaderCallback;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
-import com.dicoding.academies.utils.DataDummy;
 
 
 /**
@@ -30,6 +25,7 @@ public class ModuleContentFragment extends Fragment {
     public static final String TAG = ModuleContentFragment.class.getSimpleName();
 
     private WebView webView;
+    private ProgressBar progressBar;
     private CourseReaderViewModel viewModel;
 
     public static ModuleContentFragment newInstance() {
@@ -52,6 +48,7 @@ public class ModuleContentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         webView = view.findViewById(R.id.web_view);
+        progressBar = view.findViewById(R.id.progress_bar);
     }
 
     @Override

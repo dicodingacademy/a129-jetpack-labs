@@ -14,11 +14,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
 import com.dicoding.academies.data.ModuleEntity;
-import com.dicoding.academies.dicodingapps.R;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
-import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.utils.GlideApp;
 
 import java.util.List;

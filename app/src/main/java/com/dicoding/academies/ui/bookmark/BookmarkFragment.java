@@ -2,26 +2,21 @@ package com.dicoding.academies.ui.bookmark;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
+import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.dicodingapps.R;
-import com.dicoding.academies.ui.academy.AcademyAdapter;
-import com.dicoding.academies.ui.academy.AcademyViewModel;
-import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;
 
@@ -29,7 +24,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookmarkFragment extends Fragment implements BookmarkFragmentCallback{
+public class BookmarkFragment extends Fragment implements BookmarkFragmentCallback {
     private BookmarkAdapter adapter;
     private RecyclerView rvBookmark;
     private ProgressBar progressBar;

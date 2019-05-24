@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import com.dicoding.academies.R;
 import com.dicoding.academies.ui.academy.AcademyFragment;
 import com.dicoding.academies.ui.bookmark.BookmarkFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

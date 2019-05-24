@@ -21,8 +21,19 @@ public class RemoteRepository {
         return INSTANCE;
     }
 
-    public List<com.dicoding.academies.data.source.remote.CourseResponse> getAllCourses() {
-        return jsonHelper.loadCourses();
+    public void getAllCourses(LoadCoursesCallback callback) {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> callback.onAllCoursesReceived(jsonHelper.loadCourses()), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public void getModules(String courseId, LoadModulesCallback callback) {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> callback.onAllModulesReceived(jsonHelper.loadModule(courseId)), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public void getContent(String moduleId, GetContentCallback callback) {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> callback.onContentReceived(jsonHelper.loadContent(moduleId)), SERVICE_LATENCY_IN_MILLIS);
     }
 
     public List<ModuleResponse> getModules(String courseId) {

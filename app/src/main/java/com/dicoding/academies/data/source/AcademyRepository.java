@@ -6,8 +6,8 @@ import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.ContentEntity;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
-import com.dicoding.academies.data.source.remote.CourseResponse;
 import com.dicoding.academies.data.source.remote.RemoteRepository;
+import com.dicoding.academies.data.source.remote.response.CourseResponse;
 import com.dicoding.academies.data.source.remote.response.ModuleResponse;
 
 import java.util.ArrayList;

@@ -11,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            viewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
+            viewModel = obtainViewModel(getActivity());
             courses = viewModel.getBookmarks();
 
             //Melakukan setup Adapter
@@ -83,5 +85,12 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
                     .setText(String.format("Segera daftar kelas %s di dicoding.com", course.getTitle()))
                     .startChooser();
         }
+    }
+
+    @NonNull
+    private static BookmarkViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(BookmarkViewModel.class);
     }
 }

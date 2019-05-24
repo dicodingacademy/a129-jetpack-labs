@@ -13,8 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.CourseEntity;
-
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.ui.detail.DetailCourseActivity;
 import com.dicoding.academies.utils.GlideApp;
 

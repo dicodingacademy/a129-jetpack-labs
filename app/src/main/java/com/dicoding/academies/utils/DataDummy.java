@@ -1,7 +1,7 @@
 package com.dicoding.academies.utils;
 
-import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 
 import java.util.ArrayList;
 
@@ -90,7 +90,7 @@ public class DataDummy {
     }
 
 
-    public static CourseEntity getCourse(String courseId){
+    public static CourseEntity getCourse(String courseId) {
         for (int i = 0; i < generateDummyCourses().size(); i++) {
             CourseEntity entity = generateDummyCourses().get(i);
             if (entity.getCourseId().equals(courseId)) {

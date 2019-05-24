@@ -1,6 +1,6 @@
 package com.dicoding.academies.ui.reader;
 
-import com.dicoding.academies.data.ContentEntity;
+import com.dicoding.academies.data.source.local.entity.ContentEntity;
 
 import org.junit.After;
 import org.junit.Before;

@@ -8,7 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.utils.RecyclerViewItemCountAssertion;

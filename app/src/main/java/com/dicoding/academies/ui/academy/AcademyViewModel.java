@@ -1,5 +1,6 @@
 package com.dicoding.academies.ui.academy;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dicoding.academies.data.source.AcademyRepository;
@@ -15,7 +16,7 @@ public class AcademyViewModel extends ViewModel {
         this.academyRepository = mAcademyRepository;
     }
 
-    public List<CourseEntity> getCourses() {
+    LiveData<List<CourseEntity>> getCourses() {
         return academyRepository.getAllCourses();
     }
 }

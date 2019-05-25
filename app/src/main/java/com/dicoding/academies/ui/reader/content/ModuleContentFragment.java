@@ -60,11 +60,15 @@ public class ModuleContentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
-            ModuleEntity module = viewModel.getSelectedModule();
-            populateWebView(module);
+            progressBar.setVisibility(View.VISIBLE);
+            viewModel.getSelectedModule().observe(this, moduleEntity -> {
+                if (moduleEntity != null) {
+                    progressBar.setVisibility(View.GONE);
+                    populateWebView(moduleEntity);
+                }
+            });
         }
     }
-
 
     private void populateWebView(ModuleEntity content) {
         webView.loadData(content.contentEntity.getContent(), "text/html", "UTF-8");

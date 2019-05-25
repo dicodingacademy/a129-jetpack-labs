@@ -5,8 +5,12 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dicoding.academies.R;
+import com.dicoding.academies.ui.academy.AcademyFragment;
+import com.dicoding.academies.ui.bookmark.BookmarkFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
@@ -14,22 +18,25 @@ public class HomeActivity extends AppCompatActivity {
     private final String SELECTED_MENU = "selected_menu";
     private BottomNavigationView navView;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_home:
-
-                    return true;
-                case R.id.action_bookmark:
-
-                    return true;
-            }
-            return false;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
+        Fragment fragment = null;
+        if (item.getItemId() == R.id.action_home) {
+            fragment = AcademyFragment.newInstance();
+        } else if (item.getItemId() == R.id.action_bookmark) {
+            fragment = BookmarkFragment.newInstance();
         }
+
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .replace(R.id.container, fragment)
+                    .commit();
+        }
+        return true;
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

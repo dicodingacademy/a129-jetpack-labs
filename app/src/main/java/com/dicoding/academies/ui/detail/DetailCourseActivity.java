@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,11 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
-import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.utils.GlideApp;
+import com.dicoding.academies.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class DetailCourseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        viewModel = ViewModelProviders.of(this).get(DetailCourseViewModel.class);
+        viewModel = obtainViewModel(this);
 
         adapter = new DetailCourseAdapter();
 
@@ -96,6 +97,14 @@ public class DetailCourseActivity extends AppCompatActivity {
             v.getContext().startActivity(intent);
         });
 
+    }
+
+    @NonNull
+    private static DetailCourseViewModel obtainViewModel(AppCompatActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(DetailCourseViewModel.class);
     }
 }
 

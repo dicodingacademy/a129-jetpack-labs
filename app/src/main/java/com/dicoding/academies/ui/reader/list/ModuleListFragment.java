@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,11 +19,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.ui.reader.CourseReaderCallback;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
-import com.dicoding.academies.utils.DataDummy;
+import com.dicoding.academies.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            viewModel = ViewModelProviders.of(getActivity()).get(CourseReaderViewModel.class);
+            viewModel = obtainViewModel(getActivity());
             adapter = new ModuleListAdapter(this);
             populateRecyclerView(viewModel.getModules());
         }
@@ -96,5 +97,12 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
+    @NonNull
+    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
+    }
 }
 

@@ -19,7 +19,7 @@ public class SingleFragmentActivity extends AppCompatActivity {
 
         View content = new FrameLayout(this);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT,
                 Gravity.CENTER);
         content.setLayoutParams(params);
         content.setId(R.id.container);

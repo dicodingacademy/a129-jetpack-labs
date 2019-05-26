@@ -1,9 +1,11 @@
 package com.dicoding.academies.ui.bookmark;
 
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.testing.SingleFragmentActivity;
+import com.dicoding.academies.utils.EspressoIdlingResource;
 import com.dicoding.academies.utils.RecyclerViewItemCountAssertion;
 
 import org.junit.After;
@@ -23,20 +25,17 @@ public class BookmarkFragmentTest {
 
     @Before
     public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
         activityRule.getActivity().setFragment(bookmarkFragment);
     }
 
     @After
     public void tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
     @Test
     public void loadBookmarks() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withId(R.id.rv_bookmark)).check(new RecyclerViewItemCountAssertion(5));
     }
 }

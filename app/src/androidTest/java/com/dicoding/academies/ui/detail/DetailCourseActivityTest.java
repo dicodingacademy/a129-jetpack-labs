@@ -3,11 +3,13 @@ package com.dicoding.academies.ui.detail;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.utils.EspressoIdlingResource;
 import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.utils.RecyclerViewItemCountAssertion;
 
@@ -38,31 +40,22 @@ public class DetailCourseActivityTest {
 
     @Before
     public void setUp() {
-
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
     @After
     public void tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
     @Test
     public void loadCourse() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withId(R.id.text_title)).check(matches(withText(dummyCourse.getTitle())));
         onView(withId(R.id.text_date)).check(matches(withText(String.format("Deadline %s", dummyCourse.getDeadline()))));
     }
 
     @Test
     public void loadModules() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withId(R.id.rv_module)).check(new RecyclerViewItemCountAssertion(7));
     }
 }

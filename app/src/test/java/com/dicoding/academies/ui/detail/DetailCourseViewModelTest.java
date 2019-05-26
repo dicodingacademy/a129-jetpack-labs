@@ -1,5 +1,9 @@
 package com.dicoding.academies.ui.detail;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
@@ -7,6 +11,7 @@ import com.dicoding.academies.utils.FakeDataDummy;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,6 +22,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class DetailCourseViewModelTest {
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     private DetailCourseViewModel viewModel;
     private AcademyRepository academyRepository = mock(AcademyRepository.class);
     private CourseEntity dummyCourse = FakeDataDummy.generateDummyCourses().get(0);
@@ -34,17 +43,26 @@ public class DetailCourseViewModelTest {
 
     @Test
     public void getCourse() {
-        when(academyRepository.getCourseWithModules(courseId)).thenReturn(dummyCourse);
-        CourseEntity resultCourse = viewModel.getCourse();
+        MutableLiveData<CourseEntity> courseEntities = new MutableLiveData<>();
+        courseEntities.setValue(dummyCourse);
+
+        when(academyRepository.getCourseWithModules(courseId)).thenReturn(courseEntities);
+
+        Observer<CourseEntity> observer = mock(Observer.class);
+        viewModel.getCourse().observeForever(observer);
+
         verify(academyRepository).getCourseWithModules(courseId);
-        assertEquals(dummyCourse.getCourseId(), resultCourse.getCourseId());
     }
 
     @Test
     public void getModules() {
-        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(FakeDataDummy.generateDummyModules(courseId));
-        List<ModuleEntity> resultModules = viewModel.getModules();
+        MutableLiveData<List<ModuleEntity>> moduleEntities = new MutableLiveData<>();
+        moduleEntities.setValue(FakeDataDummy.generateDummyModules(courseId));
+
+        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(moduleEntities);
+
+        Observer<List<ModuleEntity>> observer = mock(Observer.class);
+        viewModel.getModules().observeForever(observer);
         verify(academyRepository).getAllModulesByCourse(courseId);
-        assertEquals(7, resultModules.size());
     }
 }

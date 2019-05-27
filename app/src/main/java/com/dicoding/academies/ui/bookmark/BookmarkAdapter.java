@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.ui.detail.DetailCourseActivity;
@@ -57,7 +58,11 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Academ
         });
         holder.imgShare.setOnClickListener(v -> callback.onShareClick(courses.get(holder.getAdapterPosition())));
 
-        GlideApp.with(holder.itemView.getContext()).load(course.getImagePath()).into(holder.imgPoster);
+        GlideApp.with(holder.itemView.getContext())
+                .load(course.getImagePath())
+                .apply(new RequestOptions().override(60,60).placeholder(R.drawable.ic_refresh_black)
+                        .error(R.drawable.ic_broken_image_black))
+                .into(holder.imgPoster);
     }
 
     @Override

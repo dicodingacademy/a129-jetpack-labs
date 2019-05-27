@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
 import com.dicoding.academies.ui.detail.DetailCourseActivity;
@@ -54,7 +55,11 @@ public class AcademyAdapter extends RecyclerView.Adapter<AcademyAdapter.AcademyV
             intent.putExtra(DetailCourseActivity.EXTRA_COURSE, getListCourses().get(position).getCourseId());
             activity.startActivity(intent);
         });
-        GlideApp.with(holder.itemView.getContext()).load(getListCourses().get(position).getImagePath()).into(holder.imgPoster);
+        GlideApp.with(holder.itemView.getContext())
+                .load(getListCourses().get(position).getImagePath())
+                .apply(new RequestOptions().override(60,60).placeholder(R.drawable.ic_refresh_black)
+                        .error(R.drawable.ic_broken_image_black))
+                .into(holder.imgPoster);
     }
 
     @Override

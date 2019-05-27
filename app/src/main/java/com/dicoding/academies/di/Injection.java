@@ -4,15 +4,20 @@ import android.app.Application;
 
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.LocalRepository;
+import com.dicoding.academies.data.source.local.room.AcademyDatabase;
 import com.dicoding.academies.data.source.remote.RemoteRepository;
+import com.dicoding.academies.utils.AppExecutors;
 import com.dicoding.academies.utils.JsonHelper;
 
 public class Injection {
     public static AcademyRepository provideRepository(Application application) {
 
-        LocalRepository localRepository = new LocalRepository();
-        RemoteRepository remoteRepository = RemoteRepository.getInstance(new JsonHelper(application));
+        AcademyDatabase database = AcademyDatabase.getInstance(application);
 
-        return AcademyRepository.getInstance(localRepository, remoteRepository);
+        LocalRepository localRepository = LocalRepository.getInstance(database.academyDao());
+        RemoteRepository remoteRepository = RemoteRepository.getInstance(new JsonHelper(application));
+        AppExecutors appExecutors = new AppExecutors();
+
+        return AcademyRepository.getInstance(localRepository, remoteRepository, appExecutors);
     }
 }

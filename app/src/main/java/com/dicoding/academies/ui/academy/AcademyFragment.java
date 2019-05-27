@@ -64,9 +64,10 @@ public class AcademyFragment extends Fragment {
 
             academyAdapter = new AcademyAdapter(getActivity());
 
-            viewModel.getCourses().observe(this, courses -> {
+            viewModel.setUsername("Dicoding");
+            viewModel.courses.observe(this, courses -> {
                 progressBar.setVisibility(View.GONE);
-                academyAdapter.setListCourses(courses);
+                academyAdapter.setListCourses(courses.data);
                 academyAdapter.notifyDataSetChanged();
             });
 

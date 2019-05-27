@@ -1,4 +1,4 @@
-package com.dicoding.academies.viewmodel;
+ package com.dicoding.academies.viewmodel;
 
 import android.app.Application;
 

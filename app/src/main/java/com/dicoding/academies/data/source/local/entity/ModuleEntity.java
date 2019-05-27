@@ -1,14 +1,44 @@
 package com.dicoding.academies.data.source.local.entity;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+
+@Entity(tableName = "moduleentities",
+        primaryKeys = {"moduleId", "courseId"},
+        foreignKeys = @ForeignKey(entity = CourseEntity.class,
+                parentColumns = "courseId",
+                childColumns = "courseId"),
+        indices = {@Index(value = "moduleId"),
+                @Index(value = "courseId")}
+)
 public class ModuleEntity {
+    @Embedded
     public ContentEntity contentEntity;
+
+    @NonNull
+    @ColumnInfo(name = "moduleId")
     private String mModuleId;
+
+    @NonNull
+    @ColumnInfo(name = "courseId")
     private String mCourseId;
+
+    @NonNull
+    @ColumnInfo(name = "title")
     private String mTitle;
+
+    @NonNull
+    @ColumnInfo(name = "position")
     private Integer mPosition;
+
+    @ColumnInfo(name = "read")
     private boolean mRead = false;
 
-    public ModuleEntity(String moduleId, String courseId, String title, Integer position, Boolean read) {
+    public ModuleEntity(@NonNull String moduleId, @NonNull String courseId, @NonNull String title, @NonNull Integer position, Boolean read) {
         this.mModuleId = moduleId;
         this.mCourseId = courseId;
         this.mTitle = title;
@@ -59,4 +89,3 @@ public class ModuleEntity {
         this.mRead = read;
     }
 }
-

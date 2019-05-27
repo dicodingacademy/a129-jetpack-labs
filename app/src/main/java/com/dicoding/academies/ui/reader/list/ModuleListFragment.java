@@ -71,10 +71,10 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
             progressBar.setVisibility(View.VISIBLE);
             viewModel = obtainViewModel(getActivity());
             adapter = new ModuleListAdapter(this);
-            viewModel.getModules().observe(this, moduleEntities -> {
+            viewModel.modules.observe(this, moduleEntities -> {
                 if (moduleEntities!=null){
                     progressBar.setVisibility(View.GONE);
-                    populateRecyclerView(moduleEntities);
+                    populateRecyclerView(moduleEntities.data);
                 }
             });
         }
@@ -110,4 +110,3 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
         return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 }
-

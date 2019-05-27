@@ -67,7 +67,7 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
 
             viewModel.getBookmarks().observe(this, courses -> {
                 progressBar.setVisibility(View.GONE);
-                adapter.setListCourses(courses);
+                adapter.setListCourses(courses.data);
                 adapter.notifyDataSetChanged();
             });
 

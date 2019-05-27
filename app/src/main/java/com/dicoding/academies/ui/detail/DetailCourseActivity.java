@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,17 +70,31 @@ public class DetailCourseActivity extends AppCompatActivity {
         if (extras != null) {
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
-                progressBar.setVisibility(View.VISIBLE);
                 viewModel.setCourseId(courseId);
             }
         }
 
         viewModel.courseModule.observe(this, courseWithModuleResource -> {
-            if (courseWithModuleResource.data != null) {
-                progressBar.setVisibility(View.GONE);
-                adapter.setModules(courseWithModuleResource.data.mModules);
-                adapter.notifyDataSetChanged();
-                populateCourse(courseWithModuleResource.data.mCourse);
+            if (courseWithModuleResource != null) {
+
+                switch (courseWithModuleResource.status) {
+                    case LOADING:
+                        progressBar.setVisibility(View.VISIBLE);
+                        break;
+                    case SUCCESS:
+                        if (courseWithModuleResource.data != null) {
+                            progressBar.setVisibility(View.GONE);
+                            adapter.setModules(courseWithModuleResource.data.mModules);
+                            adapter.notifyDataSetChanged();
+                            populateCourse(courseWithModuleResource.data.mCourse);
+                        }
+                        break;
+                    case ERROR:
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
             }
         });
 
@@ -97,9 +112,21 @@ public class DetailCourseActivity extends AppCompatActivity {
         this.menu = menu;
         viewModel.courseModule.observe(this, courseWithModule -> {
             if (courseWithModule != null) {
-                if (courseWithModule.data != null) {
-                    boolean state = courseWithModule.data.mCourse.isBookmarked();
-                    setBookmarkState(state);
+                switch (courseWithModule.status) {
+                    case LOADING:
+                        progressBar.setVisibility(View.VISIBLE);
+                        break;
+                    case SUCCESS:
+                        if (courseWithModule.data != null) {
+                            progressBar.setVisibility(View.GONE);
+                            boolean state = courseWithModule.data.mCourse.isBookmarked();
+                            setBookmarkState(state);
+                        }
+                        break;
+                    case ERROR:
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });

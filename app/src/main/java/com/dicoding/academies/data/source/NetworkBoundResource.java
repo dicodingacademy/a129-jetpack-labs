@@ -39,7 +39,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 result.addSource(dbSource, newData -> result.setValue(Resource.success(newData)));
             }
         });
-
     }
 
     private void fetchFromNetwork(LiveData<ResultType> dbSource) {

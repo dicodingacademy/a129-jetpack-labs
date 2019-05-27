@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,17 +65,30 @@ public class ModuleContentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
-            progressBar.setVisibility(View.VISIBLE);
-            viewModel.selectedModule.observe(this, moduleEntity -> {
-                if (moduleEntity.data != null) {
-                    setButtonNextPrevState(moduleEntity.data);
-                    progressBar.setVisibility(View.GONE);
-                    if (!moduleEntity.data.isRead()) {
-                        viewModel.readContent(moduleEntity.data);
-                    }
 
-                    if (moduleEntity.data.contentEntity != null) {
-                        populateWebView(moduleEntity.data.contentEntity);
+            viewModel.selectedModule.observe(this, moduleEntity -> {
+                if (moduleEntity != null) {
+                    switch (moduleEntity.status) {
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+                        case SUCCESS:
+                            if (moduleEntity.data != null) {
+                                setButtonNextPrevState(moduleEntity.data);
+                                progressBar.setVisibility(View.GONE);
+                                if (!moduleEntity.data.isRead()) {
+                                    viewModel.readContent(moduleEntity.data);
+                                }
+
+                                if (moduleEntity.data.contentEntity != null) {
+                                    populateWebView(moduleEntity.data.contentEntity);
+                                }
+                            }
+                            break;
+                        case ERROR:
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            break;
                     }
                 }
             });

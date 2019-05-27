@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
@@ -89,7 +90,13 @@ public class DetailCourseActivity extends AppCompatActivity {
         textDesc.setText(courseEntity.getDescription());
         textDate.setText(String.format("Deadline %s", courseEntity.getDeadline()));
 
-        GlideApp.with(getApplicationContext()).load(courseEntity.getImagePath()).into(imagePoster);
+        GlideApp.with(getApplicationContext())
+                .load(courseEntity.getImagePath())
+                .apply(new RequestOptions()
+                        .override(50,50)
+                        .placeholder(R.drawable.ic_refresh_black)
+                        .error(R.drawable.ic_broken_image_black))
+                .into(imagePoster);
 
         btnStart.setOnClickListener(v -> {
             Intent intent = new Intent(DetailCourseActivity.this, CourseReaderActivity.class);

@@ -59,16 +59,29 @@ public class AcademyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            progressBar.setVisibility(View.VISIBLE);
+
             viewModel = obtainViewModel(getActivity());
 
             academyAdapter = new AcademyAdapter(getActivity());
 
             viewModel.setUsername("Dicoding");
             viewModel.courses.observe(this, courses -> {
-                progressBar.setVisibility(View.GONE);
-                academyAdapter.setListCourses(courses.data);
-                academyAdapter.notifyDataSetChanged();
+                if (courses != null) {
+                    switch (courses.status) {
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+                        case SUCCESS:
+                            progressBar.setVisibility(View.GONE);
+                            academyAdapter.setListCourses(courses.data);
+                            academyAdapter.notifyDataSetChanged();
+                            break;
+                        case ERROR:
+                            progressBar.setVisibility(View.GONE);
+                            break;
+
+                    }
+                }
             });
 
             rvCourse.setLayoutManager(new LinearLayoutManager(getContext()));

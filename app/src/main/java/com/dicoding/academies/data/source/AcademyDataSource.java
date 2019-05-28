@@ -2,6 +2,7 @@ package com.dicoding.academies.data.source;
 
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.CourseWithModule;
@@ -22,7 +23,8 @@ public interface AcademyDataSource {
     LiveData<Resource<List<ModuleEntity>>> getAllModulesByCourse(String courseId);
 
     // Untuk Halaman Bookmark
-    LiveData<Resource<List<CourseEntity>>> getBookmarkedCourses();
+    // LiveData<Resource<List<CourseEntity>>> getBookmarkedCourses();
+    LiveData<Resource<PagedList<CourseEntity>>> getBookmarkedCoursesPaged();
 
     // Untuk getContent
     LiveData<Resource<ModuleEntity>> getContent(String moduleId);

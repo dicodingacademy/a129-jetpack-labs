@@ -2,6 +2,7 @@ package com.dicoding.academies.data.source.local.room;
 
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -22,9 +23,12 @@ public interface AcademyDao {
     @Query("SELECT * FROM courseentities")
     LiveData<List<CourseEntity>> getCourses();
 
-    @WorkerThread
+//    @WorkerThread
+//    @Query("SELECT * FROM courseentities where bookmarked = 1")
+//    LiveData<List<CourseEntity>> getBookmarkedCourse();
+
     @Query("SELECT * FROM courseentities where bookmarked = 1")
-    LiveData<List<CourseEntity>> getBookmarkedCourse();
+    DataSource.Factory<Integer, CourseEntity> getBookmarkedCourseAsPaged();
 
     @Transaction
     @Query("SELECT * FROM courseentities WHERE courseId = :courseId")

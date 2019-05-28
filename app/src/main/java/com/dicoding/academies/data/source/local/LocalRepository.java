@@ -1,6 +1,7 @@
 package com.dicoding.academies.data.source.local;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.CourseWithModule;
@@ -29,8 +30,12 @@ public class LocalRepository {
         return mAcademyDao.getCourses();
     }
 
-    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
-        return mAcademyDao.getBookmarkedCourse();
+    //    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
+    //        return mAcademyDao.getBookmarkedCourse();
+    //    }
+
+    public DataSource.Factory<Integer, CourseEntity> getBookmarkedCoursesPaged() {
+        return mAcademyDao.getBookmarkedCourseAsPaged();
     }
 
     public LiveData<CourseWithModule> getCourseWithModules(final String courseId) {

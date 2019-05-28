@@ -8,7 +8,7 @@ public class CourseEntity {
     private boolean bookmarked = false;
     private String imagePath;
 
-    public CourseEntity( String courseId, String title, String description, String deadline, Boolean bookmarked, String imagePath) {
+    public CourseEntity(String courseId, String title, String description, String deadline, Boolean bookmarked, String imagePath) {
         this.courseId = courseId;
         this.title = title;
         this.description = description;

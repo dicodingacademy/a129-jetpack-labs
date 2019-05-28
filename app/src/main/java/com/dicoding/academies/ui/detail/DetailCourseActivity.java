@@ -39,6 +39,13 @@ public class DetailCourseActivity extends AppCompatActivity {
     private DetailCourseViewModel viewModel;
     private List<ModuleEntity> modules;
 
+    @NonNull
+    private static DetailCourseViewModel obtainViewModel(AppCompatActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(DetailCourseViewModel.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +99,8 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         GlideApp.with(getApplicationContext())
                 .load(courseEntity.getImagePath())
-                .apply(new RequestOptions()
-                        .override(50,50)
-                        .placeholder(R.drawable.ic_refresh_black)
-                        .error(R.drawable.ic_broken_image_black))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
+                        .error(R.drawable.ic_error))
                 .into(imagePoster);
 
         btnStart.setOnClickListener(v -> {
@@ -104,14 +109,6 @@ public class DetailCourseActivity extends AppCompatActivity {
             v.getContext().startActivity(intent);
         });
 
-    }
-
-    @NonNull
-    private static DetailCourseViewModel obtainViewModel(AppCompatActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return ViewModelProviders.of(activity, factory).get(DetailCourseViewModel.class);
     }
 }
 

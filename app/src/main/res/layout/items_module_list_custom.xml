@@ -30,24 +30,24 @@
             android:layout_marginStart="8dp"
             android:layout_weight="2"
             android:ellipsize="end"
-            android:textStyle="bold"
             android:textColor="@color/colorText"
             android:textSize="14sp"
+            android:textStyle="bold"
             tools:text="@string/example" />
 
         <TextView
             android:id="@+id/text_last_seen"
             android:layout_width="0dp"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
-            android:paddingRight="4dp"
             android:layout_weight="1"
             android:gravity="right"
+            android:paddingRight="4dp"
             android:text="@string/last_seen"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"
+            android:visibility="gone"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
     </LinearLayout>
 </LinearLayout>

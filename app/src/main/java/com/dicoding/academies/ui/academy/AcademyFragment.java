@@ -2,6 +2,10 @@ package com.dicoding.academies.ui.academy;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,11 +14,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
@@ -42,6 +41,13 @@ public class AcademyFragment extends Fragment {
         return new AcademyFragment();
     }
 
+    @NonNull
+    private static AcademyViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(AcademyViewModel.class);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +65,7 @@ public class AcademyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if  (getActivity() != null) {
+        if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
 
             courses = viewModel.getCourses();
@@ -71,13 +77,6 @@ public class AcademyFragment extends Fragment {
             rvCourse.setHasFixedSize(true);
             rvCourse.setAdapter(academyAdapter);
         }
-    }
-
-    @NonNull
-    private static AcademyViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(AcademyViewModel.class);
     }
 
 

@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.ContentEntity;
 import com.dicoding.academies.data.ModuleEntity;
@@ -31,14 +35,13 @@ public class ModuleContentFragment extends Fragment {
     private CourseReaderViewModel viewModel;
 
 
-    public static ModuleContentFragment newInstance() {
-        return new ModuleContentFragment();
-    }
-
     public ModuleContentFragment() {
         // Required empty public constructor
     }
 
+    public static ModuleContentFragment newInstance() {
+        return new ModuleContentFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

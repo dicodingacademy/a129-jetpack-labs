@@ -15,6 +15,7 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.ui.detail.DetailCourseActivity;
@@ -22,6 +23,19 @@ import com.dicoding.academies.utils.GlideApp;
 
 public class BookmarkPagedAdapter extends PagedListAdapter<CourseEntity, BookmarkPagedAdapter.BookmarkViewHolder> {
 
+    private static DiffUtil.ItemCallback<CourseEntity> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<CourseEntity>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull CourseEntity oldItem, @NonNull CourseEntity newItem) {
+                    return oldItem.getCourseId().equals(newItem.getCourseId());
+                }
+
+                @SuppressLint("DiffUtilEquals")
+                @Override
+                public boolean areContentsTheSame(@NonNull CourseEntity oldItem, @NonNull CourseEntity newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
     private BookmarkFragmentCallback callback;
 
     BookmarkPagedAdapter(BookmarkFragmentCallback callback) {
@@ -55,7 +69,11 @@ public class BookmarkPagedAdapter extends PagedListAdapter<CourseEntity, Bookmar
                 callback.onShareClick(course);
             });
 
-            GlideApp.with(holder.itemView.getContext()).load(bookmark.getImagePath()).into(holder.imgPoster);
+            GlideApp.with(holder.itemView.getContext())
+                    .load(bookmark.getImagePath())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
+                            .error(R.drawable.ic_error))
+                    .into(holder.imgPoster);
 
         }
     }
@@ -66,21 +84,6 @@ public class BookmarkPagedAdapter extends PagedListAdapter<CourseEntity, Bookmar
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_bookmark, parent, false);
         return new BookmarkViewHolder(view);
     }
-
-
-    private static DiffUtil.ItemCallback<CourseEntity> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<CourseEntity>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull CourseEntity oldItem, @NonNull CourseEntity newItem) {
-                    return oldItem.getCourseId().equals(newItem.getCourseId());
-                }
-
-                @SuppressLint("DiffUtilEquals")
-                @Override
-                public boolean areContentsTheSame(@NonNull CourseEntity oldItem, @NonNull CourseEntity newItem) {
-                    return oldItem.equals(newItem);
-                }
-            };
 
     CourseEntity getItemById(int swipedPosition) {
         return getItem(swipedPosition);
@@ -102,5 +105,4 @@ public class BookmarkPagedAdapter extends PagedListAdapter<CourseEntity, Bookmar
             imgPoster = itemView.findViewById(R.id.img_poster);
         }
     }
-
 }

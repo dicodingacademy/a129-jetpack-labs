@@ -14,12 +14,14 @@ import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -33,6 +35,41 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     private ProgressBar progressBar;
     private BookmarkViewModel viewModel;
     private List<CourseEntity> courses;
+    private ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            // Aksi di bawah digunakan untuk melakukan swap ke kenan dan ke kiri
+            return makeMovementFlags(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        }
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return true;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            if (getView() != null) {
+                // Sebelum melakukan penghapusan, course harus mendapatkan posisi dari item yang di swipe
+                int swipedPosition = viewHolder.getAdapterPosition();
+
+                // Kemudian memanggil CourseEntity sesuai posisi ketika diswipe
+                CourseEntity courseEntity = adapter.getItemById(swipedPosition);
+
+                // Melakukan setBookmark untuk menghapus bookmark dari list course
+                viewModel.setBookmark(courseEntity);
+
+                // Memanggil Snackbar untuk melakukan pengecekan, apakah benar melakukan penghapusan bookmark
+                Snackbar snackbar = Snackbar.make(getView(), R.string.message_undo, Snackbar.LENGTH_LONG);
+
+                // Mengembalikan item yang terhapus
+                snackbar.setAction(R.string.message_ok, v -> viewModel.setBookmark(courseEntity));
+
+                // Menampilkan snackbar
+                snackbar.show();
+            }
+        }
+    });
 
     public BookmarkFragment() {
         // Required empty public constructor
@@ -94,6 +131,9 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
             rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
             rvBookmark.setHasFixedSize(true);
             rvBookmark.setAdapter(adapter);
+
+            //Memberikan aksi untuk swipe
+            itemTouchHelper.attachToRecyclerView(rvBookmark);
         }
     }
 

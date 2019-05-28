@@ -28,7 +28,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 
-public class ModuleListFragment extends Fragment implements MyAdapterClickListener{
+public class ModuleListFragment extends Fragment implements MyAdapterClickListener {
 
     public static final String TAG = ModuleListFragment.class.getSimpleName();
     private ModuleListAdapter adapter;

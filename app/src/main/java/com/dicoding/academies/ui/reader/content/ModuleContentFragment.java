@@ -25,14 +25,13 @@ public class ModuleContentFragment extends Fragment {
     private WebView webView;
     private ProgressBar progressBar;
 
-    public static ModuleContentFragment newInstance() {
-        return new ModuleContentFragment();
-    }
-
     public ModuleContentFragment() {
         // Required empty public constructor
     }
 
+    public static ModuleContentFragment newInstance() {
+        return new ModuleContentFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

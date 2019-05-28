@@ -5,6 +5,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ModuleResponse implements Parcelable {
+    public static final Creator<ModuleResponse> CREATOR = new Creator<ModuleResponse>() {
+        @Override
+        public ModuleResponse createFromParcel(Parcel source) {
+            return new ModuleResponse(source);
+        }
+
+        @Override
+        public ModuleResponse[] newArray(int size) {
+            return new ModuleResponse[size];
+        }
+    };
     private String moduleId;
     private String courseId;
     private String title;
@@ -15,6 +26,13 @@ public class ModuleResponse implements Parcelable {
         this.courseId = courseId;
         this.title = title;
         this.position = position;
+    }
+
+    protected ModuleResponse(Parcel in) {
+        this.moduleId = in.readString();
+        this.courseId = in.readString();
+        this.title = in.readString();
+        this.position = in.readInt();
     }
 
     public String getModuleId() {
@@ -49,7 +67,6 @@ public class ModuleResponse implements Parcelable {
         this.position = position;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -62,25 +79,6 @@ public class ModuleResponse implements Parcelable {
         dest.writeString(this.title);
         dest.writeInt(this.position);
     }
-
-    protected ModuleResponse(Parcel in) {
-        this.moduleId = in.readString();
-        this.courseId = in.readString();
-        this.title = in.readString();
-        this.position = in.readInt();
-    }
-
-    public static final Creator<ModuleResponse> CREATOR = new Creator<ModuleResponse>() {
-        @Override
-        public ModuleResponse createFromParcel(Parcel source) {
-            return new ModuleResponse(source);
-        }
-
-        @Override
-        public ModuleResponse[] newArray(int size) {
-            return new ModuleResponse[size];
-        }
-    };
 
 }
 

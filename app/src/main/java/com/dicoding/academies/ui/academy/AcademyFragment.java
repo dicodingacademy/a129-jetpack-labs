@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;
 

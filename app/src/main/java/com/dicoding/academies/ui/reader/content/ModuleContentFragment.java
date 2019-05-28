@@ -2,12 +2,6 @@ package com.dicoding.academies.ui.reader.content;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +11,9 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.ContentEntity;
 import com.dicoding.academies.data.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 

@@ -1,9 +1,12 @@
 package com.dicoding.academies.ui.academy;
 
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.testing.SingleFragmentActivity;
+import com.dicoding.academies.utils.EspressoIdlingResource;
 import com.dicoding.academies.utils.RecyclerViewItemCountAssertion;
 
 import org.junit.After;
@@ -22,20 +25,17 @@ public class AcademyFragmentTest {
 
     @Before
     public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
         activityRule.getActivity().setFragment(academyFragment);
     }
 
     @After
     public void tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
     @Test
     public void loadCourses() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         onView(withId(R.id.rv_academy)).check(new RecyclerViewItemCountAssertion(5));
     }
 }

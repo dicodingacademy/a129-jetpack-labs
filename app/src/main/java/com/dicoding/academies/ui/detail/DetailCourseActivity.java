@@ -39,6 +39,13 @@ public class DetailCourseActivity extends AppCompatActivity {
     private DetailCourseViewModel viewModel;
     private List<ModuleEntity> modules;
 
+    @NonNull
+    private static DetailCourseViewModel obtainViewModel(AppCompatActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(DetailCourseViewModel.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,14 +109,6 @@ public class DetailCourseActivity extends AppCompatActivity {
             v.getContext().startActivity(intent);
         });
 
-    }
-
-    @NonNull
-    private static DetailCourseViewModel obtainViewModel(AppCompatActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return ViewModelProviders.of(activity, factory).get(DetailCourseViewModel.class);
     }
 }
 

@@ -5,6 +5,17 @@ import android.os.Parcelable;
 
 public class CourseResponse implements Parcelable {
 
+    public static final Creator<CourseResponse> CREATOR = new Creator<CourseResponse>() {
+        @Override
+        public CourseResponse createFromParcel(Parcel in) {
+            return new CourseResponse(in);
+        }
+
+        @Override
+        public CourseResponse[] newArray(int size) {
+            return new CourseResponse[size];
+        }
+    };
     private String id;
     private String title;
     private String description;
@@ -21,6 +32,14 @@ public class CourseResponse implements Parcelable {
         this.description = description;
         this.date = date;
         this.imagePath = imagePath;
+    }
+
+    protected CourseResponse(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        description = in.readString();
+        date = in.readString();
+        imagePath = in.readString();
     }
 
     public String getId() {
@@ -76,26 +95,6 @@ public class CourseResponse implements Parcelable {
         dest.writeString(date);
         dest.writeString(imagePath);
     }
-
-    protected CourseResponse(Parcel in) {
-        id = in.readString();
-        title = in.readString();
-        description = in.readString();
-        date = in.readString();
-        imagePath = in.readString();
-    }
-
-    public static final Creator<CourseResponse> CREATOR = new Creator<CourseResponse>() {
-        @Override
-        public CourseResponse createFromParcel(Parcel in) {
-            return new CourseResponse(in);
-        }
-
-        @Override
-        public CourseResponse[] newArray(int size) {
-            return new CourseResponse[size];
-        }
-    };
 
 }
 

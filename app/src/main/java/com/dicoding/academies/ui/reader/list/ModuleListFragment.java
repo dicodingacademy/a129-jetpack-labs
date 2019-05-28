@@ -21,7 +21,6 @@ import com.dicoding.academies.data.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.ui.reader.CourseReaderCallback;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
-import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;
 

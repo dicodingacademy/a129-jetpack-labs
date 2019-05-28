@@ -48,7 +48,6 @@ public class RemoteRepository {
     public LiveData<ApiResponse<List<ModuleResponse>>> getAllModulesByCourseAsLiveData(String courseId) {
 
         EspressoIdlingResource.increment();
-
         MutableLiveData<ApiResponse<List<ModuleResponse>>> resultModules = new MutableLiveData<>();
 
         Handler handler = new Handler();

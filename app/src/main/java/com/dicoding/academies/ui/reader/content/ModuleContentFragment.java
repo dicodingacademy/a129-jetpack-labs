@@ -2,20 +2,18 @@ package com.dicoding.academies.ui.reader.content;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.ContentEntity;
 import com.dicoding.academies.data.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 
@@ -31,14 +29,13 @@ public class ModuleContentFragment extends Fragment {
     private CourseReaderViewModel viewModel;
 
 
-    public static ModuleContentFragment newInstance() {
-        return new ModuleContentFragment();
-    }
-
     public ModuleContentFragment() {
         // Required empty public constructor
     }
 
+    public static ModuleContentFragment newInstance() {
+        return new ModuleContentFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

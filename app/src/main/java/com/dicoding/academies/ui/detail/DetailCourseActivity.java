@@ -19,7 +19,6 @@ import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
 import com.dicoding.academies.data.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
-import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.utils.GlideApp;
 
 import java.util.List;
@@ -91,10 +90,8 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         GlideApp.with(getApplicationContext())
                 .load(courseEntity.getImagePath())
-                .apply(new RequestOptions()
-                        .override(50,50)
-                        .placeholder(R.drawable.ic_refresh_black)
-                        .error(R.drawable.ic_broken_image_black))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
+                        .error(R.drawable.ic_error))
                 .into(imagePoster);
 
         btnStart.setOnClickListener(v -> {

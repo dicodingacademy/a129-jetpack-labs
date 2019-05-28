@@ -57,8 +57,8 @@ public class AcademyAdapter extends RecyclerView.Adapter<AcademyAdapter.AcademyV
         });
         GlideApp.with(holder.itemView.getContext())
                 .load(getListCourses().get(position).getImagePath())
-                .apply(new RequestOptions().override(60,60).placeholder(R.drawable.ic_refresh_black)
-                        .error(R.drawable.ic_broken_image_black))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
+                        .error(R.drawable.ic_error))
                 .into(holder.imgPoster);
     }
 

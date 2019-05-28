@@ -80,6 +80,8 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
                         case SUCCESS:
                             progressBar.setVisibility(View.GONE);
                             adapter.submitList(courses.data);
+                            adapter.notifyDataSetChanged();
+                            break;
                         case ERROR:
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();

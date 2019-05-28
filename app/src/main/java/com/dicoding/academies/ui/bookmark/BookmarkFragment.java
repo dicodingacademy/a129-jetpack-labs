@@ -28,7 +28,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class BookmarkFragment extends Fragment implements BookmarkFragmentCallback {
-    private BookmarkAdapter adapter;
+    private BookmarkPagedAdapter adapter;
     private RecyclerView rvBookmark;
     private ProgressBar progressBar;
     private BookmarkViewModel viewModel;
@@ -69,9 +69,9 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         if (getActivity() != null) {
             viewModel = obtainViewModel(getActivity());
 
-            adapter = new BookmarkAdapter(getActivity(), this);
+            adapter = new BookmarkPagedAdapter(this);
 
-            viewModel.getBookmarks().observe(this, courses -> {
+            viewModel.getBookmarksPaged().observe(this, courses -> {
                 if (courses != null) {
                     switch (courses.status) {
                         case LOADING:
@@ -79,7 +79,7 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
                             break;
                         case SUCCESS:
                             progressBar.setVisibility(View.GONE);
-                            adapter.setListCourses(courses.data);
+                            adapter.submitList(courses.data);
                             adapter.notifyDataSetChanged();
                             break;
                         case ERROR:

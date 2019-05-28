@@ -2,6 +2,8 @@ package com.dicoding.academies.data.source;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
@@ -112,16 +114,41 @@ public class AcademyRepository implements AcademyDataSource {
         }.asLiveData();
     }
 
+//    @Override
+//    public LiveData<Resource<List<CourseEntity>>> getBookmarkedCourses() {
+//        return new NetworkBoundResource<List<CourseEntity>, List<CourseResponse>>(appExecutors) {
+//            @Override
+//            protected LiveData<List<CourseEntity>> loadFromDB() {
+//                return localRepository.getBookmarkedCoursesPaged();
+//            }
+//
+//            @Override
+//            protected Boolean shouldFetch(List<CourseEntity> data) {
+//                return false;
+//            }
+//
+//            @Override
+//            protected LiveData<ApiResponse<List<CourseResponse>>> createCall() {
+//                return null;
+//            }
+//
+//            @Override
+//            protected void saveCallResult(List<CourseResponse> data) {
+//
+//            }
+//        }.asLiveData();
+//    }
+
     @Override
-    public LiveData<Resource<List<CourseEntity>>> getBookmarkedCourses() {
-        return new NetworkBoundResource<List<CourseEntity>, List<CourseResponse>>(appExecutors) {
+    public LiveData<Resource<PagedList<CourseEntity>>> getBookmarkedCoursesPaged() {
+        return new NetworkBoundResource<PagedList<CourseEntity>, List<CourseResponse>>(appExecutors) {
             @Override
-            protected LiveData<List<CourseEntity>> loadFromDB() {
-                return localRepository.getBookmarkedCourses();
+            protected LiveData<PagedList<CourseEntity>> loadFromDB() {
+                return new LivePagedListBuilder<>(localRepository.getBookmarkedCoursesPaged(), /* page size */ 20).build();
             }
 
             @Override
-            protected Boolean shouldFetch(List<CourseEntity> data) {
+            protected Boolean shouldFetch(PagedList<CourseEntity> data) {
                 return false;
             }
 
@@ -136,7 +163,6 @@ public class AcademyRepository implements AcademyDataSource {
             }
         }.asLiveData();
     }
-
 
     @Override
     public LiveData<Resource<List<ModuleEntity>>> getAllModulesByCourse(String courseId) {

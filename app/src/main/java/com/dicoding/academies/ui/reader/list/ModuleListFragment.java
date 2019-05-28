@@ -78,7 +78,7 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
             viewModel = obtainViewModel(getActivity());
             adapter = new ModuleListAdapter(this);
             viewModel.getModules().observe(this, moduleEntities -> {
-                if (moduleEntities!=null){
+                if (moduleEntities != null) {
                     progressBar.setVisibility(View.GONE);
                     populateRecyclerView(moduleEntities);
                 }

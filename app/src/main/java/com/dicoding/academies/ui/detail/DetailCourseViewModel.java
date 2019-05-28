@@ -26,12 +26,12 @@ public class DetailCourseViewModel extends ViewModel {
         return academyRepository.getAllModulesByCourse(courseId);
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
-
     public String getCourseId() {
         return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 }
 

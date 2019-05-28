@@ -2,18 +2,17 @@ package com.dicoding.academies.ui.reader.content;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ProgressBar;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
@@ -32,14 +31,21 @@ public class ModuleContentFragment extends Fragment {
     private CourseReaderViewModel viewModel;
 
 
-    public static ModuleContentFragment newInstance() {
-        return new ModuleContentFragment();
-    }
-
     public ModuleContentFragment() {
         // Required empty public constructor
     }
 
+    public static ModuleContentFragment newInstance() {
+        return new ModuleContentFragment();
+    }
+
+    @NonNull
+    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,13 +78,5 @@ public class ModuleContentFragment extends Fragment {
 
     private void populateWebView(ModuleEntity content) {
         webView.loadData(content.contentEntity.getContent(), "text/html", "UTF-8");
-    }
-
-    @NonNull
-    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 }

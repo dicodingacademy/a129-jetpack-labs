@@ -6,8 +6,8 @@ import androidx.lifecycle.Observer;
 
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
-import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.utils.FakeDataDummy;
+import com.dicoding.academies.vo.Resource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,10 +15,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,6 +29,7 @@ public class AcademyViewModelTest {
 
     private AcademyViewModel viewModel;
     private AcademyRepository academyRepository = mock(AcademyRepository.class);
+    private String USERNAME = "Dicoding";
 
     @Before
     public void setUp() {
@@ -43,16 +42,17 @@ public class AcademyViewModelTest {
 
     @Test
     public void getCourses() {
-        MutableLiveData<List<CourseEntity>> dummyCourse = new MutableLiveData<>();
-        dummyCourse.setValue(FakeDataDummy.generateDummyCourses());
+        MutableLiveData<Resource<List<CourseEntity>>> dummyCourse = new MutableLiveData<>();
+        dummyCourse.setValue(Resource.success(FakeDataDummy.generateDummyCourses()));
 
         when(academyRepository.getAllCourses()).thenReturn(dummyCourse);
 
-        Observer<List<CourseEntity>> observer = Mockito.mock(Observer.class);
+        Observer<Resource<List<CourseEntity>>> observer = Mockito.mock(Observer.class);
 
-        viewModel.getCourses().observeForever(observer);
+        viewModel.setUsername(USERNAME);
+
+        viewModel.courses.observeForever(observer);
 
         verify(academyRepository).getAllCourses();
     }
 }
-

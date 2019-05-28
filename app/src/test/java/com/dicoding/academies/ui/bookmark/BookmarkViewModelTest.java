@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
+import com.dicoding.academies.vo.Resource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -39,16 +40,15 @@ public class BookmarkViewModelTest {
 
     @Test
     public void getBookmark() {
-        MutableLiveData<List<CourseEntity>> courses = new MutableLiveData<>();
-        courses.setValue(FakeDataDummy.generateDummyCourses());
+        MutableLiveData<Resource<List<CourseEntity>>> courses = new MutableLiveData<>();
+        courses.setValue(Resource.success(FakeDataDummy.generateDummyCourses()));
 
         when(academyRepository.getBookmarkedCourses()).thenReturn(courses);
 
-        Observer<List<CourseEntity>> observer = mock(Observer.class);
+        Observer<Resource<List<CourseEntity>>> observer = mock(Observer.class);
 
         viewModel.getBookmarks().observeForever(observer);
 
         verify(academyRepository).getBookmarkedCourses();
     }
 }
-

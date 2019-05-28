@@ -6,8 +6,10 @@ import androidx.lifecycle.Observer;
 
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.CourseWithModule;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
+import com.dicoding.academies.vo.Resource;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,6 +37,7 @@ public class DetailCourseViewModelTest {
     public void setUp() {
         viewModel = new DetailCourseViewModel(academyRepository);
         viewModel.setCourseId(courseId);
+        viewModel.setBookmark();
     }
 
     @After
@@ -42,27 +45,15 @@ public class DetailCourseViewModelTest {
     }
 
     @Test
-    public void getCourse() {
-        MutableLiveData<CourseEntity> courseEntities = new MutableLiveData<>();
-        courseEntities.setValue(dummyCourse);
+    public void getCourseWithModule() {
+        MutableLiveData<Resource<CourseWithModule>> courseEntities = new MutableLiveData<>();
+        courseEntities.setValue(Resource.success(FakeDataDummy.generateDummyCourseWithModules(dummyCourse, true)));
 
         when(academyRepository.getCourseWithModules(courseId)).thenReturn(courseEntities);
 
-        Observer<CourseEntity> observer = mock(Observer.class);
-        viewModel.getCourse().observeForever(observer);
+        Observer<Resource<CourseWithModule>> observer = mock(Observer.class);
+        viewModel.courseModule.observeForever(observer);
 
         verify(academyRepository).getCourseWithModules(courseId);
-    }
-
-    @Test
-    public void getModules() {
-        MutableLiveData<List<ModuleEntity>> moduleEntities = new MutableLiveData<>();
-        moduleEntities.setValue(FakeDataDummy.generateDummyModules(courseId));
-
-        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(moduleEntities);
-
-        Observer<List<ModuleEntity>> observer = mock(Observer.class);
-        viewModel.getModules().observeForever(observer);
-        verify(academyRepository).getAllModulesByCourse(courseId);
     }
 }

@@ -13,17 +13,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private AppExecutors mExecutors;
 
-    protected void onFetchFailed() {
-    }
-
-    protected abstract LiveData<ResultType> loadFromDB();
-
-    protected abstract Boolean shouldFetch(ResultType data);
-
-    protected abstract LiveData<ApiResponse<RequestType>> createCall();
-
-    protected abstract void saveCallResult(RequestType data);
-
     public NetworkBoundResource(AppExecutors appExecutors) {
 
         this.mExecutors = appExecutors;
@@ -40,6 +29,17 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             }
         });
     }
+
+    protected void onFetchFailed() {
+    }
+
+    protected abstract LiveData<ResultType> loadFromDB();
+
+    protected abstract Boolean shouldFetch(ResultType data);
+
+    protected abstract LiveData<ApiResponse<RequestType>> createCall();
+
+    protected abstract void saveCallResult(RequestType data);
 
     private void fetchFromNetwork(LiveData<ResultType> dbSource) {
 

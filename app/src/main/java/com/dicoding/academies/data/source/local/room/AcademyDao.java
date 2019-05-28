@@ -49,5 +49,5 @@ public interface AcademyDao {
     int updateModule(ModuleEntity module);
 
     @Query("UPDATE moduleentities SET content = :content WHERE moduleId = :moduleId")
-    int updateModuleByContent(String content,String moduleId);
+    int updateModuleByContent(String content, String moduleId);
 }

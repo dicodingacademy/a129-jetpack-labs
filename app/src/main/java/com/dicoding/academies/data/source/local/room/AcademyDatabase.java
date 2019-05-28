@@ -14,11 +14,8 @@ import com.dicoding.academies.data.source.local.entity.ModuleEntity;
         exportSchema = false)
 public abstract class AcademyDatabase extends RoomDatabase {
 
-    private static AcademyDatabase INSTANCE;
-
-    public abstract AcademyDao academyDao();
-
     private static final Object sLock = new Object();
+    private static AcademyDatabase INSTANCE;
 
     public static AcademyDatabase getInstance(Context context) {
         synchronized (sLock) {
@@ -30,5 +27,7 @@ public abstract class AcademyDatabase extends RoomDatabase {
             return INSTANCE;
         }
     }
+
+    public abstract AcademyDao academyDao();
 
 }

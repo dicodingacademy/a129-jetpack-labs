@@ -42,6 +42,12 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         return new BookmarkFragment();
     }
 
+    @NonNull
+    private static BookmarkViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(BookmarkViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,13 +107,6 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
                     .setText(String.format("Segera daftar kelas %s di dicoding.com", course.getTitle()))
                     .startChooser();
         }
-    }
-
-    @NonNull
-    private static BookmarkViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(BookmarkViewModel.class);
     }
 }
 

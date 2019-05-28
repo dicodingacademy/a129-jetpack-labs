@@ -14,6 +14,10 @@ import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+interface MyAdapterClickListener {
+    void onItemClicked(int position, String moduleId);
+}
+
 public class ModuleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final MyAdapterClickListener listener;
@@ -96,9 +100,5 @@ public class ModuleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             textTitle.setText(title);
         }
     }
-}
-
-interface MyAdapterClickListener {
-    void onItemClicked(int position, String moduleId);
 }
 

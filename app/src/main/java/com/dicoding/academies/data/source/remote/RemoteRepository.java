@@ -16,8 +16,8 @@ import java.util.List;
 public class RemoteRepository {
 
     private static RemoteRepository INSTANCE;
-    private JsonHelper jsonHelper;
     private final long SERVICE_LATENCY_IN_MILLIS = 2000;
+    private JsonHelper jsonHelper;
 
     private RemoteRepository(JsonHelper jsonHelper) {
         this.jsonHelper = jsonHelper;

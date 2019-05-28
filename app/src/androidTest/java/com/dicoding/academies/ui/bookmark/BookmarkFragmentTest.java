@@ -31,6 +31,11 @@ public class BookmarkFragmentTest {
 
     @Test
     public void loadBookmarks() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.rv_bookmark)).check(new RecyclerViewItemCountAssertion(5));
     }
 }

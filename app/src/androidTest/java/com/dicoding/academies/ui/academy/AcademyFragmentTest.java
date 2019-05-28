@@ -31,6 +31,11 @@ public class AcademyFragmentTest {
 
     @Test
     public void loadCourses() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.rv_academy)).check(new RecyclerViewItemCountAssertion(5));
     }
 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer;
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.CourseWithModule;
-import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.vo.Resource;
 
@@ -15,8 +14,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

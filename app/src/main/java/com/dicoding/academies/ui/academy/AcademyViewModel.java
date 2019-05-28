@@ -16,13 +16,12 @@ public class AcademyViewModel extends ViewModel {
     private AcademyRepository academyRepository;
 
     private MutableLiveData<String> mLogin = new MutableLiveData<>();
+    LiveData<Resource<List<CourseEntity>>> courses = Transformations.switchMap(mLogin,
+            data -> academyRepository.getAllCourses());
 
     public AcademyViewModel(AcademyRepository mAcademyRepository) {
         this.academyRepository = mAcademyRepository;
     }
-
-    LiveData<Resource<List<CourseEntity>>> courses = Transformations.switchMap(mLogin,
-            data -> academyRepository.getAllCourses());
 
     void setUsername(String username) {
         mLogin.setValue(username);

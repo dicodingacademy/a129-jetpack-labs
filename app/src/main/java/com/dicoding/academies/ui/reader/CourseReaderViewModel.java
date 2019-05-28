@@ -17,21 +17,19 @@ public class CourseReaderViewModel extends ViewModel {
     private MutableLiveData<String> courseId = new MutableLiveData<>();
     private MutableLiveData<String> moduleId = new MutableLiveData<>();
     private AcademyRepository academyRepository;
+    public LiveData<Resource<List<ModuleEntity>>> modules = Transformations.switchMap(courseId,
+            mCourseId -> academyRepository.getAllModulesByCourse(mCourseId));
+    public LiveData<Resource<ModuleEntity>> selectedModule = Transformations.switchMap(moduleId,
+            selectedPosition -> academyRepository.getContent(selectedPosition)
+    );
 
     public CourseReaderViewModel(AcademyRepository mAcademyRepository) {
         this.academyRepository = mAcademyRepository;
     }
 
-    public LiveData<Resource<List<ModuleEntity>>> modules = Transformations.switchMap(courseId,
-            mCourseId -> academyRepository.getAllModulesByCourse(mCourseId));
-
     public void setCourseId(String courseId) {
         this.courseId.setValue(courseId);
     }
-
-    public LiveData<Resource<ModuleEntity>> selectedModule = Transformations.switchMap(moduleId,
-            selectedPosition -> academyRepository.getContent(selectedPosition)
-    );
 
     public void setSelectedModule(String moduleId) {
         this.moduleId.setValue(moduleId);

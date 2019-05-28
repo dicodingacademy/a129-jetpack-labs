@@ -11,13 +11,12 @@ import java.util.List;
 
 public class LocalRepository {
 
+    private static LocalRepository INSTANCE;
     private final AcademyDao mAcademyDao;
 
     private LocalRepository(AcademyDao mAcademyDao) {
         this.mAcademyDao = mAcademyDao;
     }
-
-    private static LocalRepository INSTANCE;
 
     public static LocalRepository getInstance(AcademyDao academyDao) {
         if (INSTANCE == null) {
@@ -55,12 +54,12 @@ public class LocalRepository {
         mAcademyDao.updateCourse(course);
     }
 
-    public LiveData<ModuleEntity> getModuleWithContent(String moduleId){
+    public LiveData<ModuleEntity> getModuleWithContent(String moduleId) {
         return mAcademyDao.getModuleById(moduleId);
     }
 
-    public void updateContent(String content,String moduleId){
-        mAcademyDao.updateModuleByContent(content,moduleId);
+    public void updateContent(String content, String moduleId) {
+        mAcademyDao.updateModuleByContent(content, moduleId);
     }
 
     public void setReadModule(final ModuleEntity module) {

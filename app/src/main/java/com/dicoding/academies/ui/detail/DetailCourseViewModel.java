@@ -15,21 +15,20 @@ public class DetailCourseViewModel extends ViewModel {
     private AcademyRepository academyRepository;
 
     private MutableLiveData<String> courseId = new MutableLiveData<>();
+    public LiveData<Resource<CourseWithModule>> courseModule = Transformations.switchMap(courseId,
+            mCourseId -> academyRepository.getCourseWithModules(mCourseId));
 
     public DetailCourseViewModel(AcademyRepository mAcademyRepository) {
         this.academyRepository = mAcademyRepository;
     }
 
-    public LiveData<Resource<CourseWithModule>> courseModule = Transformations.switchMap(courseId,
-            mCourseId -> academyRepository.getCourseWithModules(mCourseId));
-
-    public void setCourseId(String courseId) {
-        this.courseId.setValue(courseId);
-    }
-
     public String getCourseId() {
         if (courseId.getValue() == null) return null;
         return courseId.getValue();
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId.setValue(courseId);
     }
 
     void setBookmark() {

@@ -49,6 +49,13 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
         return new ModuleListFragment();
     }
 
+    @NonNull
+    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +92,6 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
                             Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
                             break;
                     }
-
                 }
             });
         }
@@ -111,13 +117,5 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
         recyclerView.setAdapter(adapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-    }
-
-    @NonNull
-    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 }

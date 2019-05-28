@@ -35,14 +35,21 @@ public class ModuleContentFragment extends Fragment {
     private Button btnNext;
     private Button btnPrev;
 
-    public static ModuleContentFragment newInstance() {
-        return new ModuleContentFragment();
-    }
-
     public ModuleContentFragment() {
         // Required empty public constructor
     }
 
+    public static ModuleContentFragment newInstance() {
+        return new ModuleContentFragment();
+    }
+
+    @NonNull
+    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+
+        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -116,13 +123,5 @@ public class ModuleContentFragment extends Fragment {
                 btnNext.setEnabled(true);
             }
         }
-    }
-
-    @NonNull
-    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 }

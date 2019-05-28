@@ -1,7 +1,6 @@
 package com.dicoding.academies.ui.academy;
 
 import androidx.test.espresso.IdlingRegistry;
-import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;

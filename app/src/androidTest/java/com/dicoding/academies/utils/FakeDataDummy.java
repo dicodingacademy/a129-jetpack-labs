@@ -89,7 +89,7 @@ public class FakeDataDummy {
         return modules;
     }
 
-    public static CourseEntity getCourse(String courseId){
+    public static CourseEntity getCourse(String courseId) {
         for (int i = 0; i < generateDummyCourses().size(); i++) {
             CourseEntity entity = generateDummyCourses().get(i);
             if (entity.getCourseId().equals(courseId)) {

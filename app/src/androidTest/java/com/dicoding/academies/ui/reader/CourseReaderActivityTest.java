@@ -22,7 +22,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.*;
 
 public class CourseReaderActivityTest {
     private CourseEntity dummyCourse = FakeDataDummy.generateDummyCourses().get(0);

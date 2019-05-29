@@ -64,7 +64,6 @@ dependencies {
     // Dependencies for Android unit tests
     androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
-    androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
 
     // Android Testing Support Library's runner and rules
     androidTestImplementation "androidx.test.ext:junit:$androidXTestVersion"

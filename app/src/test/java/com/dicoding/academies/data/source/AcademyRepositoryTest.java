@@ -1,7 +1,10 @@
 package com.dicoding.academies.data.source;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
@@ -20,12 +23,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -34,9 +37,9 @@ public class AcademyRepositoryTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private LocalRepository local = Mockito.mock(LocalRepository.class);
-    private RemoteRepository remote = Mockito.mock(RemoteRepository.class);
-    private InstantAppExecutors instantAppExecutors = Mockito.mock(InstantAppExecutors.class);
+    private LocalRepository local = mock(LocalRepository.class);
+    private RemoteRepository remote = mock(RemoteRepository.class);
+    private InstantAppExecutors instantAppExecutors = mock(InstantAppExecutors.class);
     private FakeAcademyRepository academyRepository = new FakeAcademyRepository(local, remote, instantAppExecutors);
 
     private ArrayList<CourseResponse> courseResponses = FakeDataDummy.generateRemoteDummyCourses();
@@ -83,15 +86,14 @@ public class AcademyRepositoryTest {
 
     @Test
     public void getBookmarkedCourses() {
-        MutableLiveData<List<CourseEntity>> dummyCourses = new MutableLiveData<>();
-        dummyCourses.setValue(FakeDataDummy.generateDummyCourses());
 
-        when(local.getBookmarkedCourses()).thenReturn(dummyCourses);
+        DataSource.Factory<Integer, CourseEntity> dataSourceFactory = mock(DataSource.Factory.class);
 
-        Resource<List<CourseEntity>> result = LiveDataTestUtil.getValue(academyRepository.getBookmarkedCourses());
+        when(local.getBookmarkedCoursesPaged()).thenReturn(dataSourceFactory);
 
-        verify(local).getBookmarkedCourses();
-        assertNotNull(result);
+        academyRepository.getBookmarkedCoursesPaged();
+
+        verify(local).getBookmarkedCoursesPaged();
     }
 
     @Test

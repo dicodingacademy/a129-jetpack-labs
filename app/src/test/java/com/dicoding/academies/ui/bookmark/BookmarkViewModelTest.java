@@ -3,6 +3,7 @@ package com.dicoding.academies.ui.bookmark;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
@@ -40,15 +41,18 @@ public class BookmarkViewModelTest {
 
     @Test
     public void getBookmark() {
-        MutableLiveData<Resource<List<CourseEntity>>> courses = new MutableLiveData<>();
-        courses.setValue(Resource.success(FakeDataDummy.generateDummyCourses()));
 
-        when(academyRepository.getBookmarkedCourses()).thenReturn(courses);
+        MutableLiveData<Resource<PagedList<CourseEntity>>> dummyCourse = new MutableLiveData<>();
+        PagedList<CourseEntity> pagedList = mock(PagedList.class);
+        dummyCourse.setValue(Resource.success(pagedList));
 
-        Observer<Resource<List<CourseEntity>>> observer = mock(Observer.class);
+        when(academyRepository.getBookmarkedCoursesPaged()).thenReturn(dummyCourse);
 
-        viewModel.getBookmarks().observeForever(observer);
+        Observer<Resource<PagedList<CourseEntity>>> observer = mock(Observer.class);
 
-        verify(academyRepository).getBookmarkedCourses();
+        viewModel.getBookmarksPaged().observeForever(observer);
+
+        verify(academyRepository).getBookmarkedCoursesPaged();
+
     }
 }

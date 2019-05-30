@@ -114,31 +114,6 @@ public class AcademyRepository implements AcademyDataSource {
         }.asLiveData();
     }
 
-//    @Override
-//    public LiveData<Resource<List<CourseEntity>>> getBookmarkedCourses() {
-//        return new NetworkBoundResource<List<CourseEntity>, List<CourseResponse>>(appExecutors) {
-//            @Override
-//            protected LiveData<List<CourseEntity>> loadFromDB() {
-//                return localRepository.getBookmarkedCoursesPaged();
-//            }
-//
-//            @Override
-//            protected Boolean shouldFetch(List<CourseEntity> data) {
-//                return false;
-//            }
-//
-//            @Override
-//            protected LiveData<ApiResponse<List<CourseResponse>>> createCall() {
-//                return null;
-//            }
-//
-//            @Override
-//            protected void saveCallResult(List<CourseResponse> data) {
-//
-//            }
-//        }.asLiveData();
-//    }
-
     @Override
     public LiveData<Resource<PagedList<CourseEntity>>> getBookmarkedCoursesPaged() {
         return new NetworkBoundResource<PagedList<CourseEntity>, List<CourseResponse>>(appExecutors) {
@@ -163,6 +138,7 @@ public class AcademyRepository implements AcademyDataSource {
             }
         }.asLiveData();
     }
+
 
     @Override
     public LiveData<Resource<List<ModuleEntity>>> getAllModulesByCourse(String courseId) {

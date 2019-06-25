@@ -20,29 +20,19 @@ import com.dicoding.academies.vo.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AcademyRepository implements AcademyDataSource {
+import javax.inject.Inject;
 
-    private volatile static AcademyRepository INSTANCE = null;
+public class AcademyRepository implements AcademyDataSource {
 
     private final LocalRepository localRepository;
     private final RemoteRepository remoteRepository;
     private final AppExecutors appExecutors;
 
-    private AcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository, AppExecutors appExecutors) {
+    @Inject
+    public AcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository, AppExecutors appExecutors) {
         this.localRepository = localRepository;
         this.remoteRepository = remoteRepository;
         this.appExecutors = appExecutors;
-    }
-
-    public static AcademyRepository getInstance(LocalRepository localRepository, RemoteRepository remoteData, AppExecutors appExecutors) {
-        if (INSTANCE == null) {
-            synchronized (AcademyRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new AcademyRepository(localRepository, remoteData, appExecutors);
-                }
-            }
-        }
-        return INSTANCE;
     }
 
     @Override

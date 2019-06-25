@@ -10,6 +10,8 @@ import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.CourseWithModule;
 import com.dicoding.academies.vo.Resource;
 
+import javax.inject.Inject;
+
 public class DetailCourseViewModel extends ViewModel {
     private CourseEntity mCourse;
     private AcademyRepository academyRepository;
@@ -18,6 +20,7 @@ public class DetailCourseViewModel extends ViewModel {
     public LiveData<Resource<CourseWithModule>> courseModule = Transformations.switchMap(courseId,
             mCourseId -> academyRepository.getCourseWithModules(mCourseId));
 
+    @Inject
     public DetailCourseViewModel(AcademyRepository mAcademyRepository) {
         this.academyRepository = mAcademyRepository;
     }

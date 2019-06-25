@@ -12,26 +12,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
-import com.dicoding.academies.viewmodel.ViewModelFactory;
+import com.dicoding.academies.di.Injectable;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AcademyFragment extends Fragment {
+public class AcademyFragment extends Fragment implements Injectable {
     private RecyclerView rvCourse;
     private ProgressBar progressBar;
     private AcademyAdapter academyAdapter;
     private AcademyViewModel viewModel;
-    private List<CourseEntity> courses;
+
+    @Inject
+    ViewModelProvider.Factory factory;
 
     public AcademyFragment() {
         // Required empty public constructor
@@ -43,9 +48,8 @@ public class AcademyFragment extends Fragment {
     }
 
     @NonNull
-    private static AcademyViewModel obtainViewModel(FragmentActivity activity) {
+    private AcademyViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(AcademyViewModel.class);
     }
 

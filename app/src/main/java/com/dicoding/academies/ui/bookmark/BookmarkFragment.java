@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,16 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.di.Injectable;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookmarkFragment extends Fragment implements BookmarkFragmentCallback {
+public class BookmarkFragment extends Fragment implements BookmarkFragmentCallback, Injectable {
     private BookmarkPagedAdapter adapter;
     private RecyclerView rvBookmark;
     private ProgressBar progressBar;
@@ -71,6 +75,9 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         }
     });
 
+    @Inject
+    ViewModelProvider.Factory factory;
+
     public BookmarkFragment() {
         // Required empty public constructor
     }
@@ -80,9 +87,8 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     }
 
     @NonNull
-    private static BookmarkViewModel obtainViewModel(FragmentActivity activity) {
+    private BookmarkViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(BookmarkViewModel.class);
     }
 

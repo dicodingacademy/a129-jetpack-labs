@@ -14,19 +14,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.ContentEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.di.Injectable;
+import com.dicoding.academies.ui.academy.AcademyViewModel;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
+
+import javax.inject.Inject;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ModuleContentFragment extends Fragment {
+public class ModuleContentFragment extends Fragment implements Injectable {
     public static final String TAG = ModuleContentFragment.class.getSimpleName();
 
     private WebView webView;
@@ -34,6 +39,9 @@ public class ModuleContentFragment extends Fragment {
     private CourseReaderViewModel viewModel;
     private Button btnNext;
     private Button btnPrev;
+
+    @Inject
+    ViewModelProvider.Factory factory;
 
     public ModuleContentFragment() {
         // Required empty public constructor
@@ -44,10 +52,8 @@ public class ModuleContentFragment extends Fragment {
     }
 
     @NonNull
-    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
+    private CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
         return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 

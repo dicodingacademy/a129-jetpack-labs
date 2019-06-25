@@ -12,18 +12,10 @@ import java.util.List;
 
 public class LocalRepository {
 
-    private static LocalRepository INSTANCE;
     private final AcademyDao mAcademyDao;
 
-    private LocalRepository(AcademyDao mAcademyDao) {
+    public LocalRepository(AcademyDao mAcademyDao) {
         this.mAcademyDao = mAcademyDao;
-    }
-
-    public static LocalRepository getInstance(AcademyDao academyDao) {
-        if (INSTANCE == null) {
-            INSTANCE = new LocalRepository(academyDao);
-        }
-        return INSTANCE;
     }
 
     public LiveData<List<CourseEntity>> getAllCourses() {

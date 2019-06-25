@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,8 @@ import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 
 /**
@@ -41,6 +44,9 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     private ProgressBar progressBar;
     private CourseReaderViewModel viewModel;
 
+    @Inject
+    ViewModelProvider.Factory factory;
+
     public ModuleListFragment() {
         // Required empty public constructor
     }
@@ -50,10 +56,8 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     }
 
     @NonNull
-    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
+    private CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
         return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 

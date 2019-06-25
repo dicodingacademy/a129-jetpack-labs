@@ -19,13 +19,13 @@ public class RemoteRepository {
     private final long SERVICE_LATENCY_IN_MILLIS = 2000;
     private JsonHelper jsonHelper;
 
-    private RemoteRepository(JsonHelper jsonHelper) {
+    public RemoteRepository(JsonHelper jsonHelper) {
         this.jsonHelper = jsonHelper;
     }
 
-    public static RemoteRepository getInstance(JsonHelper helper) {
+    public static RemoteRepository getInstance(JsonHelper jsonHelper) {
         if (INSTANCE == null) {
-            INSTANCE = new RemoteRepository(helper);
+            INSTANCE = new RemoteRepository(jsonHelper);
         }
         return INSTANCE;
     }

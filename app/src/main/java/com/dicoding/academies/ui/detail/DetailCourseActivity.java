@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +32,13 @@ import com.dicoding.academies.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
-public class DetailCourseActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class DetailCourseActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     public static final String EXTRA_COURSE = "extra_course";
     private Button btnStart;
@@ -45,10 +53,15 @@ public class DetailCourseActivity extends AppCompatActivity {
     private List<ModuleEntity> modules;
     private Menu menu;
 
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
+    @Inject
+    ViewModelProvider.Factory factory;
+
     @NonNull
-    private static DetailCourseViewModel obtainViewModel(AppCompatActivity activity) {
+    private DetailCourseViewModel obtainViewModel(AppCompatActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
         return ViewModelProviders.of(activity, factory).get(DetailCourseViewModel.class);
     }
@@ -178,6 +191,11 @@ public class DetailCourseActivity extends AppCompatActivity {
             v.getContext().startActivity(intent);
         });
 
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 }
 

@@ -11,6 +11,8 @@ import com.dicoding.academies.vo.Resource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 public class AcademyViewModel extends ViewModel {
     private AcademyRepository academyRepository;
@@ -19,6 +21,7 @@ public class AcademyViewModel extends ViewModel {
     LiveData<Resource<List<CourseEntity>>> courses = Transformations.switchMap(mLogin,
             data -> academyRepository.getAllCourses());
 
+    @Inject
     public AcademyViewModel(AcademyRepository mAcademyRepository) {
         this.academyRepository = mAcademyRepository;
     }

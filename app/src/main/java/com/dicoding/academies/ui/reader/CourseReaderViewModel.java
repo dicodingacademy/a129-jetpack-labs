@@ -11,6 +11,8 @@ import com.dicoding.academies.vo.Resource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 public class CourseReaderViewModel extends ViewModel {
 
@@ -23,6 +25,7 @@ public class CourseReaderViewModel extends ViewModel {
             selectedPosition -> academyRepository.getContent(selectedPosition)
     );
 
+    @Inject
     public CourseReaderViewModel(AcademyRepository mAcademyRepository) {
         this.academyRepository = mAcademyRepository;
     }

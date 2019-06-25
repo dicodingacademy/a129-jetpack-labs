@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.dicoding.academies.R;
@@ -20,10 +21,23 @@ import com.dicoding.academies.vo.Resource;
 
 import java.util.List;
 
-public class CourseReaderActivity extends AppCompatActivity implements CourseReaderCallback {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class CourseReaderActivity extends AppCompatActivity implements CourseReaderCallback, HasSupportFragmentInjector {
 
     public static final String EXTRA_COURSE_ID = "extra_course_id";
     private CourseReaderViewModel viewModel;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
+    @Inject
+    ViewModelProvider.Factory factory;
+
     private final Observer<Resource<List<ModuleEntity>>> initObserver = modules -> {
         if (modules != null) {
 
@@ -63,10 +77,8 @@ public class CourseReaderActivity extends AppCompatActivity implements CourseRea
     private boolean isLarge = false;
 
     @NonNull
-    private static CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
+    private CourseReaderViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
         return ViewModelProviders.of(activity, factory).get(CourseReaderViewModel.class);
     }
 
@@ -156,5 +168,10 @@ public class CourseReaderActivity extends AppCompatActivity implements CourseRea
         }
 
         return lastReadModule;
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 }

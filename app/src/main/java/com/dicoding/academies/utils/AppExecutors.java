@@ -9,6 +9,8 @@ import androidx.annotation.VisibleForTesting;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
 public class AppExecutors {
 
     private static final int THREAD_COUNT = 3;
@@ -26,6 +28,7 @@ public class AppExecutors {
         this.mainThread = mainThread;
     }
 
+    @Inject
     public AppExecutors() {
         this(new DiskIOThreadExecutor(), Executors.newFixedThreadPool(THREAD_COUNT),
                 new MainThreadExecutor());

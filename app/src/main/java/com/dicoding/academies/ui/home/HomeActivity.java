@@ -11,11 +11,20 @@ import com.dicoding.academies.ui.academy.AcademyFragment;
 import com.dicoding.academies.ui.bookmark.BookmarkFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     private final String SELECTED_MENU = "selected_menu";
     private BottomNavigationView navView;
 
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
         Fragment fragment = null;
@@ -40,6 +49,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        AndroidInjection.inject(this);
+
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -56,5 +68,9 @@ public class HomeActivity extends AppCompatActivity {
         outState.putInt(SELECTED_MENU, navView.getSelectedItemId());
     }
 
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
+    }
 }
 

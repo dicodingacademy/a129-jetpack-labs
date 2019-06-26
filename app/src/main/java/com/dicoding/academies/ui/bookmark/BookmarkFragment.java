@@ -66,12 +66,16 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
+            progressBar.setVisibility(View.VISIBLE);
             viewModel = obtainViewModel(getActivity());
 
-            courses = viewModel.getBookmarks();
-
             adapter = new BookmarkAdapter(getActivity(), this);
-            adapter.setListCourses(courses);
+
+            viewModel.getBookmarks().observe(this, courses -> {
+                progressBar.setVisibility(View.GONE);
+                adapter.setListCourses(courses);
+                adapter.notifyDataSetChanged();
+            });
 
             rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
             rvBookmark.setHasFixedSize(true);

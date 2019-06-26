@@ -1,7 +1,9 @@
 package com.dicoding.academies.ui.detail;
 
+import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.utils.FakeDataDummy;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,20 +13,21 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class DetailCourseViewModelTest {
     private DetailCourseViewModel viewModel;
-    private CourseEntity dummyCourse;
+    private AcademyRepository academyRepository = mock(AcademyRepository.class);
+    private CourseEntity dummyCourse = FakeDataDummy.generateDummyCourses().get(0);
+    private String courseId = dummyCourse.getCourseId();
+
 
     @Before
     public void setUp() {
-        viewModel = new DetailCourseViewModel();
-        dummyCourse = new CourseEntity("a14",
-                "Menjadi Android Developer Expert",
-                "Dicoding sebagai satu-satunya Google Authorized Training Partner di Indonesia telah melalui proses penyusunan kurikulum secara komprehensif. Semua modul telah diverifikasi langsung oleh Google untuk memastikan bahwa materi yang diajarkan relevan dan sesuai dengan kebutuhan industri digital saat ini. Peserta akan belajar membangun aplikasi Android dengan materi Testing, Debugging, Application, Application UX, Fundamental Application Components, Persistent Data Storage, dan Enhanced System Integration.",
-                "100 Hari",
-                false,
-                "https://www.dicoding.com/images/small/academy/menjadi_android_developer_expert_logo_070119140352.jpg");
+        viewModel = new DetailCourseViewModel(academyRepository);
+        viewModel.setCourseId(courseId);
     }
 
     @After
@@ -33,20 +36,20 @@ public class DetailCourseViewModelTest {
 
     @Test
     public void getCourse() {
-        viewModel.setCourseId(dummyCourse.getCourseId());
+        when(academyRepository.getCourseWithModules(courseId)).thenReturn(dummyCourse);
         CourseEntity courseEntity = viewModel.getCourse();
+        verify(academyRepository).getCourseWithModules(courseId);
         assertNotNull(courseEntity);
-        assertEquals(dummyCourse.getCourseId(), courseEntity.getCourseId());
-        assertEquals(dummyCourse.getDeadline(), courseEntity.getDeadline());
-        assertEquals(dummyCourse.getDescription(), courseEntity.getDescription());
-        assertEquals(dummyCourse.getImagePath(), courseEntity.getImagePath());
-        assertEquals(dummyCourse.getTitle(), courseEntity.getTitle());
+        String courseId =courseEntity.getCourseId();
+        assertNotNull(courseId);
+        assertEquals(dummyCourse.getCourseId(), courseId);
     }
 
     @Test
     public void getModules() {
-        viewModel.setCourseId(dummyCourse.getCourseId());
+        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(FakeDataDummy.generateDummyModules(courseId));
         List<ModuleEntity> moduleEntities = viewModel.getModules();
+        verify(academyRepository).getAllModulesByCourse(courseId);
         assertNotNull(moduleEntities);
         assertEquals(7, moduleEntities.size());
     }

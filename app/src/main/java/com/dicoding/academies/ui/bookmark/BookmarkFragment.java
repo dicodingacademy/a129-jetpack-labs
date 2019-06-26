@@ -11,14 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.source.local.entity.CourseEntity;
-import com.dicoding.academies.viewmodel.ViewModelFactory;
+import com.dicoding.academies.data.CourseEntity;
 
 import java.util.List;
 
@@ -41,12 +39,6 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         return new BookmarkFragment();
     }
 
-    @NonNull
-    private static BookmarkViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(BookmarkViewModel.class);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,8 +58,7 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            viewModel = obtainViewModel(getActivity());
-
+            viewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
             courses = viewModel.getBookmarks();
 
             adapter = new BookmarkAdapter(getActivity(), this);

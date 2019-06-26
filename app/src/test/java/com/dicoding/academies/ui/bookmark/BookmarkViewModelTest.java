@@ -1,10 +1,17 @@
+
 package com.dicoding.academies.ui.bookmark;
+
+
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 public class BookmarkViewModelTest {
@@ -21,6 +28,8 @@ public class BookmarkViewModelTest {
 
     @Test
     public void getBookmark() {
-        assertEquals(5, viewModel.getBookmarks().size());
+        List<CourseEntity> courseEntities = viewModel.getBookmarks();
+        assertNotNull(courseEntities);
+        assertEquals(5, courseEntities.size());
     }
 }

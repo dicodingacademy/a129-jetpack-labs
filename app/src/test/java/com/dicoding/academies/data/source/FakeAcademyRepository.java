@@ -20,14 +20,14 @@ public class FakeAcademyRepository implements AcademyDataSource {
     private final LocalRepository localRepository;
     private final RemoteRepository remoteRepository;
 
-    public FakeAcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository) {
+    FakeAcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository) {
         this.localRepository = localRepository;
         this.remoteRepository = remoteRepository;
     }
 
     public static FakeAcademyRepository getInstance(LocalRepository localRepository, RemoteRepository remoteData) {
         if (INSTANCE == null) {
-            synchronized (AcademyRepository.class) {
+            synchronized (FakeAcademyRepository.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new FakeAcademyRepository(localRepository, remoteData);
                 }
@@ -131,5 +131,4 @@ public class FakeAcademyRepository implements AcademyDataSource {
         return module;
     }
 }
-
 

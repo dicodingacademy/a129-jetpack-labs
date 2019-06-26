@@ -1,7 +1,7 @@
 package com.dicoding.academies.ui.detail;
 
-import com.dicoding.academies.data.source.local.entity.CourseEntity;
-import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.data.ModuleEntity;
 
 import org.junit.After;
 import org.junit.Before;

@@ -2,9 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
+    buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.dicoding.picodiploma.myviewmodel"
-        minSdkVersion 21
+        applicationId "com.dicoding.picodiploma.myunittest"
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -26,5 +27,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.27.0'
 }

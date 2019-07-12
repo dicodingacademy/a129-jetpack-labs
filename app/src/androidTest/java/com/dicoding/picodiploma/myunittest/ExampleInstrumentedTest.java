@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.myviewmodel;
+package com.dicoding.picodiploma.myunittest;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.dicoding.picodiploma.myviewmodel", appContext.getPackageName());
+        assertEquals("com.dicoding.picodiploma.myunittest", appContext.getPackageName());
     }
 }

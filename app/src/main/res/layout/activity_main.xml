@@ -48,17 +48,49 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:inputType="numberDecimal"
         android:lines="1" />
-
     <Button
-        android:id="@+id/btn_calculate"
+        android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/calculate" />
+        android:text="@string/save" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_calculate_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/calculate_volume" />
+
+        <Button
+            android:id="@+id/btn_calculate_circumference"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/calculate_circumference" />
+
+        <Button
+            android:id="@+id/btn_calculate_surface_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/calculate_surface_area" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:text="@string/result"
         android:textSize="24sp"

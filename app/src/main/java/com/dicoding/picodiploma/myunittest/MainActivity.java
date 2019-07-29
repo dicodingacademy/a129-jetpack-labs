@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mainViewModel = new MainViewModel(new CuboidModel());
 
-        edtWidth = findViewById(R.id.edt_width);
         edtHeight = findViewById(R.id.edt_height);
         edtLength = findViewById(R.id.edt_length);
         tvResult = findViewById(R.id.tv_result);

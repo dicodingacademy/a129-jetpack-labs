@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.myidleresource;
 
-import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.idling.CountingIdlingResource;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.idling.CountingIdlingResource;
 
 public class EspressoIdlingResource {
     private static final String RESOURCE = "GLOBAL";

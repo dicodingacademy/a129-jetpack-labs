@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.mynoteapps.ui.insert;
 
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 
 import com.dicoding.picodiploma.mynoteapps.database.Note;
 import com.dicoding.picodiploma.mynoteapps.repository.NoteRepository;

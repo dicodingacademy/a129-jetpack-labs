@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.mynoteapps.repository;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import com.dicoding.picodiploma.mynoteapps.database.Note;
 import com.dicoding.picodiploma.mynoteapps.database.NoteDao;

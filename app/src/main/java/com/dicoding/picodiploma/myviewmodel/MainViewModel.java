@@ -1,6 +1,6 @@
 package com.dicoding.picodiploma.myviewmodel;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 
 // Meng-extend kelas ViewModel ke MainViewModel
 public class MainViewModel extends ViewModel {

@@ -1,14 +1,13 @@
 package com.dicoding.picodiploma.mynoteapps.repository;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.paging.DataSource;
+
+import androidx.paging.DataSource;
 
 import com.dicoding.picodiploma.mynoteapps.database.Note;
 import com.dicoding.picodiploma.mynoteapps.database.NoteDao;
 import com.dicoding.picodiploma.mynoteapps.database.NoteRoomDatabase;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

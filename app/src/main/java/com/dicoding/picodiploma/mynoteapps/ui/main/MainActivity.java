@@ -1,23 +1,24 @@
 package com.dicoding.picodiploma.mynoteapps.ui.main;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.picodiploma.mynoteapps.R;
 import com.dicoding.picodiploma.mynoteapps.database.Note;
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory;
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import static com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity.REQUEST_UPDATE;
 

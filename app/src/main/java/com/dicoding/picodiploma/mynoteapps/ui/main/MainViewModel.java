@@ -1,10 +1,11 @@
 package com.dicoding.picodiploma.mynoteapps.ui.main;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
-import android.arch.paging.LivePagedListBuilder;
-import android.arch.paging.PagedList;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import com.dicoding.picodiploma.mynoteapps.database.Note;
 import com.dicoding.picodiploma.mynoteapps.repository.NoteRepository;

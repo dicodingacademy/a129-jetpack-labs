@@ -1,9 +1,10 @@
 package com.dicoding.picodiploma.mynoteapps.helper;
 
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateViewModel;
 import com.dicoding.picodiploma.mynoteapps.ui.main.MainViewModel;

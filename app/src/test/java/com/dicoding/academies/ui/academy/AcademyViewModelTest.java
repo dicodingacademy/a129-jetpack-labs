@@ -2,7 +2,6 @@ package com.dicoding.academies.ui.academy;
 
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,10 +18,6 @@ public class AcademyViewModelTest {
     @Before
     public void setUp() {
         viewModel = new AcademyViewModel();
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test

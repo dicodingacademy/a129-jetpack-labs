@@ -1,4 +1,4 @@
-package com.dicoding.academies.data.source.local.entity;
+package com.dicoding.academies.data;
 
 public class ModuleEntity {
     public ContentEntity contentEntity;

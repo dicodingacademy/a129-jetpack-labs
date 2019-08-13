@@ -1,7 +1,7 @@
 package com.dicoding.academies.ui.reader;
 
-import com.dicoding.academies.data.ContentEntity;
-import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.data.source.local.entity.ContentEntity;
+import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 
 public class CourseReaderViewModelTest {
 
@@ -48,5 +47,4 @@ public class CourseReaderViewModelTest {
         assertNotNull(content);
         assertEquals(content, dummyContentEntity.getContent());
     }
-
 }

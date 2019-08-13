@@ -8,7 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
-import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.utils.RecyclerViewItemCountAssertion;
 
@@ -39,13 +39,11 @@ public class CourseReaderActivityTest {
 
     @Test
     public void loadModules() {
-        onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_module)).check(new RecyclerViewItemCountAssertion(7));
     }
 
     @Test
     public void clickModule() {
-        onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_module)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.web_view)).check(matches(isDisplayed()));

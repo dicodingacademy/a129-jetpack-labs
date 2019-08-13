@@ -34,7 +34,7 @@ public class AcademyRepositoryTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private RemoteRepository remote = Mockito.mock(RemoteRepository.class);
-    private FakeAcademyRepository academyRepository = new FakeAcademyRepository(local, remote);
+    private FakeAcademyRepository academyRepository = new FakeAcademyRepository(remote);
 
     private ArrayList<CourseResponse> courseResponses = FakeDataDummy.generateRemoteDummyCourses();
     private String courseId = courseResponses.get(0).getId();

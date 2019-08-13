@@ -20,6 +20,10 @@ public class BookmarkViewModelTest {
         viewModel = new BookmarkViewModel();
     }
 
+    @After
+    public void tearDown() {
+    }
+
     @Test
     public void getBookmark() {
         List<CourseEntity> courseEntities = viewModel.getBookmarks();

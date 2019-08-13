@@ -1,7 +1,9 @@
 package com.dicoding.academies.ui.academy;
 
 import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.utils.DataDummy;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,6 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.verify;
 
 
 public class AcademyViewModelTest {
@@ -18,6 +21,10 @@ public class AcademyViewModelTest {
     @Before
     public void setUp() {
         viewModel = new AcademyViewModel();
+    }
+
+    @After
+    public void tearDown() {
     }
 
     @Test

@@ -27,6 +27,10 @@ public class AcademyFragmentTest {
         activityRule.getActivity().setFragment(academyFragment);
     }
 
+    @After
+    public void tearDown() {
+    }
+
     @Test
     public void loadCourses() {
         onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));

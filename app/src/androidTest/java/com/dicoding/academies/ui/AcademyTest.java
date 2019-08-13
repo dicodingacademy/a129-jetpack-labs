@@ -23,6 +23,15 @@ public class AcademyTest {
     @Rule
     public ActivityTestRule<HomeActivity> activityRule = new ActivityTestRule<>(HomeActivity.class);
 
+    @Before
+    public void setUp() {
+
+    }
+
+    @After
+    public void tearDown() {
+    }
+
     @Test
     public void toDetailActivityTest() {
         onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));

@@ -2,7 +2,6 @@ package com.dicoding.academies.data.source;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
-import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.data.source.remote.RemoteRepository;
@@ -15,11 +14,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,9 +28,8 @@ public class AcademyRepositoryTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private LocalRepository local = Mockito.mock(LocalRepository.class);
-    private RemoteRepository remote = Mockito.mock(RemoteRepository.class);
-    private FakeAcademyRepository academyRepository = new FakeAcademyRepository(local, remote);
+    private RemoteRepository remote = mock(RemoteRepository.class);
+    private FakeAcademyRepository academyRepository = new FakeAcademyRepository(remote);
 
     private ArrayList<CourseResponse> courseResponses = FakeDataDummy.generateRemoteDummyCourses();
     private String courseId = courseResponses.get(0).getId();

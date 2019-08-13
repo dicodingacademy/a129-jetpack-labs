@@ -39,10 +39,6 @@ public class CourseReaderViewModelTest {
         viewModel.setCourseId(courseId);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getModules() {
         MutableLiveData<List<ModuleEntity>> moduleEntities = new MutableLiveData<>();
@@ -53,7 +49,7 @@ public class CourseReaderViewModelTest {
         Observer<List<ModuleEntity>> observer = mock(Observer.class);
         viewModel.getModules().observeForever(observer);
 
-        verify(academyRepository).getAllModulesByCourse(courseId);
+        verify(observer).onChanged(dummyModules);
     }
 
     @Test
@@ -71,7 +67,9 @@ public class CourseReaderViewModelTest {
         viewModel.setSelectedModule(moduleId);
 
         Observer<ModuleEntity> observer = mock(Observer.class);
+
         viewModel.getSelectedModule().observeForever(observer);
-        verify(academyRepository).getContent(courseId, moduleId);
+
+        verify(observer).onChanged(dummyModule);
     }
 }

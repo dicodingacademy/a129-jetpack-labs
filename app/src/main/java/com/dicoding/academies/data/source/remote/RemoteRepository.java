@@ -5,7 +5,6 @@ import android.os.Handler;
 import com.dicoding.academies.data.source.remote.response.ContentResponse;
 import com.dicoding.academies.data.source.remote.response.CourseResponse;
 import com.dicoding.academies.data.source.remote.response.ModuleResponse;
-import com.dicoding.academies.utils.EspressoIdlingResource;
 import com.dicoding.academies.utils.JsonHelper;
 
 import java.util.List;
@@ -28,29 +27,23 @@ public class RemoteRepository {
     }
 
     public void getAllCourses(LoadCoursesCallback callback) {
-        EspressoIdlingResource.increment();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             callback.onAllCoursesReceived(jsonHelper.loadCourses());
-            EspressoIdlingResource.decrement();
         }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     public void getModules(String courseId, LoadModulesCallback callback) {
-        EspressoIdlingResource.increment();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             callback.onAllModulesReceived(jsonHelper.loadModule(courseId));
-            EspressoIdlingResource.decrement();
         }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     public void getContent(String moduleId, GetContentCallback callback) {
-        EspressoIdlingResource.increment();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             callback.onContentReceived(jsonHelper.loadContent(moduleId));
-            EspressoIdlingResource.decrement();
         }, SERVICE_LATENCY_IN_MILLIS);
     }
 

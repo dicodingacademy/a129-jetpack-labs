@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -33,14 +34,12 @@ public class BookmarkViewModelTest {
         viewModel = new BookmarkViewModel(academyRepository);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getBookmark() {
+        ArrayList<CourseEntity> dummyCourses = FakeDataDummy.generateDummyCourses();
+
         MutableLiveData<List<CourseEntity>> courses = new MutableLiveData<>();
-        courses.setValue(FakeDataDummy.generateDummyCourses());
+        courses.setValue(dummyCourses);
 
         when(academyRepository.getBookmarkedCourses()).thenReturn(courses);
 
@@ -48,7 +47,7 @@ public class BookmarkViewModelTest {
 
         viewModel.getBookmarks().observeForever(observer);
 
-        verify(academyRepository).getBookmarkedCourses();
+        verify(observer).onChanged(dummyCourses);
     }
 }
 

@@ -28,10 +28,6 @@ public class DetailCourseViewModelTest {
                 "https://www.dicoding.com/images/small/academy/menjadi_android_developer_expert_logo_070119140352.jpg");
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getCourse() {
         viewModel.setCourseId(dummyCourse.getCourseId());

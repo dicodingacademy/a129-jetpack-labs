@@ -37,15 +37,6 @@ public class DetailCourseActivityTest {
         }
     };
 
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void loadCourse() {
         onView(withId(R.id.text_title)).check(matches(isDisplayed()));

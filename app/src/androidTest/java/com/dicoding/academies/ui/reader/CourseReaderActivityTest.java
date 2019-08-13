@@ -37,15 +37,6 @@ public class CourseReaderActivityTest {
         }
     };
 
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void loadModules() {
         onView(withId(R.id.rv_module)).check(matches(isDisplayed()));

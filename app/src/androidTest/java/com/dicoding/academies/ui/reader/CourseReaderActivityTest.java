@@ -51,11 +51,13 @@ public class CourseReaderActivityTest {
 
     @Test
     public void loadModules() {
+        onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_module)).check(new RecyclerViewItemCountAssertion(7));
     }
 
     @Test
     public void clickModule() {
+        onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_module)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.web_view)).check(matches(isDisplayed()));

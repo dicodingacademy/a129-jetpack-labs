@@ -2,7 +2,6 @@ package com.dicoding.academies.data.source;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
-import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.data.source.remote.RemoteRepository;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -33,7 +33,6 @@ public class AcademyRepositoryTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private LocalRepository local = Mockito.mock(LocalRepository.class);
     private RemoteRepository remote = Mockito.mock(RemoteRepository.class);
     private FakeAcademyRepository academyRepository = new FakeAcademyRepository(local, remote);
 
@@ -66,6 +65,7 @@ public class AcademyRepositoryTest {
 
         verify(remote, times(1)).getAllCourses(any(RemoteRepository.LoadCoursesCallback.class));
 
+        assertNotNull(result);
         assertEquals(courseResponses.size(), result.size());
     }
 
@@ -81,6 +81,7 @@ public class AcademyRepositoryTest {
 
         verify(remote, times(1)).getModules(eq(courseId), any(RemoteRepository.LoadModulesCallback.class));
 
+        assertNotNull(result);
         assertEquals(moduleResponses.size(), result.size());
     }
 
@@ -96,6 +97,7 @@ public class AcademyRepositoryTest {
 
         verify(remote, times(1)).getAllCourses(any(RemoteRepository.LoadCoursesCallback.class));
 
+        assertNotNull(result);
         assertEquals(courseResponses.size(), result.size());
     }
 
@@ -121,6 +123,9 @@ public class AcademyRepositoryTest {
         verify(remote, times(1))
                 .getContent(eq(moduleId), any(RemoteRepository.GetContentCallback.class));
 
+        assertNotNull(resultContent);
+        assertNotNull(resultContent.contentEntity);
+        assertNotNull(resultContent.contentEntity.getContent());
         assertEquals(content.getContent(), resultContent.contentEntity.getContent());
     }
 
@@ -137,6 +142,8 @@ public class AcademyRepositoryTest {
 
         verify(remote, times(1)).getAllCourses(any(RemoteRepository.LoadCoursesCallback.class));
 
+        assertNotNull(result);
+        assertNotNull(result.getTitle());
         assertEquals(courseResponses.get(0).getTitle(), result.getTitle());
     }
 }

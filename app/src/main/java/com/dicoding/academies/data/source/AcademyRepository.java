@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.ContentEntity;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
@@ -20,19 +19,17 @@ public class AcademyRepository implements AcademyDataSource {
 
     private volatile static AcademyRepository INSTANCE = null;
 
-    private final LocalRepository localRepository;
     private final RemoteRepository remoteRepository;
 
-    private AcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository) {
-        this.localRepository = localRepository;
+    private AcademyRepository(@NonNull RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
     }
 
-    public static AcademyRepository getInstance(LocalRepository localRepository, RemoteRepository remoteData) {
+    public static AcademyRepository getInstance(RemoteRepository remoteData) {
         if (INSTANCE == null) {
             synchronized (AcademyRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new AcademyRepository(localRepository, remoteData);
+                    INSTANCE = new AcademyRepository(remoteData);
                 }
             }
         }

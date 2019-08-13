@@ -4,7 +4,6 @@ import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,10 +24,6 @@ public class AcademyViewModelTest {
     @Before
     public void setUp() {
         viewModel = new AcademyViewModel(academyRepository);
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test

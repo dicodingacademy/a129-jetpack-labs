@@ -30,10 +30,6 @@ public class DetailCourseViewModelTest {
         viewModel.setCourseId(courseId);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getCourse() {
         when(academyRepository.getCourseWithModules(courseId)).thenReturn(dummyCourse);

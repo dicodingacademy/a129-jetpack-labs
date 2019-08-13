@@ -34,10 +34,6 @@ public class CourseReaderViewModelTest {
         viewModel.setCourseId(courseId);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getModules() {
         when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(dummyModules);

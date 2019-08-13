@@ -28,10 +28,6 @@ public class BookmarkViewModelTest {
         viewModel = new BookmarkViewModel(academyRepository);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getBookmark() {
         when(academyRepository.getBookmarkedCourses()).thenReturn(FakeDataDummy.generateDummyCourses());

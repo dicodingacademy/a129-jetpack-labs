@@ -9,7 +9,6 @@ import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.vo.Resource;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,21 +33,18 @@ public class BookmarkViewModelTest {
         viewModel = new BookmarkViewModel(academyRepository);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getBookmark() {
-        MutableLiveData<Resource<List<CourseEntity>>> courses = new MutableLiveData<>();
-        courses.setValue(Resource.success(FakeDataDummy.generateDummyCourses()));
+        Resource<List<CourseEntity>> resource = Resource.success(FakeDataDummy.generateDummyCourses());
+        MutableLiveData<Resource<List<CourseEntity>>> dummyCourses = new MutableLiveData<>();
+        dummyCourses.setValue(resource);
 
-        when(academyRepository.getBookmarkedCourses()).thenReturn(courses);
+        when(academyRepository.getBookmarkedCourses()).thenReturn(dummyCourses);
 
         Observer<Resource<List<CourseEntity>>> observer = mock(Observer.class);
 
         viewModel.getBookmarks().observeForever(observer);
 
-        verify(academyRepository).getBookmarkedCourses();
+        verify(observer).onChanged(resource);
     }
 }

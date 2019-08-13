@@ -16,8 +16,6 @@ import com.dicoding.academies.utils.InstantAppExecutors;
 import com.dicoding.academies.utils.LiveDataTestUtil;
 import com.dicoding.academies.vo.Resource;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -25,6 +23,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,16 +44,6 @@ public class AcademyRepositoryTest {
     private String moduleId = moduleResponses.get(0).getModuleId();
     private ContentResponse content = FakeDataDummy.generateRemoteDummyContent(moduleId);
 
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-
-    }
-
     @Test
     public void getAllCourses() {
         MutableLiveData<List<CourseEntity>> dummyCourses = new MutableLiveData<>();
@@ -66,6 +55,7 @@ public class AcademyRepositoryTest {
 
         verify(local).getAllCourses();
         assertNotNull(result.data);
+        assertEquals(courseResponses.size(), result.data.size());
     }
 
     @Test
@@ -78,7 +68,8 @@ public class AcademyRepositoryTest {
         Resource<List<ModuleEntity>> result = LiveDataTestUtil.getValue(academyRepository.getAllModulesByCourse(courseId));
 
         verify(local).getAllModulesByCourse(courseId);
-        assertNotNull(result);
+        assertNotNull(result.data);
+        assertEquals(moduleResponses.size(), result.data.size());
     }
 
     @Test
@@ -91,7 +82,8 @@ public class AcademyRepositoryTest {
         Resource<List<CourseEntity>> result = LiveDataTestUtil.getValue(academyRepository.getBookmarkedCourses());
 
         verify(local).getBookmarkedCourses();
-        assertNotNull(result);
+        assertNotNull(result.data);
+        assertEquals(courseResponses.size(), result.data.size());
     }
 
     @Test
@@ -105,6 +97,11 @@ public class AcademyRepositoryTest {
 
         verify(local).getModuleWithContent(courseId);
         assertNotNull(result);
+
+        assertNotNull(result.data);
+        assertNotNull(result.data.contentEntity);
+        assertNotNull(result.data.contentEntity.getContent());
+        assertEquals(content.getContent(), result.data.contentEntity.getContent());
     }
 
     @Test
@@ -117,6 +114,8 @@ public class AcademyRepositoryTest {
         Resource<CourseWithModule> result = LiveDataTestUtil.getValue(academyRepository.getCourseWithModules(courseId));
 
         verify(local).getCourseWithModules(courseId);
-        assertNotNull(result);
+        assertNotNull(result.data);
+        assertNotNull(result.data.mCourse.getTitle());
+        assertEquals(courseResponses.get(0).getTitle(), result.data.mCourse.getTitle());
     }
 }

@@ -102,6 +102,7 @@ public class FakeDataDummy {
         return null;
     }
 
+
     public static ArrayList<CourseResponse> generateRemoteDummyCourses() {
 
         ArrayList<CourseResponse> courses = new ArrayList<>();

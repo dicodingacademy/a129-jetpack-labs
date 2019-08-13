@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.dicoding.academies.data.source.local.LocalRepository;
 import com.dicoding.academies.data.source.local.entity.ContentEntity;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
@@ -20,19 +19,17 @@ public class FakeAcademyRepository implements AcademyDataSource {
 
     private volatile static FakeAcademyRepository INSTANCE = null;
 
-    private final LocalRepository localRepository;
     private final RemoteRepository remoteRepository;
 
-    FakeAcademyRepository(@NonNull LocalRepository localRepository, @NonNull RemoteRepository remoteRepository) {
-        this.localRepository = localRepository;
+    FakeAcademyRepository(@NonNull RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
     }
 
-    public static FakeAcademyRepository getInstance(LocalRepository localRepository, RemoteRepository remoteData) {
+    public static FakeAcademyRepository getInstance(RemoteRepository remoteData) {
         if (INSTANCE == null) {
             synchronized (FakeAcademyRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new FakeAcademyRepository(localRepository, remoteData);
+                    INSTANCE = new FakeAcademyRepository(remoteData);
                 }
             }
         }
@@ -40,168 +37,97 @@ public class FakeAcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public LiveData<List<CourseEntity>> getAllCourses() {
-        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
+    public ArrayList<CourseEntity> getAllCourses() {
+        List<CourseResponse> courseResponses = remoteRepository.getAllCourses();
+        ArrayList<CourseEntity> courseList = new ArrayList<>();
+        for (int i = 0; i < courseResponses.size(); i++) {
+            CourseResponse response = courseResponses.get(i);
+            CourseEntity course = new CourseEntity(response.getId(),
+                    response.getTitle(),
+                    response.getDescription(),
+                    response.getDate(),
+                    false,
+                    response.getImagePath());
 
-        remoteRepository.getAllCourses(new RemoteRepository.LoadCoursesCallback() {
-            @Override
-            public void onAllCoursesReceived(List<CourseResponse> courseResponses) {
-                ArrayList<CourseEntity> courseList = new ArrayList<>();
-                for (int i = 0; i < courseResponses.size(); i++) {
-                    CourseResponse response = courseResponses.get(i);
-                    CourseEntity course = new CourseEntity(response.getId(),
-                            response.getTitle(),
-                            response.getDescription(),
-                            response.getDate(),
-                            false,
-                            response.getImagePath());
-
-                    courseList.add(course);
-                }
-                courseResults.postValue(courseList);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-        return courseResults;
+            courseList.add(course);
+        }
+        return courseList;
     }
 
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
     @Override
-    public LiveData<CourseEntity> getCourseWithModules(final String courseId) {
-        MutableLiveData<CourseEntity> courseResult = new MutableLiveData<>();
-
-        remoteRepository.getAllCourses(new RemoteRepository.LoadCoursesCallback() {
-            @Override
-            public void onAllCoursesReceived(List<CourseResponse> courseResponses) {
-                for (int i = 0; i < courseResponses.size(); i++) {
-                    CourseResponse response = courseResponses.get(i);
-                    if (response.getId().equals(courseId)) {
-                        CourseEntity course = new CourseEntity(response.getId(),
-                                response.getTitle(),
-                                response.getDescription(),
-                                response.getDate(),
-                                false,
-                                response.getImagePath());
-                        courseResult.postValue(course);
-                    }
-                }
+    public CourseEntity getCourseWithModules(final String courseId) {
+        CourseEntity course = null;
+        List<CourseResponse> courses = remoteRepository.getAllCourses();
+        for (int i = 0; i < courses.size(); i++) {
+            CourseResponse response = courses.get(i);
+            if (response.getId().equals(courseId)) {
+                course = new CourseEntity(response.getId(),
+                        response.getTitle(),
+                        response.getDescription(),
+                        response.getDate(),
+                        false,
+                        response.getImagePath());
             }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-
-        return courseResult;
-    }
-
-    @Override
-    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
-        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
-
-        remoteRepository.getAllCourses(new RemoteRepository.LoadCoursesCallback() {
-            @Override
-            public void onAllCoursesReceived(List<CourseResponse> courseResponses) {
-                ArrayList<CourseEntity> courseList = new ArrayList<>();
-                for (int i = 0; i < courseResponses.size(); i++) {
-                    CourseResponse response = courseResponses.get(i);
-                    CourseEntity course = new CourseEntity(response.getId(),
-                            response.getTitle(),
-                            response.getDescription(),
-                            response.getDate(),
-                            false,
-                            response.getImagePath());
-                    courseList.add(course);
-                }
-                courseResults.postValue(courseList);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-
-        return courseResults;
+        }
+        return course;
     }
 
 
     @Override
-    public LiveData<List<ModuleEntity>> getAllModulesByCourse(String courseId) {
-        MutableLiveData<List<ModuleEntity>> moduleResults = new MutableLiveData<>();
+    public ArrayList<CourseEntity> getBookmarkedCourses() {
+        ArrayList<CourseEntity> courseList = new ArrayList<>();
+        List<CourseResponse> courses = remoteRepository.getAllCourses();
+        for (int i = 0; i < courses.size(); i++) {
+            CourseResponse response = courses.get(i);
+            CourseEntity course = new CourseEntity(response.getId(),
+                    response.getTitle(),
+                    response.getDescription(),
+                    response.getDate(),
+                    false,
+                    response.getImagePath());
+            courseList.add(course);
+        }
+        return courseList;
+    }
 
-        remoteRepository.getModules(courseId, new RemoteRepository.LoadModulesCallback() {
-            @Override
-            public void onAllModulesReceived(List<ModuleResponse> moduleResponses) {
-                ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-                for (int i = 0; i < moduleResponses.size(); i++) {
-                    ModuleResponse response = moduleResponses.get(i);
-                    ModuleEntity course = new ModuleEntity(response.getModuleId(),
-                            response.getCourseId(),
-                            response.getTitle(),
-                            response.getPosition(),
-                            false);
+    @Override
+    public ArrayList<ModuleEntity> getAllModulesByCourse(String courseId) {
+        ArrayList<ModuleEntity> moduleList = new ArrayList<>();
+        List<ModuleResponse> moduleResponses = remoteRepository.getModules(courseId);
+        for (int i = 0; i < moduleResponses.size(); i++) {
+            ModuleResponse response = moduleResponses.get(i);
+            ModuleEntity course = new ModuleEntity(response.getModuleId(),
+                    response.getCourseId(),
+                    response.getTitle(),
+                    response.getPosition(),
+                    false);
 
-                    moduleList.add(course);
-                }
-                moduleResults.postValue(moduleList);
-            }
+            moduleList.add(course);
+        }
 
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-
-
-        return moduleResults;
+        return moduleList;
     }
 
 
     @Override
-    public LiveData<ModuleEntity> getContent(String courseId, String moduleId) {
-        MutableLiveData<ModuleEntity> moduleResult = new MutableLiveData<>();
-        remoteRepository.getModules(courseId, new RemoteRepository.LoadModulesCallback() {
-            @Override
-            public void onAllModulesReceived(List<ModuleResponse> moduleResponses) {
-                ModuleEntity module;
-                for (int i = 0; i < moduleResponses.size(); i++) {
-                    ModuleResponse moduleResponse = moduleResponses.get(i);
+    public ModuleEntity getContent(String courseId, String moduleId) {
+        List<ModuleResponse> moduleResponses = remoteRepository.getModules(courseId);
 
-                    String id = moduleResponse.getModuleId();
+        ModuleEntity module = null;
+        for (int i = 0; i < moduleResponses.size(); i++) {
+            ModuleResponse moduleResponse = moduleResponses.get(i);
 
-                    if (id.equals(moduleId)) {
-                        module = new ModuleEntity(id, moduleResponse.getCourseId(), moduleResponse.getTitle(), moduleResponse.getPosition(), false);
+            String id = moduleResponse.getModuleId();
 
-                        remoteRepository.getContent(moduleId, new RemoteRepository.GetContentCallback() {
-                            @Override
-                            public void onContentReceived(ContentResponse contentResponse) {
-                                module.contentEntity = new ContentEntity(contentResponse.getContent());
-                                moduleResult.postValue(module);
-                            }
+            if (id.equals(moduleId)) {
+                module = new ModuleEntity(id, moduleResponse.getCourseId(), moduleResponse.getTitle(), moduleResponse.getPosition(), false);
 
-                            @Override
-                            public void onDataNotAvailable() {
-
-                            }
-                        });
-                        break;
-                    }
-                }
+                module.contentEntity = new ContentEntity(remoteRepository.getContent(moduleId).getContent());
+                break;
             }
+        }
 
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-
-        return moduleResult;
+        return module;
     }
 }
-

@@ -1,13 +1,12 @@
 package com.dicoding.academies.ui.detail;
 
-import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

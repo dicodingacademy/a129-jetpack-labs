@@ -1,6 +1,6 @@
 package com.dicoding.academies.ui.academy;
 
-import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.CourseEntity;
 
 import org.junit.Before;
 import org.junit.Test;

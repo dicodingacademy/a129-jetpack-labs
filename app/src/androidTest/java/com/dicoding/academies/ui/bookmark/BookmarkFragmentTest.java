@@ -12,6 +12,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 public class BookmarkFragmentTest {
@@ -27,6 +29,7 @@ public class BookmarkFragmentTest {
 
     @Test
     public void loadBookmarks() {
+        onView(withId(R.id.rv_bookmark)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_bookmark)).check(new RecyclerViewItemCountAssertion(5));
     }
 }

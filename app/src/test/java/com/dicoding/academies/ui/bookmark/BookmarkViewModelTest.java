@@ -1,8 +1,6 @@
-
 package com.dicoding.academies.ui.bookmark;
 
-
-import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.data.CourseEntity;
 
 import org.junit.After;
 import org.junit.Before;

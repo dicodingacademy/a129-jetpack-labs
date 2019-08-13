@@ -8,12 +8,11 @@ import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -34,22 +33,20 @@ public class AcademyViewModelTest {
         viewModel = new AcademyViewModel(academyRepository);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getCourses() {
-        MutableLiveData<List<CourseEntity>> dummyCourse = new MutableLiveData<>();
-        dummyCourse.setValue(FakeDataDummy.generateDummyCourses());
+        ArrayList<CourseEntity> dummyCourses = FakeDataDummy.generateDummyCourses();
 
-        when(academyRepository.getAllCourses()).thenReturn(dummyCourse);
+        MutableLiveData<List<CourseEntity>> courses = new MutableLiveData<>();
+        courses.setValue(dummyCourses);
 
-        Observer<List<CourseEntity>> observer = Mockito.mock(Observer.class);
+        when(academyRepository.getAllCourses()).thenReturn(courses);
+
+        Observer<List<CourseEntity>> observer = mock(Observer.class);
 
         viewModel.getCourses().observeForever(observer);
 
-        verify(academyRepository).getAllCourses();
+        verify(observer).onChanged(dummyCourses);
     }
 }
 

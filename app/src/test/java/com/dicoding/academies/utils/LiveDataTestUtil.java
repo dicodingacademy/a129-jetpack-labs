@@ -9,13 +9,13 @@ import java.util.concurrent.TimeUnit;
 public class LiveDataTestUtil {
     @SuppressWarnings("unchecked")
     public static <T> T getValue(LiveData<T> liveData) {
-        Object data[] = new Object[1];
+        Object[] data = new Object[1];
         CountDownLatch latch = new CountDownLatch(1);
 
         Observer<T> observer = new Observer<T>() {
             @Override
             public void onChanged(T o) {
-                data[0] = (T) o;
+                data[0] = o;
                 latch.countDown();
                 liveData.removeObserver(this);
             }

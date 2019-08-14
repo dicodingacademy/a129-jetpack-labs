@@ -11,7 +11,6 @@ import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.vo.Resource;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,21 +39,18 @@ public class CourseReaderViewModelTest {
         viewModel.setCourseId(courseId);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getModules() {
         MutableLiveData<Resource<List<ModuleEntity>>> moduleEntities = new MutableLiveData<>();
-        moduleEntities.setValue(Resource.success(dummyModules));
+        Resource<List<ModuleEntity>> resource = Resource.success(dummyModules);
+        moduleEntities.setValue(resource);
 
         when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(moduleEntities);
 
         Observer<Resource<List<ModuleEntity>>> observer = mock(Observer.class);
         viewModel.modules.observeForever(observer);
 
-        verify(academyRepository).getAllModulesByCourse(courseId);
+        verify(observer).onChanged(resource);
     }
 
     @Test
@@ -64,8 +60,8 @@ public class CourseReaderViewModelTest {
         ModuleEntity dummyModule = dummyModules.get(0);
         String content = "<h3 class=\"fr-text-bordered\">Modul 0 : Introduction</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>";
         dummyModule.contentEntity = new ContentEntity(content);
-
-        moduleEntity.setValue(Resource.success(dummyModule));
+        Resource<ModuleEntity> resource = Resource.success(dummyModule);
+        moduleEntity.setValue(resource);
 
         when(academyRepository.getContent(moduleId)).thenReturn(moduleEntity);
 
@@ -73,6 +69,6 @@ public class CourseReaderViewModelTest {
 
         Observer<Resource<ModuleEntity>> observer = mock(Observer.class);
         viewModel.selectedModule.observeForever(observer);
-        verify(academyRepository).getContent(moduleId);
+        verify(observer).onChanged(resource);
     }
 }

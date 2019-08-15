@@ -38,28 +38,35 @@ public class AcademyTest {
 
     @Test
     public void toDetailActivityTest() {
+        onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
+        onView(withId(R.id.text_title)).check(matches(isDisplayed()));
         onView(withId(R.id.text_title)).check(matches(withText("Menjadi Android Developer Expert")));
     }
 
     @Test
     public void toReaderActivityTest() {
+        onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
+        onView(withId(R.id.btn_start)).check(matches(isDisplayed()));
         onView(withId(R.id.btn_start)).perform(click());
 
         try {
             onView(withId(R.id.frame_container)).check(matches(isDisplayed()));
 
+            onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
             onView(withId(R.id.rv_module)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
             onView(withId(R.id.web_view)).check(matches(isDisplayed()));
         } catch (NoMatchingViewException e) {
             onView(withId(R.id.frame_list)).check(matches(isDisplayed()));
 
+            onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
             onView(withId(R.id.rv_module)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
+            onView(withId(R.id.web_view)).check(matches(isDisplayed()));
             onView(withId(R.id.web_view)).check(matches(isDisplayed()));
         }
     }

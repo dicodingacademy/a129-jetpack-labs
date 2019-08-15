@@ -7,15 +7,11 @@ import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.source.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
-import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.vo.Resource;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -35,15 +31,12 @@ public class BookmarkViewModelTest {
         viewModel = new BookmarkViewModel(academyRepository);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void getBookmark() {
 
         MutableLiveData<Resource<PagedList<CourseEntity>>> dummyCourse = new MutableLiveData<>();
         PagedList<CourseEntity> pagedList = mock(PagedList.class);
+
         dummyCourse.setValue(Resource.success(pagedList));
 
         when(academyRepository.getBookmarkedCoursesPaged()).thenReturn(dummyCourse);
@@ -52,7 +45,7 @@ public class BookmarkViewModelTest {
 
         viewModel.getBookmarksPaged().observeForever(observer);
 
-        verify(academyRepository).getBookmarkedCoursesPaged();
+        verify(observer).onChanged(Resource.success(pagedList));
 
     }
 }

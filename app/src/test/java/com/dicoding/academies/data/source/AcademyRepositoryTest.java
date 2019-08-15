@@ -17,16 +17,16 @@ import com.dicoding.academies.data.source.remote.response.ModuleResponse;
 import com.dicoding.academies.utils.FakeDataDummy;
 import com.dicoding.academies.utils.InstantAppExecutors;
 import com.dicoding.academies.utils.LiveDataTestUtil;
+import com.dicoding.academies.utils.PagedListUtil;
 import com.dicoding.academies.vo.Resource;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -43,20 +43,11 @@ public class AcademyRepositoryTest {
     private FakeAcademyRepository academyRepository = new FakeAcademyRepository(local, remote, instantAppExecutors);
 
     private ArrayList<CourseResponse> courseResponses = FakeDataDummy.generateRemoteDummyCourses();
+    private List<CourseEntity> courseEntities = FakeDataDummy.generateDummyCourses();
     private String courseId = courseResponses.get(0).getId();
     private ArrayList<ModuleResponse> moduleResponses = FakeDataDummy.generateRemoteDummyModules(courseId);
     private String moduleId = moduleResponses.get(0).getModuleId();
     private ContentResponse content = FakeDataDummy.generateRemoteDummyContent(moduleId);
-
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-
-    }
 
     @Test
     public void getAllCourses() {
@@ -69,6 +60,7 @@ public class AcademyRepositoryTest {
 
         verify(local).getAllCourses();
         assertNotNull(result.data);
+        assertEquals(courseResponses.size(), result.data.size());
     }
 
     @Test
@@ -81,7 +73,8 @@ public class AcademyRepositoryTest {
         Resource<List<ModuleEntity>> result = LiveDataTestUtil.getValue(academyRepository.getAllModulesByCourse(courseId));
 
         verify(local).getAllModulesByCourse(courseId);
-        assertNotNull(result);
+        assertNotNull(result.data);
+        assertEquals(moduleResponses.size(), result.data.size());
     }
 
     @Test
@@ -90,10 +83,12 @@ public class AcademyRepositoryTest {
         DataSource.Factory<Integer, CourseEntity> dataSourceFactory = mock(DataSource.Factory.class);
 
         when(local.getBookmarkedCoursesPaged()).thenReturn(dataSourceFactory);
-
         academyRepository.getBookmarkedCoursesPaged();
+        Resource<PagedList<CourseEntity>> result = Resource.success(PagedListUtil.mockPagedList(courseEntities));
 
         verify(local).getBookmarkedCoursesPaged();
+        assertNotNull(result.data);
+        assertEquals(courseEntities.size(), result.data.size());
     }
 
     @Test
@@ -107,6 +102,11 @@ public class AcademyRepositoryTest {
 
         verify(local).getModuleWithContent(courseId);
         assertNotNull(result);
+
+        assertNotNull(result.data);
+        assertNotNull(result.data.contentEntity);
+        assertNotNull(result.data.contentEntity.getContent());
+        assertEquals(content.getContent(), result.data.contentEntity.getContent());
     }
 
     @Test
@@ -119,6 +119,8 @@ public class AcademyRepositoryTest {
         Resource<CourseWithModule> result = LiveDataTestUtil.getValue(academyRepository.getCourseWithModules(courseId));
 
         verify(local).getCourseWithModules(courseId);
-        assertNotNull(result);
+        assertNotNull(result.data);
+        assertNotNull(result.data.mCourse.getTitle());
+        assertEquals(courseResponses.get(0).getTitle(), result.data.mCourse.getTitle());
     }
 }

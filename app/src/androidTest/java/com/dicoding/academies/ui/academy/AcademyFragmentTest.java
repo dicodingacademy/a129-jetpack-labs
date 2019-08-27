@@ -1,6 +1,7 @@
 package com.dicoding.academies.ui.academy;
 
 import androidx.test.espresso.IdlingRegistry;
+
 import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
@@ -14,6 +15,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 public class AcademyFragmentTest {
@@ -35,6 +38,7 @@ public class AcademyFragmentTest {
 
     @Test
     public void loadCourses() {
+        onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_academy)).check(new RecyclerViewItemCountAssertion(5));
     }
 }

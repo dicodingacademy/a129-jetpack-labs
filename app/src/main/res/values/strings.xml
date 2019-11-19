@@ -22,4 +22,6 @@
     <string name="added">Satu item berhasil ditambahkan</string>
     <string name="changed">Satu item berhasil diubah</string>
     <string name="deleted">Satu item berhasil dihapus</string>
+    <string name="menu_newest">Newest</string>
+    <string name="menu_oldest">Oldest</string>
 </resources>

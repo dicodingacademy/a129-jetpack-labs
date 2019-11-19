@@ -3,10 +3,12 @@ package com.dicoding.picodiploma.mynoteapps.repository;
 import android.app.Application;
 
 import androidx.paging.DataSource;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.dicoding.picodiploma.mynoteapps.database.Note;
 import com.dicoding.picodiploma.mynoteapps.database.NoteDao;
 import com.dicoding.picodiploma.mynoteapps.database.NoteRoomDatabase;
+import com.dicoding.picodiploma.mynoteapps.helper.SortUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,8 +24,9 @@ public class NoteRepository {
         mNotesDao = db.noteDao();
     }
 
-    public DataSource.Factory<Integer, Note> getAllNotes() {
-        return mNotesDao.getAllNotes();
+    public DataSource.Factory<Integer, Note> getAllNotes(String sort) {
+        SimpleSQLiteQuery query = SortUtils.getSorteredQuery(sort);
+        return mNotesDao.getAllNotes(query);
     }
 
     public void insert(final Note note) {

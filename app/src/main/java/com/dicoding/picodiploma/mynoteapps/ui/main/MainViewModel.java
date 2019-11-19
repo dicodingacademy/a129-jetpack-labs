@@ -3,6 +3,7 @@ package com.dicoding.picodiploma.mynoteapps.ui.main;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -18,8 +19,8 @@ public class MainViewModel extends ViewModel {
         mNoteRepository = new NoteRepository(application);
     }
 
-    LiveData<PagedList<Note>> getAllNotes() {
+    LiveData<PagedList<Note>> getAllNotes(String sort) {
         return new LivePagedListBuilder<>(
-                mNoteRepository.getAllNotes(), 20).build();
+                mNoteRepository.getAllNotes(sort), 20).build();
     }
 }

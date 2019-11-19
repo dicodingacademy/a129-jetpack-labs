@@ -36,8 +36,8 @@ public abstract class NoteRoomDatabase extends RoomDatabase {
             @Override
             public void run() {
                 final List<Note> list = new ArrayList<>();
-                for (int i = 0; i < 30; i++) {
-                    list.add(new Note("Tugas " + i, "Belajar Modul " + i, ""));
+                for (int i = 0; i < 10; i++) {
+                    list.add(new Note("Tugas " + i, "Belajar Modul " + i, "2019/09/09 09:09:0"+i));
                 }
                 INSTANCE.noteDao().insertAll(list);
             }

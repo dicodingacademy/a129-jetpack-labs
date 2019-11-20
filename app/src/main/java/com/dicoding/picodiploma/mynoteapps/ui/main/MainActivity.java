@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         public void onChanged(@Nullable PagedList<Note> noteList) {
             if (noteList != null) {
                 adapter.submitList(noteList);
-                adapter.notifyDataSetChanged();
             }
         }
     };

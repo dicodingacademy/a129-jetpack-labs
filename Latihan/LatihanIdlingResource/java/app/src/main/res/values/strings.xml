@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyIdleResource</string>
+    <string name="start">Mulai</string>
+    <string name="delay1">Delay 1 Selesai</string>
+    <string name="delay2">Delay 2 Selesai</string>
+    <string name="prepare">Persiapan</string>
+</resources>

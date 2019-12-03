@@ -32,8 +32,8 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
     public static final int RESULT_UPDATE = 201;
     public static final int RESULT_DELETE = 301;
 
-    private final int ALERT_DIALOG_CLOSE = 10;
-    private final int ALERT_DIALOG_DELETE = 20;
+    private static final int ALERT_DIALOG_CLOSE = 10;
+    private static final int ALERT_DIALOG_DELETE = 20;
 
     private Note note;
     private int position;

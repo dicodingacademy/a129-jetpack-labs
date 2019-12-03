@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mynoteapps.R
 import com.dicoding.picodiploma.mynoteapps.database.Note
-import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory.Companion.getInstance
+import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun obtainViewModel(activity: AppCompatActivity): MainViewModel {
-        val factory = getInstance(activity.application)
+        val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory).get(MainViewModel::class.java)
     }
 

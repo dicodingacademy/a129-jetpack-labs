@@ -1,47 +1,46 @@
 package com.dicoding.picodiploma.mynoteapps.ui.main;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-
 import com.dicoding.picodiploma.mynoteapps.R;
 import com.dicoding.picodiploma.mynoteapps.database.Note;
+import com.dicoding.picodiploma.mynoteapps.helper.SortUtils;
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory;
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity;
-
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import static com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity.REQUEST_UPDATE;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+
+    private NotePagedListAdapter adapter;
     private MainViewModel mainViewModel;
-    private NoteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainViewModel = obtainViewModel(MainActivity.this);
-        mainViewModel.getAllNotes().observe(this, noteObserver);
 
-        adapter = new NoteAdapter(MainActivity.this);
+        mainViewModel.getAllNotes(SortUtils.NEWEST).observe(this, noteObserver);
+
+        adapter = new NotePagedListAdapter(MainActivity.this);
 
         recyclerView = findViewById(R.id.rv_notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -59,22 +58,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    @NonNull
-    private static MainViewModel obtainViewModel(AppCompatActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return new ViewModelProvider(activity, factory).get(MainViewModel.class);
-    }
-
-    private final Observer<List<Note>> noteObserver = new Observer<List<Note>>() {
-        @Override
-        public void onChanged(@Nullable List<Note> noteList) {
-            if (noteList != null) {
-                adapter.setListNotes(noteList);
-            }
-        }
-    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -94,7 +77,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private final Observer<PagedList<Note>> noteObserver = new Observer<PagedList<Note>>() {
+        @Override
+        public void onChanged(@Nullable PagedList<Note> noteList) {
+            if (noteList != null) {
+                adapter.submitList(noteList);
+            }
+        }
+    };
+
+    @NonNull
+    private static MainViewModel obtainViewModel(AppCompatActivity activity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
+    }
+
     private void showSnackbarMessage(String message) {
         Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String sort = SortUtils.NEWEST;
+        switch (item.getItemId()) {
+            case R.id.action_newest:
+                sort = SortUtils.NEWEST;
+                break;
+            case R.id.action_oldest:
+                sort = SortUtils.OLDEST;
+                break;
+        }
+        mainViewModel.getAllNotes(sort).observe(this, noteObserver);
+        item.setChecked(true);
+        return super.onOptionsItemSelected(item);
     }
 }

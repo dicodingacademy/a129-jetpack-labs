@@ -15,13 +15,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var adapter: NoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mainViewModel = obtainViewModel(this@MainActivity)
+        mainViewModel = obtainViewModel(this@MainActivity)
         mainViewModel.getAllNotes().observe(this, noteObserver)
 
         adapter = NoteAdapter(this@MainActivity)

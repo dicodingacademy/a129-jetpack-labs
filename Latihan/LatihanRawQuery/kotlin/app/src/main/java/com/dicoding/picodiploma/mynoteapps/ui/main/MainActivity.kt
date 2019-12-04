@@ -2,6 +2,8 @@ package com.dicoding.picodiploma.mynoteapps.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -9,10 +11,12 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mynoteapps.R
 import com.dicoding.picodiploma.mynoteapps.database.Note
+import com.dicoding.picodiploma.mynoteapps.helper.SortUtils
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainViewModel = obtainViewModel(this@MainActivity)
-        mainViewModel.getAllNotes().observe(this, noteObserver)
+        mainViewModel.getAllNotes(SortUtils.NEWEST).observe(this, noteObserver)
 
         adapter = NotePagedListAdapter(this@MainActivity)
 
@@ -70,5 +74,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSnackbarMessage(message: String) {
         Snackbar.make(rv_notes, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var sort = ""
+        when (item.getItemId()) {
+            R.id.action_newest -> sort = SortUtils.NEWEST
+            R.id.action_oldest -> sort = SortUtils.OLDEST
+        }
+        mainViewModel.getAllNotes(sort).observe(this, noteObserver)
+        item.setChecked(true)
+        return super.onOptionsItemSelected(item)
     }
 }

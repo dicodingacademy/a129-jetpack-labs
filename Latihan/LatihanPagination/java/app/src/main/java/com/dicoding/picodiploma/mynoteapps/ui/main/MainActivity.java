@@ -25,14 +25,14 @@ import static com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivit
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-
+    private MainViewModel mainViewModel;
     private NotePagedListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainViewModel mainViewModel = obtainViewModel(MainActivity.this);
+        mainViewModel = obtainViewModel(MainActivity.this);
         mainViewModel.getAllNotes().observe(this, noteObserver);
 
         adapter = new NotePagedListAdapter(MainActivity.this);

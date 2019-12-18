@@ -35,9 +35,6 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
-    //architecture component
-    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
-
     //testing
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "junit:junit:$junitVersion"

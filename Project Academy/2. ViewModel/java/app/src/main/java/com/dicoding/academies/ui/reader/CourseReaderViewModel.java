@@ -17,6 +17,14 @@ public class CourseReaderViewModel extends ViewModel {
         this.courseId = courseId;
     }
 
+    public ArrayList<ModuleEntity> getModules() {
+        return DataDummy.generateDummyModules(courseId);
+    }
+
+    public void setSelectedModule(String moduleId) {
+        this.moduleId = moduleId;
+    }
+
     public ModuleEntity getSelectedModule() {
         ModuleEntity module = null;
         for (int i = 0; i < getModules().size(); i++) {
@@ -28,14 +36,6 @@ public class CourseReaderViewModel extends ViewModel {
             }
         }
         return module;
-    }
-
-    public void setSelectedModule(String moduleId) {
-        this.moduleId = moduleId;
-    }
-
-    public ArrayList<ModuleEntity> getModules() {
-        return DataDummy.generateDummyModules(courseId);
     }
 }
 

@@ -50,8 +50,8 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         courseReaderCallback = context as CourseReaderActivity
     }
 
-    override fun onItemClicked(position: Int, moduleId: String?) {
-        courseReaderCallback.moveTo(position, moduleId as String)
+    override fun onItemClicked(position: Int, moduleId: String) {
+        courseReaderCallback.moveTo(position, moduleId)
     }
 
     private fun populateRecyclerView(modules: List<ModuleEntity>) {

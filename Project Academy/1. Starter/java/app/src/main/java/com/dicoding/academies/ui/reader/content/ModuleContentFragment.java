@@ -10,13 +10,9 @@ import android.webkit.WebView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.ContentEntity;
-import com.dicoding.academies.data.ModuleEntity;
-import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 
 /**
  * A simple {@link Fragment} subclass.

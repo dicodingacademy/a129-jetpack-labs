@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,6 @@ import com.dicoding.academies.R;
 import com.dicoding.academies.data.ModuleEntity;
 import com.dicoding.academies.ui.reader.CourseReaderActivity;
 import com.dicoding.academies.ui.reader.CourseReaderCallback;
-import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 import com.dicoding.academies.utils.DataDummy;
 
 import java.util.List;

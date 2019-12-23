@@ -10,18 +10,19 @@ class CourseReaderViewModelTest {
 
     private lateinit var viewModel: CourseReaderViewModel
 
-    private val dummyCourse = DataDummy.generateDummyCourses().get(0)
+    private val dummyCourse = DataDummy.generateDummyCourses()[0]
     private val courseId = dummyCourse.courseId
     private val dummyModules = DataDummy.generateDummyModules(courseId)
-    private val moduleId = dummyModules.get(0).moduleId
+    private val moduleId = dummyModules[0].moduleId
 
     @Before
     fun setUp() {
         viewModel = CourseReaderViewModel()
         viewModel.courseId = courseId
+        viewModel.moduleId = moduleId
 
-        val title = viewModel.getModules()[0].title
-        dummyModules.get(0).contentEntity = ContentEntity("<h3 class=\\\"fr-text-bordered\\\">$title</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>")
+        val dummyModule = dummyModules[0]
+        dummyModule.contentEntity = ContentEntity("<h3 class=\\\"fr-text-bordered\\\">"+dummyModule.title+"</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>")
     }
 
     @Test
@@ -33,13 +34,12 @@ class CourseReaderViewModelTest {
 
     @Test
     fun getSelectedModule() {
-        viewModel.moduleId = moduleId
         val moduleEntity = viewModel.getSelectedModule()
         assertNotNull(moduleEntity)
         val contentEntity = moduleEntity.contentEntity
         assertNotNull(contentEntity)
         val content = contentEntity.content
         assertNotNull(content)
-        assertEquals(content, dummyModules.get(0).contentEntity.content)
+        assertEquals(content, dummyModules[0].contentEntity.content)
     }
 }

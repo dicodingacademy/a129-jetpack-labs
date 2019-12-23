@@ -28,8 +28,8 @@ public class CourseReaderViewModelTest {
         viewModel.setCourseId(courseId);
         viewModel.setSelectedModule(moduleId);
 
-        String title = viewModel.getModules().get(0).getTitle();
-        dummyModules.get(0).contentEntity = new ContentEntity("<h3 class=\\\"fr-text-bordered\\\">" + title + "</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>");
+        ModuleEntity dummyModule = dummyModules.get(0);
+        dummyModule.contentEntity = new ContentEntity("<h3 class=\\\"fr-text-bordered\\\">" + dummyModule.getTitle() + "</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>");
     }
 
     @Test
@@ -41,7 +41,6 @@ public class CourseReaderViewModelTest {
 
     @Test
     public void getSelectedModule() {
-        viewModel.setSelectedModule(moduleId);
         ModuleEntity moduleEntity = viewModel.getSelectedModule();
         assertNotNull(moduleEntity);
         ContentEntity contentEntity = moduleEntity.contentEntity;

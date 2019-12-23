@@ -1,24 +1,20 @@
 package com.dicoding.academies.ui.detail
 
-import com.dicoding.academies.data.CourseEntity
-import org.junit.Test
-
-import org.junit.Assert.*
+import com.dicoding.academies.utils.DataDummy
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
+import org.junit.Test
 
 class DetailCourseViewModelTest {
     private lateinit var viewModel: DetailCourseViewModel
-    private lateinit var dummyCourse: CourseEntity
+    private val dummyCourse = DataDummy.generateDummyCourses()[0]
+    private val courseId = dummyCourse.courseId
 
     @Before
     fun setUp() {
         viewModel = DetailCourseViewModel()
-        dummyCourse = CourseEntity("a14",
-                "Menjadi Android Developer Expert",
-                "Dicoding sebagai satu-satunya Google Authorized Training Partner di Indonesia telah melalui proses penyusunan kurikulum secara komprehensif. Semua modul telah diverifikasi langsung oleh Google untuk memastikan bahwa materi yang diajarkan relevan dan sesuai dengan kebutuhan industri digital saat ini. Peserta akan belajar membangun aplikasi Android dengan materi Testing, Debugging, Application, Application UX, Fundamental Application Components, Persistent Data Storage, dan Enhanced System Integration.",
-                "100 Hari",
-                false,
-                "https://www.dicoding.com/images/small/academy/menjadi_android_developer_expert_logo_070119140352.jpg")
+        viewModel.courseId = courseId
     }
 
     @Test

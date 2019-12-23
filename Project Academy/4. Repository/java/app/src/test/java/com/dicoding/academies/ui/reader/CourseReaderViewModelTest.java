@@ -14,18 +14,20 @@ import static org.junit.Assert.assertNotNull;
 public class CourseReaderViewModelTest {
 
     private CourseReaderViewModel viewModel;
-    private ContentEntity dummyContentEntity;
-    private String moduleId;
+
+    private CourseEntity dummyCourse = DataDummy.generateDummyCourses().get(0);
+    private String courseId = dummyCourse.getCourseId();
+    private ArrayList<ModuleEntity> dummyModules = DataDummy.generateDummyModules(courseId);
+    private String moduleId = dummyModules.get(0).getModuleId();
 
     @Before
     public void setUp() {
         viewModel = new CourseReaderViewModel();
-        viewModel.setCourseId("a14");
-
-        moduleId = "a14m1";
+        viewModel.setCourseId(courseId);
+        viewModel.setSelectedModule(moduleId);
 
         String title = viewModel.getModules().get(0).getTitle();
-        dummyContentEntity = new ContentEntity("<h3 class=\\\"fr-text-bordered\\\">" + title + "</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>");
+        dummyModules.get(0).contentEntity = new ContentEntity("<h3 class=\\\"fr-text-bordered\\\">" + title + "</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>");
     }
 
     @Test
@@ -44,7 +46,6 @@ public class CourseReaderViewModelTest {
         assertNotNull(contentEntity);
         String content = contentEntity.getContent();
         assertNotNull(content);
-        assertEquals(content, dummyContentEntity.getContent());
+        assertEquals(content, dummyModules.get(0).contentEntity.getContent());
     }
-
 }

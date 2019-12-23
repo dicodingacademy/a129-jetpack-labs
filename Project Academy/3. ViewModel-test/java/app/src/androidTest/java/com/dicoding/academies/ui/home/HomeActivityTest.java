@@ -5,7 +5,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
-import com.dicoding.academies.ui.utils.FakeDataDummy;
+import com.dicoding.academies.utils.DataDummy;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class HomeActivityTest {
 
-    private ArrayList<CourseEntity> dummyCourse = FakeDataDummy.generateDummyCourses();
+    private ArrayList<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
 
     @Rule
     public ActivityTestRule activityRule = new ActivityTestRule<>(HomeActivity.class);

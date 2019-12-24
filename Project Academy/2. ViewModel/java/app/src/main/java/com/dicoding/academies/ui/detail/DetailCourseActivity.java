@@ -2,8 +2,10 @@ package com.dicoding.academies.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,7 @@ public class DetailCourseActivity extends AppCompatActivity {
     private TextView textDesc;
     private TextView textDate;
     private ImageView imagePoster;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class DetailCourseActivity extends AppCompatActivity {
         textDate = findViewById(R.id.text_date);
         RecyclerView rvModule = findViewById(R.id.rv_module);
         imagePoster = findViewById(R.id.image_poster);
+        progressBar = findViewById(R.id.progress_bar);
 
         DetailCourseAdapter adapter = new DetailCourseAdapter();
 

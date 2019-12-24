@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 public class ModuleContentFragment extends Fragment {
     public static final String TAG = ModuleContentFragment.class.getSimpleName();
     private WebView webView;
+    private ProgressBar progressBar;
 
     public ModuleContentFragment() {
         // Required empty public constructor
@@ -40,6 +42,7 @@ public class ModuleContentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         webView = view.findViewById(R.id.web_view);
+        progressBar = view.findViewById(R.id.progress_bar);
     }
 
     @Override

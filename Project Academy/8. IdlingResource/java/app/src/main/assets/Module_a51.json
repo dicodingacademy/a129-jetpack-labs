@@ -1,0 +1,46 @@
+{
+  "modules": [
+    {
+      "moduleId": "a51m1",
+      "courseId": "a51",
+      "title": "Modul 0 : Introduction",
+      "position": "0"
+    },
+    {
+      "moduleId": "a51m2",
+      "courseId": "a51",
+      "title": "Modul 1 : Teori 1",
+      "position": "1"
+    },
+    {
+      "moduleId": "a51m3",
+      "courseId": "a51",
+      "title": "Latihan 1",
+      "position": "2"
+    },
+    {
+      "moduleId": "a51m4",
+      "courseId": "a51",
+      "title": "Bedah Kode 1",
+      "position": "3"
+    },
+    {
+      "moduleId": "a51m5",
+      "courseId": "a51",
+      "title": "Modul 2 : Teori 2",
+      "position": "4"
+    },
+    {
+      "moduleId": "a51m6",
+      "courseId": "a51",
+      "title": "Latihan 2",
+      "position": "5"
+    },
+    {
+      "moduleId": "a51m7",
+      "courseId": "a51",
+      "title": "Bedah Kode 2",
+      "position": "6"
+    }
+  ]
+}

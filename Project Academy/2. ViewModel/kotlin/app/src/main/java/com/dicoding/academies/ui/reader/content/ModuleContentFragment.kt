@@ -18,8 +18,6 @@ import kotlinx.android.synthetic.main.fragment_module_content.*
  */
 class ModuleContentFragment : Fragment() {
 
-    private lateinit var viewModel: CourseReaderViewModel
-
     companion object {
         val TAG = ModuleContentFragment::class.java.simpleName
 
@@ -35,7 +33,7 @@ class ModuleContentFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
-            viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+            val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
             val module = viewModel.getSelectedModule()
             populateWebView(module)
         }

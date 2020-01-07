@@ -11,9 +11,9 @@ interface AcademyDataSource {
 
     fun getBookmarkedCourses(): LiveData<List<CourseEntity>>
 
-    fun getCourseWithModules(courseId: String?): LiveData<CourseEntity>
+    fun getCourseWithModules(courseId: String): LiveData<CourseEntity>
 
-    fun getAllModulesByCourse(courseId: String?): LiveData<List<ModuleEntity>>
+    fun getAllModulesByCourse(courseId: String): LiveData<List<ModuleEntity>>
 
-    fun getContent(courseId: String?, moduleId: String?): LiveData<ModuleEntity>
+    fun getContent(courseId: String, moduleId: String): LiveData<ModuleEntity>
 }

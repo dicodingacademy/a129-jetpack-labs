@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.academies.R
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
@@ -26,8 +27,8 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
     override fun onBindViewHolder(viewHolder: ModuleViewHolder, position: Int) {
         val module = listModules[position]
         viewHolder.bind(module)
-        if (viewHolder.itemViewType == 0) run{
-            viewHolder.textModuleTitle.setTextColor(viewHolder.itemView.context.resources.getColor(R.color.colorTextSecondary))
+        if (viewHolder.itemViewType == 0){
+            viewHolder.textModuleTitle.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.colorTextSecondary))
         } else {
             viewHolder.itemView.setOnClickListener {
                 listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId)
@@ -40,7 +41,7 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
     }
 
     override fun getItemViewType(position: Int): Int {
-        val modulePosition = listModules[position].position as Int
+        val modulePosition = listModules[position].position
         return when {
             modulePosition == 0 -> 1
             listModules[modulePosition - 1].read as Boolean -> 1

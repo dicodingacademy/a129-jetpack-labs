@@ -55,7 +55,7 @@ class CourseReaderViewModel(private val academyRepository: AcademyRepository) : 
             val moduleEntity = selectedModule.value?.data
             val moduleEntities = modules.value?.data
             if (moduleEntity != null && moduleEntities != null) {
-                val position = moduleEntity.position as Int
+                val position = moduleEntity.position
                 if (position < moduleEntities.size && position >= 0) {
                     moduleId.value = moduleEntities[position + 1].moduleId
                 }
@@ -68,7 +68,7 @@ class CourseReaderViewModel(private val academyRepository: AcademyRepository) : 
             val moduleEntity = selectedModule.value?.data
             val moduleEntities = modules.value?.data
             if (moduleEntity != null && moduleEntities != null) {
-                val position = moduleEntity.position as Int
+                val position = moduleEntity.position
                 if (position < moduleEntities.size && position >= 0) {
                     moduleId.value = moduleEntities[position - 1].moduleId
                 }

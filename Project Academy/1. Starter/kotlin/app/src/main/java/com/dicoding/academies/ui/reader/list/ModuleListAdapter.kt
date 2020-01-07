@@ -36,7 +36,7 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
     }
 
     inner class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textTitle = itemView.findViewById<TextView>(R.id.text_module_title)
+        val textTitle: TextView = itemView.findViewById(R.id.text_module_title)
         fun bind(module: ModuleEntity) {
             textTitle.text = module.title
         }

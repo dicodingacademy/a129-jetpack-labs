@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_detail_course.*
 import kotlinx.android.synthetic.main.content_detail_course.*
 
 class DetailCourseActivity : AppCompatActivity() {
+    private lateinit var viewModel: DetailCourseViewModel
+
     companion object {
         const val EXTRA_COURSE = "extra_course"
     }
@@ -27,13 +29,13 @@ class DetailCourseActivity : AppCompatActivity() {
 
         val adapter = DetailCourseAdapter()
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailCourseViewModel::class.java]
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailCourseViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
             val courseId = extras.getString(EXTRA_COURSE)
             if (courseId != null) {
-                viewModel.courseId = courseId
+                viewModel.setSelectedCourse(courseId)
                 val modules = viewModel.getModules()
                 adapter.setModules(modules)
                 populateCourse(viewModel.getCourse())

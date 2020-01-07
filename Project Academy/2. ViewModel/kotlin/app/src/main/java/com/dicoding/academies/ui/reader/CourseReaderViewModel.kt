@@ -10,8 +10,16 @@ import java.util.ArrayList
 
 class CourseReaderViewModel : ViewModel() {
 
-    var courseId: String? = null
-    var moduleId: String? = null
+    var courseId: String = ""
+    var moduleId: String = ""
+
+    fun setSelectedCourse(courseId: String) {
+        this.courseId = courseId
+    }
+
+    fun setSelectedModule(moduleId: String) {
+        this.moduleId = moduleId
+    }
 
     fun getModules(): ArrayList<ModuleEntity> {
         return DataDummy.generateDummyModules(courseId)

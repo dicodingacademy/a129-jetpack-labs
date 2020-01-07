@@ -9,6 +9,8 @@ import com.dicoding.academies.ui.reader.list.ModuleListFragment
 
 class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
 
+    private lateinit var viewModel: CourseReaderViewModel
+
     companion object {
         const val EXTRA_COURSE_ID = "extra_course_id"
     }
@@ -16,13 +18,13 @@ class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_reader)
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
 
         val bundle = intent.extras
         if (bundle != null) {
             val courseId = bundle.getString(EXTRA_COURSE_ID)
             if (courseId != null) {
-                viewModel.courseId = courseId
+                viewModel.setSelectedCourse(courseId)
                 populateFragment()
             }
         }

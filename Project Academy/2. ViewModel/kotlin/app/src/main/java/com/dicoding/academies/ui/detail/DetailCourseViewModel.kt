@@ -7,8 +7,12 @@ import com.dicoding.academies.data.ModuleEntity
 import com.dicoding.academies.utils.DataDummy
 
 class DetailCourseViewModel : ViewModel() {
-    var courseId: String? = null
+    var courseId: String = ""
     private var course: CourseEntity? = null
+
+    fun setSelectedCourse(courseId: String) {
+        this.courseId = courseId
+    }
 
     fun getCourse(): CourseEntity {
         for (i in 0 until DataDummy.generateDummyCourses().size) {

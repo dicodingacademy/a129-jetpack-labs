@@ -8,16 +8,6 @@ import java.util.*
 
 class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : AcademyDataSource {
 
-    companion object {
-        @Volatile
-        private var instance: FakeAcademyRepository? = null
-
-        fun getInstance(remoteData: RemoteDataSource): FakeAcademyRepository =
-                instance ?: synchronized(this) {
-                    instance ?: FakeAcademyRepository(remoteData)
-                }
-    }
-
     override fun getAllCourses(): ArrayList<CourseEntity> {
         val courseResponses = remoteDataSource.getAllCourses()
         val courseList = ArrayList<CourseEntity>()
@@ -53,7 +43,7 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
     }
 
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
-    override fun getCourseWithModules(courseId: String?): CourseEntity {
+    override fun getCourseWithModules(courseId: String): CourseEntity {
         var course: CourseEntity? = null
         val courses = remoteDataSource.getAllCourses()
         for (i in courses.indices) {
@@ -70,7 +60,7 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
         return course as CourseEntity
     }
 
-    override fun getAllModulesByCourse(courseId: String?): ArrayList<ModuleEntity> {
+    override fun getAllModulesByCourse(courseId: String): ArrayList<ModuleEntity> {
         val moduleList = ArrayList<ModuleEntity>()
         val moduleResponses = remoteDataSource.getModules(courseId)
         for (i in moduleResponses.indices) {
@@ -88,7 +78,7 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
     }
 
 
-    override fun getContent(courseId: String?, moduleId: String?): ModuleEntity {
+    override fun getContent(courseId: String, moduleId: String): ModuleEntity {
         val moduleResponses = remoteDataSource.getModules(courseId)
 
         var module: ModuleEntity? = null

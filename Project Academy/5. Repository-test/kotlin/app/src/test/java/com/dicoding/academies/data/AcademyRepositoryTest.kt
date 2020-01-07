@@ -57,7 +57,7 @@ class AcademyRepositoryTest {
         val resultModule = academyRepository.getContent(courseId, moduleId)
         verify<RemoteDataSource>(remote).getContent(moduleId)
         assertNotNull(resultModule)
-        assertEquals(content.content, resultModule.contentEntity.content)
+        assertEquals(content.content, resultModule.contentEntity?.content)
     }
 
     @Test

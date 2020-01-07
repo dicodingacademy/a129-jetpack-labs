@@ -10,9 +10,9 @@ interface AcademyDataSource {
 
     fun getBookmarkedCourses(): List<CourseEntity>
 
-    fun getCourseWithModules(courseId: String?): CourseEntity
+    fun getCourseWithModules(courseId: String): CourseEntity
 
-    fun getAllModulesByCourse(courseId: String?): List<ModuleEntity>
+    fun getAllModulesByCourse(courseId: String): List<ModuleEntity>
 
-    fun getContent(courseId: String?, moduleId: String?): ModuleEntity
+    fun getContent(courseId: String, moduleId: String): ModuleEntity
 }

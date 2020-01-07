@@ -21,11 +21,11 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
         return jsonHelper.loadCourses()
     }
 
-    fun getModules(courseId: String?): List<ModuleResponse> {
+    fun getModules(courseId: String): List<ModuleResponse> {
         return jsonHelper.loadModule(courseId)
     }
 
-    fun getContent(moduleId: String?): ContentResponse {
+    fun getContent(moduleId: String): ContentResponse {
         return jsonHelper.loadContent(moduleId)
     }
 }

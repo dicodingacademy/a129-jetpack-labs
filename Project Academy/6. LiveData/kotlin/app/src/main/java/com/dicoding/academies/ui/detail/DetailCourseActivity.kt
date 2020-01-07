@@ -37,7 +37,7 @@ class DetailCourseActivity : AppCompatActivity() {
         if (extras != null) {
             val courseId = extras.getString(EXTRA_COURSE)
             if (courseId != null) {
-                viewModel.courseId = courseId
+                viewModel.setSelectedCourse(courseId)
 
                 progress_bar.visibility = View.VISIBLE
                 viewModel.getModules().observe(this, Observer{ modules ->

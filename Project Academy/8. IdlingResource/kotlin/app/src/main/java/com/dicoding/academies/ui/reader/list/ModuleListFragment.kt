@@ -60,7 +60,7 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
 
     override fun onItemClicked(position: Int, moduleId: String) {
         courseReaderCallback.moveTo(position, moduleId)
-        viewModel.moduleId = moduleId
+        viewModel.setSelectedModule(moduleId)
     }
 
     private fun populateRecyclerView(modules: List<ModuleEntity>) {

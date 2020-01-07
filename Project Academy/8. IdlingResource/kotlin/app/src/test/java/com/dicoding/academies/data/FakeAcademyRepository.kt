@@ -13,16 +13,6 @@ import java.util.*
 
 class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : AcademyDataSource {
 
-    companion object {
-        @Volatile
-        private var instance: FakeAcademyRepository? = null
-
-        fun getInstance(remoteData: RemoteDataSource): FakeAcademyRepository =
-                instance ?: synchronized(this) {
-                    instance ?: FakeAcademyRepository(remoteData)
-                }
-    }
-
     override fun getAllCourses(): LiveData<List<CourseEntity>> {
         val courseResults = MutableLiveData<List<CourseEntity>>()
         remoteDataSource.getAllCourses(object : RemoteDataSource.LoadCoursesCallback {
@@ -68,7 +58,7 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
         return courseResults
     }
 
-    override fun getCourseWithModules(courseId: String?): LiveData<CourseEntity> {
+    override fun getCourseWithModules(courseId: String): LiveData<CourseEntity> {
         val courseResult = MutableLiveData<CourseEntity>()
 
         remoteDataSource.getAllCourses(object : RemoteDataSource.LoadCoursesCallback {
@@ -91,10 +81,10 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
         return courseResult
     }
 
-    override fun getAllModulesByCourse(courseId: String?): LiveData<List<ModuleEntity>> {
+    override fun getAllModulesByCourse(courseId: String): LiveData<List<ModuleEntity>> {
         val moduleResults = MutableLiveData<List<ModuleEntity>>()
 
-        remoteDataSource.getModules(courseId.toString(), object : RemoteDataSource.LoadModulesCallback {
+        remoteDataSource.getModules(courseId, object : RemoteDataSource.LoadModulesCallback {
             override fun onAllModulesReceived(moduleResponses: List<ModuleResponse>) {
                 val moduleList = ArrayList<ModuleEntity>()
                 for (i in moduleResponses.indices) {
@@ -114,10 +104,10 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
         return moduleResults
     }
 
-    override fun getContent(courseId: String?, moduleId: String?): LiveData<ModuleEntity> {
+    override fun getContent(courseId: String, moduleId: String): LiveData<ModuleEntity> {
         val moduleResult = MutableLiveData<ModuleEntity>()
 
-        remoteDataSource.getModules(courseId.toString(), object : RemoteDataSource.LoadModulesCallback {
+        remoteDataSource.getModules(courseId, object : RemoteDataSource.LoadModulesCallback {
             override fun onAllModulesReceived(moduleResponses: List<ModuleResponse>) {
                 val module: ModuleEntity
                 for (i in moduleResponses.indices) {
@@ -128,7 +118,7 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
                     if (id == moduleId) {
                         module = ModuleEntity(id, moduleResponse.courseId, moduleResponse.title, moduleResponse.position, false)
 
-                        remoteDataSource.getContent(moduleId.toString(), object : RemoteDataSource.LoadContentCallback {
+                        remoteDataSource.getContent(moduleId, object : RemoteDataSource.LoadContentCallback {
                             override fun onContentReceived(contentResponse: ContentResponse) {
                                 module.contentEntity = ContentEntity(contentResponse.content)
                                 moduleResult.postValue(module)

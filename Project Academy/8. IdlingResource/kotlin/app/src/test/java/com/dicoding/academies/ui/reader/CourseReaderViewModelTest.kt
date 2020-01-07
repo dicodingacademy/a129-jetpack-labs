@@ -69,9 +69,9 @@ class CourseReaderViewModelTest {
         assertNotNull(moduleEntity)
         val contentEntity = moduleEntity.contentEntity
         assertNotNull(contentEntity)
-        val content = contentEntity.content
+        val content = contentEntity?.content
         assertNotNull(content)
-        assertEquals(content, dummyModules[0].contentEntity.content)
+        assertEquals(content, dummyModules[0].contentEntity?.content)
 
         val observer = mock(Observer::class.java) as Observer<ModuleEntity>
         viewModel.getSelectedModule().observeForever(observer)

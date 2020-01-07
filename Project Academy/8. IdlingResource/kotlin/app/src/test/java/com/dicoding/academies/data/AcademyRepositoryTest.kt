@@ -80,28 +80,27 @@ class AcademyRepositoryTest {
             (invocation.arguments[1] as RemoteDataSource.LoadModulesCallback)
                     .onAllModulesReceived(moduleResponses)
             null
-        }.`when`(remote).getModules(eq(courseId.toString()), any())
+        }.`when`(remote).getModules(eq(courseId), any())
 
         doAnswer { invocation ->
             (invocation.arguments[1] as RemoteDataSource.LoadContentCallback)
                     .onContentReceived(content)
             null
-        }.`when`(remote).getContent(eq(moduleId.toString()), any())
+        }.`when`(remote).getContent(eq(moduleId), any())
 
-        val courseEntitiesContent = LiveDataTestUtil.getValue(academyRepository.getContent(courseId.toString(), moduleId.toString()))
-
-        verify(remote)
-                .getModules(eq(courseId.toString()), any())
+        val courseEntitiesContent = LiveDataTestUtil.getValue(academyRepository.getContent(courseId, moduleId))
 
         verify(remote)
-                .getContent(eq(moduleId.toString()), any())
+                .getModules(eq(courseId), any())
+
+        verify(remote)
+                .getContent(eq(moduleId), any())
 
         assertNotNull(courseEntitiesContent)
         assertNotNull(courseEntitiesContent.contentEntity)
-        assertNotNull(courseEntitiesContent.contentEntity.content)
-        assertEquals(content.content, courseEntitiesContent.contentEntity.content)
+        assertNotNull(courseEntitiesContent.contentEntity?.content)
+        assertEquals(content.content, courseEntitiesContent.contentEntity?.content)
     }
-
 
     @Test
     fun getCourseWithModules() {

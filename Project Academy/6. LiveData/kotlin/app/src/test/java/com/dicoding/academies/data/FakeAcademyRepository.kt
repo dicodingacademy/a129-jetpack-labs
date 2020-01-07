@@ -8,16 +8,6 @@ import java.util.*
 
 class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : AcademyDataSource {
 
-    companion object {
-        @Volatile
-        private var instance: FakeAcademyRepository? = null
-
-        fun getInstance(remoteData: RemoteDataSource): FakeAcademyRepository =
-                instance ?: synchronized(this) {
-                    instance ?: FakeAcademyRepository(remoteData)
-                }
-    }
-
     override fun getAllCourses(): ArrayList<CourseEntity> {
         val courseResponses = remoteDataSource.getAllCourses()
         val courseList = ArrayList<CourseEntity>()

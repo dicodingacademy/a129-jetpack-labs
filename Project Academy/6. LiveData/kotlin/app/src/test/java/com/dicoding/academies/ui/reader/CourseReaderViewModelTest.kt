@@ -56,6 +56,6 @@ class CourseReaderViewModelTest {
         assertNotNull(contentEntity)
         val content = contentEntity.content
         assertNotNull(content)
-        assertEquals(content, dummyModules[0].contentEntity.content)
+        assertEquals(content, dummyModules[0].contentEntity?.content)
     }
 }

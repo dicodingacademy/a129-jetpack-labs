@@ -63,10 +63,10 @@ class AcademyRepository private constructor(
     }
 
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
-    override fun getCourseWithModules(courseId: String?): LiveData<Resource<CourseWithModule>> {
+    override fun getCourseWithModules(courseId: String): LiveData<Resource<CourseWithModule>> {
         return object : NetworkBoundResource<CourseWithModule, List<ModuleResponse>>(appExecutors) {
             override fun loadFromDB(): LiveData<CourseWithModule> {
-                return localDataSource.getCourseWithModules(courseId.toString())
+                return localDataSource.getCourseWithModules(courseId)
             }
 
             override fun shouldFetch(courseWithModule: CourseWithModule?): Boolean {
@@ -74,7 +74,7 @@ class AcademyRepository private constructor(
             }
 
             override fun createCall(): LiveData<ApiResponse<List<ModuleResponse>>> {
-                return remoteDataSource.getModules(courseId.toString())
+                return remoteDataSource.getModules(courseId)
             }
 
             override fun saveCallResult(moduleResponses: List<ModuleResponse>) {
@@ -96,10 +96,10 @@ class AcademyRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getAllModulesByCourse(courseId: String?): LiveData<Resource<List<ModuleEntity>>> {
+    override fun getAllModulesByCourse(courseId: String): LiveData<Resource<List<ModuleEntity>>> {
         return object : NetworkBoundResource<List<ModuleEntity>, List<ModuleResponse>>(appExecutors) {
             override fun loadFromDB(): LiveData<List<ModuleEntity>> {
-                return localDataSource.getAllModulesByCourse(courseId.toString())
+                return localDataSource.getAllModulesByCourse(courseId)
             }
 
             override fun shouldFetch(modules: List<ModuleEntity>?): Boolean {
@@ -107,7 +107,7 @@ class AcademyRepository private constructor(
             }
 
             override fun createCall(): LiveData<ApiResponse<List<ModuleResponse>>> {
-                return remoteDataSource.getModules(courseId.toString())
+                return remoteDataSource.getModules(courseId)
             }
 
             override fun saveCallResult(moduleResponses: List<ModuleResponse>) {
@@ -132,10 +132,10 @@ class AcademyRepository private constructor(
     }
 
 
-    override fun getContent(moduleId: String?): LiveData<Resource<ModuleEntity>> {
+    override fun getContent(moduleId: String): LiveData<Resource<ModuleEntity>> {
         return object : NetworkBoundResource<ModuleEntity, ContentResponse>(appExecutors) {
             override fun loadFromDB(): LiveData<ModuleEntity> {
-                return localDataSource.getModuleWithContent(moduleId.toString())
+                return localDataSource.getModuleWithContent(moduleId)
             }
 
             override fun shouldFetch(moduleEntity: ModuleEntity?): Boolean {
@@ -143,11 +143,11 @@ class AcademyRepository private constructor(
             }
 
             override fun createCall(): LiveData<ApiResponse<ContentResponse>> {
-                return remoteDataSource.getContent(moduleId.toString())
+                return remoteDataSource.getContent(moduleId)
             }
 
             override fun saveCallResult(contentResponse: ContentResponse) {
-                localDataSource.updateContent(contentResponse.content.toString(), moduleId.toString())
+                localDataSource.updateContent(contentResponse.content.toString(), moduleId)
             }
         }.asLiveData()
     }

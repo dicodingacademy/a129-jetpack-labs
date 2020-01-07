@@ -11,11 +11,11 @@ interface AcademyDataSource {
 
     fun getAllCourses(): LiveData<Resource<List<CourseEntity>>>
 
-    fun getCourseWithModules(courseId: String?): LiveData<Resource<CourseWithModule>>
+    fun getCourseWithModules(courseId: String): LiveData<Resource<CourseWithModule>>
 
-    fun getAllModulesByCourse(courseId: String?): LiveData<Resource<List<ModuleEntity>>>
+    fun getAllModulesByCourse(courseId: String): LiveData<Resource<List<ModuleEntity>>>
 
-    fun getContent(moduleId: String?): LiveData<Resource<ModuleEntity>>
+    fun getContent(moduleId: String): LiveData<Resource<ModuleEntity>>
 
     fun getBookmarkedCourses(): LiveData<List<CourseEntity>>
 

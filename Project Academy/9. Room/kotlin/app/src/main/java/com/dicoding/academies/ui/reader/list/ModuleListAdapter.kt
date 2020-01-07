@@ -28,7 +28,7 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
         val module = listModules[position]
         viewHolder.bind(module)
         if (viewHolder.itemViewType == 0){
-            viewHolder.textModuleTitle.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.colorTextSecondary))
+            viewHolder.textTitle.setTextColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.colorTextSecondary))
         } else {
             viewHolder.itemView.setOnClickListener {
                 listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId)
@@ -50,11 +50,9 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
     }
 
     inner class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textModuleTitle = itemView.findViewById<TextView>(R.id.text_module_title)
+        val textTitle: TextView = itemView.findViewById(R.id.text_module_title)
         fun bind(module: ModuleEntity) {
-            with(itemView) {
-                text_module_title.text = module.title
-            }
+            textTitle.text = module.title
         }
     }
 }

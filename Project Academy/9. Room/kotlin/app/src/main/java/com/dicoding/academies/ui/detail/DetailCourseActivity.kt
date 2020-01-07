@@ -45,7 +45,7 @@ class DetailCourseActivity : AppCompatActivity() {
         if (extras != null) {
             val courseId = extras.getString(EXTRA_COURSE)
             if (courseId != null) {
-                viewModel.setCourseId(courseId)
+                viewModel.setSelectedCourse(courseId)
 
                 viewModel.courseModule.observe(this, Observer { courseWithModuleResource ->
                     if (courseWithModuleResource != null) {

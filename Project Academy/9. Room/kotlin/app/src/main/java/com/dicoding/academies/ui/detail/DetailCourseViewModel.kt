@@ -15,7 +15,7 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 class DetailCourseViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
     val courseId = MutableLiveData<String>()
 
-    fun setCourseId(courseId: String) {
+    fun setSelectedCourse(courseId: String) {
         this.courseId.value = courseId
     }
 

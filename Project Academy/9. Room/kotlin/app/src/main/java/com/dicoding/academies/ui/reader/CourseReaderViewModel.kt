@@ -20,7 +20,7 @@ class CourseReaderViewModel(private val academyRepository: AcademyRepository) : 
 
     var moduleId = MutableLiveData<String>()
 
-    fun setCourseId(courseId: String) {
+    fun setSelectedCourse(courseId: String) {
         this.courseId.value = courseId
     }
 

@@ -42,6 +42,6 @@ class ModuleContentFragment : Fragment() {
     }
 
     private fun populateWebView(module: ModuleEntity) {
-        web_view.loadData(module.contentEntity.content, "text/html", "UTF-8")
+        web_view.loadData(module.contentEntity?.content, "text/html", "UTF-8")
     }
 }

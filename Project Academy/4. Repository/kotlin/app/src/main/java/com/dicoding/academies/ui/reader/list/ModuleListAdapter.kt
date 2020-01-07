@@ -3,6 +3,7 @@ package com.dicoding.academies.ui.reader.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.academies.R
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
@@ -26,7 +27,7 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
         val module = listModules[position]
         viewHolder.bind(module)
         viewHolder.itemView.setOnClickListener {
-            listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId.toString())
+            listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId)
         }
     }
 
@@ -35,10 +36,9 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
     }
 
     inner class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textTitle: TextView = itemView.findViewById(R.id.text_module_title)
         fun bind(module: ModuleEntity) {
-            with(itemView) {
-                text_module_title.text = module.title
-            }
+            textTitle.text = module.title
         }
     }
 }

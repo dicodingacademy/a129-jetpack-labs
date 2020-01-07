@@ -44,7 +44,7 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
         val modulePosition = listModules[position].position
         return when {
             modulePosition == 0 -> 1
-            listModules[modulePosition - 1].read as Boolean -> 1
+            listModules[modulePosition - 1].read -> 1
             else -> 0
         }
     }

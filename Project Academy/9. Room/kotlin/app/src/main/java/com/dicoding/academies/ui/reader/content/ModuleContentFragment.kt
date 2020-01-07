@@ -52,7 +52,7 @@ class ModuleContentFragment : Fragment() {
                                 populateWebView(moduleEntity.data)
                             }
                             setButtonNextPrevState(moduleEntity.data)
-                            if (!moduleEntity.data.read!!) {
+                            if (!moduleEntity.data.read) {
                                 viewModel.readContent(moduleEntity.data)
                             }
 

@@ -28,7 +28,7 @@ data class ModuleEntity(
         var position: Int,
 
         @ColumnInfo(name = "read")
-        var read: Boolean? = false
+        var read: Boolean = false
 ){
     @Embedded
     var contentEntity: ContentEntity? = null

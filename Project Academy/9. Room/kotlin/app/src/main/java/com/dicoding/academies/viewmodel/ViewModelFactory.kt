@@ -24,18 +24,18 @@ class ViewModelFactory private constructor(private val mAcademyRepository: Acade
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        when {
+        return when {
             modelClass.isAssignableFrom(AcademyViewModel::class.java) -> {
-                return AcademyViewModel(mAcademyRepository) as T
+                AcademyViewModel(mAcademyRepository) as T
             }
             modelClass.isAssignableFrom(DetailCourseViewModel::class.java) -> {
-                return DetailCourseViewModel(mAcademyRepository) as T
+                DetailCourseViewModel(mAcademyRepository) as T
             }
             modelClass.isAssignableFrom(BookmarkViewModel::class.java) -> {
-                return BookmarkViewModel(mAcademyRepository) as T
+                BookmarkViewModel(mAcademyRepository) as T
             }
             modelClass.isAssignableFrom(CourseReaderViewModel::class.java) -> {
-                return CourseReaderViewModel(mAcademyRepository) as T
+                CourseReaderViewModel(mAcademyRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

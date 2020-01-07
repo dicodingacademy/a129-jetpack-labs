@@ -3,6 +3,7 @@ package com.dicoding.academies.ui.reader.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.academies.R
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
@@ -25,8 +26,12 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
     override fun onBindViewHolder(viewHolder: ModuleViewHolder, position: Int) {
         val module = listModules[position]
         viewHolder.bind(module)
-        viewHolder.itemView.setOnClickListener {
-            listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId.toString())
+        if (viewHolder.itemViewType == 0) run{
+            viewHolder.textModuleTitle.setTextColor(viewHolder.itemView.context.resources.getColor(R.color.colorTextSecondary))
+        } else {
+            viewHolder.itemView.setOnClickListener {
+                listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId)
+            }
         }
     }
 
@@ -34,7 +39,17 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
         return listModules.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        val modulePosition = listModules[position].position as Int
+        return when {
+            modulePosition == 0 -> 1
+            listModules[modulePosition - 1].read as Boolean -> 1
+            else -> 0
+        }
+    }
+
     inner class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textModuleTitle = itemView.findViewById<TextView>(R.id.text_module_title)
         fun bind(module: ModuleEntity) {
             with(itemView) {
                 text_module_title.text = module.title

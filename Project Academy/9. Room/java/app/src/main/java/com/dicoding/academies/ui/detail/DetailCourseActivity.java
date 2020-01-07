@@ -2,14 +2,18 @@ package com.dicoding.academies.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +35,8 @@ public class DetailCourseActivity extends AppCompatActivity {
     private TextView textDate;
     private ImageView imagePoster;
     private ProgressBar progressBar;
+    DetailCourseViewModel viewModel;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +58,7 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         DetailCourseAdapter adapter = new DetailCourseAdapter();
         ViewModelFactory factory = ViewModelFactory.getInstance(this);
-        DetailCourseViewModel viewModel = new ViewModelProvider(this, factory).get(DetailCourseViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(DetailCourseViewModel.class);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -60,13 +66,29 @@ public class DetailCourseActivity extends AppCompatActivity {
             if (courseId != null) {
                 viewModel.setCourseId(courseId);
 
-                progressBar.setVisibility(View.VISIBLE);
-                viewModel.getModules().observe(this, modules -> {
-                    progressBar.setVisibility(View.GONE);
-                    adapter.setModules(modules);
-                    adapter.notifyDataSetChanged();
+                viewModel.courseModule.observe(this, courseWithModuleResource -> {
+                    if (courseWithModuleResource != null) {
+
+                        switch (courseWithModuleResource.status) {
+                            case LOADING:
+                                progressBar.setVisibility(View.VISIBLE);
+                                break;
+                            case SUCCESS:
+                                if (courseWithModuleResource.data != null) {
+                                    progressBar.setVisibility(View.GONE);
+                                    adapter.setModules(courseWithModuleResource.data.mModules);
+                                    adapter.notifyDataSetChanged();
+                                    populateCourse(courseWithModuleResource.data.mCourse);
+                                }
+                                break;
+                            case ERROR:
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getApplicationContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+
+                    }
                 });
-                viewModel.getCourse().observe(this, course -> populateCourse(course));
             }
         }
 
@@ -94,6 +116,52 @@ public class DetailCourseActivity extends AppCompatActivity {
             intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID, courseEntity.getCourseId());
             startActivity(intent);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        this.menu = menu;
+        viewModel.courseModule.observe(this, courseWithModule -> {
+            if (courseWithModule != null) {
+                switch (courseWithModule.status) {
+                    case LOADING:
+                        progressBar.setVisibility(View.VISIBLE);
+                        break;
+                    case SUCCESS:
+                        if (courseWithModule.data != null) {
+                            progressBar.setVisibility(View.GONE);
+                            boolean state = courseWithModule.data.mCourse.isBookmarked();
+                            setBookmarkState(state);
+                        }
+                        break;
+                    case ERROR:
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_bookmark) {
+            viewModel.setBookmark();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setBookmarkState(boolean state) {
+        if (menu == null) return;
+        MenuItem menuItem = menu.findItem(R.id.action_bookmark);
+        if (state) {
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_bookmarked_white));
+        } else {
+            menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_bookmark_white));
+        }
     }
 }
 

@@ -2,14 +2,18 @@ package com.dicoding.academies.data;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.dicoding.academies.data.source.local.entity.ContentEntity;
+import com.dicoding.academies.data.source.local.LocalDataSource;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.CourseWithModule;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.data.source.remote.ApiResponse;
 import com.dicoding.academies.data.source.remote.RemoteDataSource;
+import com.dicoding.academies.data.source.remote.response.ContentResponse;
 import com.dicoding.academies.data.source.remote.response.CourseResponse;
 import com.dicoding.academies.data.source.remote.response.ModuleResponse;
+import com.dicoding.academies.utils.AppExecutors;
+import com.dicoding.academies.vo.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +23,20 @@ public class AcademyRepository implements AcademyDataSource {
     private volatile static AcademyRepository INSTANCE = null;
 
     private final RemoteDataSource remoteDataSource;
+    private final LocalDataSource localDataSource;
+    private final AppExecutors appExecutors;
 
-    private AcademyRepository(@NonNull RemoteDataSource remoteDataSource) {
+    private AcademyRepository(@NonNull RemoteDataSource remoteDataSource, @NonNull LocalDataSource localDataSource, AppExecutors appExecutors) {
         this.remoteDataSource = remoteDataSource;
+        this.localDataSource = localDataSource;
+        this.appExecutors = appExecutors;
     }
 
-    public static AcademyRepository getInstance(RemoteDataSource remoteData) {
+    public static AcademyRepository getInstance(RemoteDataSource remoteData, LocalDataSource localDataSource, AppExecutors appExecutors) {
         if (INSTANCE == null) {
             synchronized (AcademyRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new AcademyRepository(remoteData);
+                    INSTANCE = new AcademyRepository(remoteData, localDataSource, appExecutors);
                 }
             }
         }
@@ -36,119 +44,160 @@ public class AcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public LiveData<List<CourseEntity>> getAllCourses() {
-        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
-        remoteDataSource.getAllCourses(courseResponses -> {
-            List<CourseEntity> courseList = new ArrayList<>();
-            for (int i = 0; i < courseResponses.size(); i++) {
-                CourseResponse response = courseResponses.get(i);
-                CourseEntity course = new CourseEntity(response.getId(),
-                        response.getTitle(),
-                        response.getDescription(),
-                        response.getDate(),
-                        false,
-                        response.getImagePath());
-
-                courseList.add(course);
+    public LiveData<Resource<List<CourseEntity>>> getAllCourses() {
+        return new NetworkBoundResource<List<CourseEntity>, List<CourseResponse>>(appExecutors) {
+            @Override
+            public LiveData<List<CourseEntity>> loadFromDB() {
+                return localDataSource.getAllCourses();
             }
-            courseResults.postValue(courseList);
-        });
 
-        return courseResults;
-    }
-
-    @Override
-    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
-        MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
-
-        remoteDataSource.getAllCourses(courseResponses -> {
-            ArrayList<CourseEntity> courseList = new ArrayList<>();
-            for (int i = 0; i < courseResponses.size(); i++) {
-                CourseResponse response = courseResponses.get(i);
-                CourseEntity course = new CourseEntity(response.getId(),
-                        response.getTitle(),
-                        response.getDescription(),
-                        response.getDate(),
-                        false,
-                        response.getImagePath());
-                courseList.add(course);
+            @Override
+            public Boolean shouldFetch(List<CourseEntity> data) {
+                return (data == null) || (data.size() == 0);
             }
-            courseResults.postValue(courseList);
-        });
 
-        return courseResults;
-    }
+            @Override
+            public LiveData<ApiResponse<List<CourseResponse>>> createCall() {
+                return remoteDataSource.getAllCourses();
+            }
 
-    // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
-    @Override
-    public LiveData<CourseEntity> getCourseWithModules(final String courseId) {
-        MutableLiveData<CourseEntity> courseResult = new MutableLiveData<>();
-
-        remoteDataSource.getAllCourses(courseResponses -> {
-            for (int i = 0; i < courseResponses.size(); i++) {
-                CourseResponse response = courseResponses.get(i);
-                if (response.getId().equals(courseId)) {
+            @Override
+            public void saveCallResult(List<CourseResponse> courseResponses) {
+                ArrayList<CourseEntity> courseList = new ArrayList<>();
+                for (int i = 0; i < courseResponses.size(); i++) {
+                    CourseResponse response = courseResponses.get(i);
                     CourseEntity course = new CourseEntity(response.getId(),
                             response.getTitle(),
                             response.getDescription(),
                             response.getDate(),
                             false,
                             response.getImagePath());
-                    courseResult.postValue(course);
+                    courseList.add(course);
                 }
-            }
-        });
 
-        return courseResult;
+                localDataSource.insertCourses(courseList);
+            }
+        }.asLiveData();
+    }
+
+    // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
+    @Override
+    public LiveData<Resource<CourseWithModule>> getCourseWithModules(final String courseId) {
+        return new NetworkBoundResource<CourseWithModule, List<ModuleResponse>>(appExecutors) {
+            @Override
+            protected LiveData<CourseWithModule> loadFromDB() {
+                return localDataSource.getCourseWithModules(courseId);
+            }
+
+            @Override
+            protected Boolean shouldFetch(CourseWithModule courseWithModule) {
+                return (courseWithModule == null || courseWithModule.mModules == null) || (courseWithModule.mModules.size() == 0);
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<ModuleResponse>>> createCall() {
+                return remoteDataSource.getModules(courseId);
+            }
+
+            @Override
+            protected void saveCallResult(List<ModuleResponse> moduleResponses) {
+
+                ArrayList<ModuleEntity> moduleList = new ArrayList<>();
+                for (int i = 0; i < moduleResponses.size(); i++) {
+                    ModuleResponse response = moduleResponses.get(i);
+                    ModuleEntity course = new ModuleEntity(response.getModuleId(),
+                            response.getCourseId(),
+                            response.getTitle(),
+                            response.getPosition(),
+                            false);
+
+                    moduleList.add(course);
+                }
+
+                localDataSource.insertModules(moduleList);
+            }
+        }.asLiveData();
     }
 
     @Override
-    public LiveData<List<ModuleEntity>> getAllModulesByCourse(String courseId) {
-        MutableLiveData<List<ModuleEntity>> moduleResults = new MutableLiveData<>();
-
-        remoteDataSource.getModules(courseId, moduleResponses -> {
-            ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-            for (int i = 0; i < moduleResponses.size(); i++) {
-                ModuleResponse response = moduleResponses.get(i);
-                ModuleEntity course = new ModuleEntity(response.getModuleId(),
-                        response.getCourseId(),
-                        response.getTitle(),
-                        response.getPosition(),
-                        false);
-
-                moduleList.add(course);
+    public LiveData<Resource<List<ModuleEntity>>> getAllModulesByCourse(String courseId) {
+        return new NetworkBoundResource<List<ModuleEntity>, List<ModuleResponse>>(appExecutors) {
+            @Override
+            protected LiveData<List<ModuleEntity>> loadFromDB() {
+                return localDataSource.getAllModulesByCourse(courseId);
             }
-            moduleResults.postValue(moduleList);
-        });
 
-        return moduleResults;
+            @Override
+            protected Boolean shouldFetch(List<ModuleEntity> modules) {
+                return (modules == null) || (modules.size() == 0);
+            }
+
+            @Override
+            protected LiveData<ApiResponse<List<ModuleResponse>>> createCall() {
+                return remoteDataSource.getModules(courseId);
+            }
+
+            @Override
+            protected void saveCallResult(List<ModuleResponse> moduleResponses) {
+
+                ArrayList<ModuleEntity> moduleList = new ArrayList<>();
+                for (int i = 0; i < moduleResponses.size(); i++) {
+                    ModuleResponse response = moduleResponses.get(i);
+                    ModuleEntity course = new ModuleEntity(response.getModuleId(),
+                            response.getCourseId(),
+                            response.getTitle(),
+                            response.getPosition(),
+                            false);
+
+                    moduleList.add(course);
+                }
+
+                localDataSource.insertModules(moduleList);
+
+            }
+        }.asLiveData();
     }
 
 
     @Override
-    public LiveData<ModuleEntity> getContent(String courseId, String moduleId) {
-        MutableLiveData<ModuleEntity> moduleResult = new MutableLiveData<>();
-
-        remoteDataSource.getModules(courseId, moduleResponses -> {
-            ModuleEntity module;
-            for (int i = 0; i < moduleResponses.size(); i++) {
-                ModuleResponse moduleResponse = moduleResponses.get(i);
-
-                String id = moduleResponse.getModuleId();
-
-                if (id.equals(moduleId)) {
-                    module = new ModuleEntity(id, moduleResponse.getCourseId(), moduleResponse.getTitle(), moduleResponse.getPosition(), false);
-
-                    remoteDataSource.getContent(moduleId, contentResponse -> {
-                        module.contentEntity = new ContentEntity(contentResponse.getContent());
-                        moduleResult.postValue(module);
-                    });
-
-                    break;
-                }
+    public LiveData<Resource<ModuleEntity>> getContent(String moduleId) {
+        return new NetworkBoundResource<ModuleEntity, ContentResponse>(appExecutors) {
+            @Override
+            protected LiveData<ModuleEntity> loadFromDB() {
+                return localDataSource.getModuleWithContent(moduleId);
             }
-        });
-        return moduleResult;
+
+            @Override
+            protected Boolean shouldFetch(ModuleEntity moduleEntity) {
+                return (moduleEntity.contentEntity == null);
+            }
+
+            @Override
+            protected LiveData<ApiResponse<ContentResponse>> createCall() {
+                return remoteDataSource.getContent(moduleId);
+            }
+
+            @Override
+            protected void saveCallResult(ContentResponse contentResponse) {
+
+                localDataSource.updateContent(contentResponse.getContent(), moduleId);
+            }
+        }.asLiveData();
+    }
+
+    @Override
+    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
+        return localDataSource.getBookmarkedCourses();
+    }
+
+    @Override
+    public void setCourseBookmark(CourseEntity course, boolean state) {
+        appExecutors.diskIO().execute(() -> localDataSource.setCourseBookmark(course, state));
+    }
+
+    @Override
+    public void setReadModule(ModuleEntity module) {
+        appExecutors.diskIO().execute(() -> localDataSource.setReadModule(module));
     }
 }
 

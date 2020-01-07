@@ -26,7 +26,7 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
         val module = listModules[position]
         viewHolder.bind(module)
         viewHolder.itemView.setOnClickListener {
-            listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId.toString())
+            listener.onItemClicked(viewHolder.adapterPosition, listModules[viewHolder.adapterPosition].moduleId)
         }
     }
 

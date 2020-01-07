@@ -2,7 +2,6 @@ package com.dicoding.academies.ui.reader
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.dicoding.academies.R
 import com.dicoding.academies.ui.reader.content.ModuleContentFragment
 import com.dicoding.academies.ui.reader.list.ModuleListFragment

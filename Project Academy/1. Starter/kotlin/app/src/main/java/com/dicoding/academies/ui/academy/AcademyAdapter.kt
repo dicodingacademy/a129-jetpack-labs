@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.items_academy.view.*
 import java.util.ArrayList
 
 class AcademyAdapter : RecyclerView.Adapter<AcademyAdapter.CourseViewHolder>() {
-    var listCourses = ArrayList<CourseEntity>()
+    private var listCourses = ArrayList<CourseEntity>()
 
     fun setCourses(courses: List<CourseEntity>?) {
         if (courses == null) return

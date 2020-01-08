@@ -18,11 +18,6 @@ public class DetailCourseViewModel extends ViewModel {
         this.academyRepository = mAcademyRepository;
     }
 
-//    public LiveData<Resource<CourseWithModule>> getCourseWithModule() {
-//        return Transformations.switchMap(courseId,
-//                mCourseId -> academyRepository.getCourseWithModules(mCourseId));
-//    }
-
     public LiveData<Resource<CourseWithModule>> courseModule = Transformations.switchMap(courseId,
             mCourseId -> academyRepository.getCourseWithModules(mCourseId));
 

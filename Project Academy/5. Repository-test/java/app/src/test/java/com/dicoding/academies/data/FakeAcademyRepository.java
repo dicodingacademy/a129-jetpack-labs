@@ -22,17 +22,6 @@ public class FakeAcademyRepository implements AcademyDataSource {
         this.remoteDataSource = remoteDataSource;
     }
 
-    public static FakeAcademyRepository getInstance(RemoteDataSource remoteData) {
-        if (INSTANCE == null) {
-            synchronized (FakeAcademyRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new FakeAcademyRepository(remoteData);
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
     @Override
     public ArrayList<CourseEntity> getAllCourses() {
         List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();

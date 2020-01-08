@@ -77,15 +77,19 @@ class ModuleContentFragment : Fragment() {
 
     private fun setButtonNextPrevState(module: ModuleEntity) {
         if (activity != null) {
-            if (module.position == 0) {
-                btn_prev.setEnabled(false)
-                btn_next.setEnabled(true)
-            } else if (module.position == viewModel.getModuleSize() - 1) {
-                btn_prev.setEnabled(true)
-                btn_next.setEnabled(false)
-            } else {
-                btn_prev.setEnabled(true)
-                btn_next.setEnabled(true)
+            when (module.position) {
+                0 -> {
+                    btn_prev.isEnabled = false
+                    btn_next.isEnabled = true
+                }
+                viewModel.getModuleSize() - 1 -> {
+                    btn_prev.isEnabled = true
+                    btn_next.isEnabled = false
+                }
+                else -> {
+                    btn_prev.isEnabled = true
+                    btn_next.isEnabled = true
+                }
             }
         }
     }

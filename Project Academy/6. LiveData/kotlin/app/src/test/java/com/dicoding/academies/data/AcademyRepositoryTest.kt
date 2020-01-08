@@ -21,7 +21,7 @@ class AcademyRepositoryTest {
     private val courseId = courseResponses[0].id
     private val moduleResponses = DataDummy.generateRemoteDummyModules(courseId)
     private val moduleId = moduleResponses[0].moduleId
-    private val content = DataDummy.generateRemoteDummyContent(moduleId!!)
+    private val content = DataDummy.generateRemoteDummyContent(moduleId)
 
     @Test
     fun getAllCourses() {

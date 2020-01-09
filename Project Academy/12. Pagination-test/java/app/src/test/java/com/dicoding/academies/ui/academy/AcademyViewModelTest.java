@@ -3,10 +3,10 @@ package com.dicoding.academies.ui.academy;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
-import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.vo.Resource;
 
 import org.junit.Before;
@@ -41,8 +41,10 @@ public class AcademyViewModelTest {
 
     @Test
     public void getCourses() {
-        Resource<List<CourseEntity>> dummyCourses = Resource.success(DataDummy.generateDummyCourses());
-        MutableLiveData<Resource<List<CourseEntity>>> courses = new MutableLiveData<>();
+        PagedList pagedList = mock(PagedList.class);
+        Resource<PagedList<CourseEntity>> dummyCourses = Resource.success(pagedList);
+        when(dummyCourses.data.size()).thenReturn(5);
+        MutableLiveData<Resource<PagedList<CourseEntity>>> courses = new MutableLiveData<>();
         courses.setValue(dummyCourses);
 
         when(academyRepository.getAllCourses()).thenReturn(courses);
@@ -51,7 +53,7 @@ public class AcademyViewModelTest {
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
-        Observer<Resource<List<CourseEntity>>> observer = mock(Observer.class);
+        Observer<Resource<PagedList<CourseEntity>>> observer = mock(Observer.class);
         viewModel.getCourses().observeForever(observer);
         verify(observer).onChanged(dummyCourses);
     }

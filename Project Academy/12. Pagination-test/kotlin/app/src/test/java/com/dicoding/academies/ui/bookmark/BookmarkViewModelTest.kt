@@ -3,6 +3,7 @@ package com.dicoding.academies.ui.bookmark
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.utils.DataDummy
@@ -33,8 +34,9 @@ class BookmarkViewModelTest {
 
     @Test
     fun getBookmark() {
-        val dummyCourses = DataDummy.generateDummyCourses()
-        val courses = MutableLiveData<List<CourseEntity>>()
+        val dummyCourses = mock(PagedList::class.java) as PagedList<CourseEntity>
+        `when`(dummyCourses.size).thenReturn(5)
+        val courses = MutableLiveData<PagedList<CourseEntity>>()
         courses.value = dummyCourses
 
         `when`(academyRepository.getBookmarkedCourses()).thenReturn(courses)

@@ -1,6 +1,8 @@
 package com.dicoding.academies.data
 
 import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.dicoding.academies.data.source.local.LocalDataSource
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.data.source.local.entity.CourseWithModule
@@ -20,13 +22,18 @@ class FakeAcademyRepository constructor(
         private val appExecutors: AppExecutors)
     : AcademyDataSource {
 
-    override fun getAllCourses(): LiveData<Resource<List<CourseEntity>>> {
-        return object : NetworkBoundResource<List<CourseEntity>, List<CourseResponse>>(appExecutors) {
-            public override fun loadFromDB(): LiveData<List<CourseEntity>> {
-                return localDataSource.getAllCourses()
+    override fun getAllCourses(): LiveData<Resource<PagedList<CourseEntity>>> {
+        return object : NetworkBoundResource<PagedList<CourseEntity>, List<CourseResponse>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<CourseEntity>> {
+                val config = PagedList.Config.Builder()
+                        .setEnablePlaceholders(false)
+                        .setInitialLoadSizeHint(4)
+                        .setPageSize(4)
+                        .build()
+                return LivePagedListBuilder(localDataSource.getAllCourses(), config).build()
             }
 
-            override fun shouldFetch(data: List<CourseEntity>?): Boolean {
+            override fun shouldFetch(data: PagedList<CourseEntity>?): Boolean {
                 return data == null || data.isEmpty()
             }
 
@@ -143,8 +150,13 @@ class FakeAcademyRepository constructor(
         }.asLiveData()
     }
 
-    override fun getBookmarkedCourses(): LiveData<List<CourseEntity>> {
-        return localDataSource.getBookmarkedCourses()
+    override fun getBookmarkedCourses(): LiveData<PagedList<CourseEntity>> {
+        val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(4)
+                .setPageSize(4)
+                .build()
+        return LivePagedListBuilder(localDataSource.getBookmarkedCourses(), config).build()
     }
 
     override fun setCourseBookmark(course: CourseEntity, state: Boolean) {

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.utils.DataDummy
@@ -36,17 +37,19 @@ class AcademyViewModelTest {
 
     @Test
     fun getCourses() {
-        val dummyCourses = Resource.success(DataDummy.generateDummyCourses()) as Resource<List<CourseEntity>>
-        val courses = MutableLiveData<Resource<List<CourseEntity>>>()
+        val pagedList = mock(PagedList::class.java) as PagedList<CourseEntity>
+        val dummyCourses = Resource.success(pagedList)
+        `when`(dummyCourses.data?.size).thenReturn(5)
+        val courses = MutableLiveData<Resource<PagedList<CourseEntity>>>()
         courses.value = dummyCourses
 
-        `when`<LiveData<Resource<List<CourseEntity>>>>(academyRepository.getAllCourses()).thenReturn(courses)
+        `when`(academyRepository.getAllCourses()).thenReturn(courses)
         val courseEntities = viewModel.getCourses().value?.data
         verify(academyRepository).getAllCourses()
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<List<CourseEntity>>>
+        val observer = mock(Observer::class.java) as Observer<Resource<PagedList<CourseEntity>>>
         viewModel.getCourses().observeForever(observer)
         verify(observer).onChanged(dummyCourses)
     }

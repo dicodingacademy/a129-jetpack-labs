@@ -2,6 +2,7 @@ package com.dicoding.academies.data;
 
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.data.source.local.entity.CourseWithModule;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface AcademyDataSource {
 
-    LiveData<Resource<List<CourseEntity>>> getAllCourses();
+    LiveData<Resource<PagedList<CourseEntity>>> getAllCourses();
 
     LiveData<Resource<CourseWithModule>> getCourseWithModules(String courseId);
 
@@ -20,7 +21,7 @@ public interface AcademyDataSource {
 
     LiveData<Resource<ModuleEntity>> getContent(String moduleId);
 
-    LiveData<List<CourseEntity>> getBookmarkedCourses();
+    LiveData<PagedList<CourseEntity>> getBookmarkedCourses();
 
     void setCourseBookmark(CourseEntity course, boolean state);
 

@@ -2,11 +2,10 @@ package com.dicoding.academies.ui.bookmark;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
-
-import java.util.List;
 
 
 public class BookmarkViewModel extends ViewModel {
@@ -16,8 +15,13 @@ public class BookmarkViewModel extends ViewModel {
         this.academyRepository = mAcademyRepository;
     }
 
-    public LiveData<List<CourseEntity>> getBookmarks() {
+    public LiveData<PagedList<CourseEntity>> getBookmarks() {
         return academyRepository.getBookmarkedCourses();
+    }
+
+    void setBookmark(CourseEntity courseEntity) {
+        final boolean newState = !courseEntity.isBookmarked();
+        academyRepository.setCourseBookmark(courseEntity, newState);
     }
 }
 

@@ -1,11 +1,13 @@
 package com.dicoding.academies.ui.bookmark
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.academies.R
@@ -17,16 +19,27 @@ import kotlinx.android.synthetic.main.items_academy.view.tv_item_description
 import kotlinx.android.synthetic.main.items_academy.view.tv_item_title
 import kotlinx.android.synthetic.main.items_bookmark.view.*
 
-import java.util.ArrayList
+class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedListAdapter<CourseEntity, BookmarkAdapter.CourseViewHolder>(DIFF_CALLBACK) {
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CourseEntity>() {
+            override fun areItemsTheSame(oldItem: CourseEntity, newItem: CourseEntity): Boolean {
+                return oldItem.courseId == newItem.courseId
+            }
 
-class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : RecyclerView.Adapter<BookmarkAdapter.CourseViewHolder>() {
-    private val listCourses = ArrayList<CourseEntity>()
-
-    fun setCourses(courses: List<CourseEntity>?) {
-        if (courses == null) return
-        this.listCourses.clear()
-        this.listCourses.addAll(courses)
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(oldItem: CourseEntity, newItem: CourseEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
+
+//    private val listCourses = ArrayList<CourseEntity>()
+//
+//    fun setCourses(courses: List<CourseEntity>?) {
+//        if (courses == null) return
+//        this.listCourses.clear()
+//        this.listCourses.addAll(courses)
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.items_bookmark, parent, false)
@@ -34,13 +47,17 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : Recycler
     }
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
-        val course = listCourses[position]
+        val course = getItem(position) as CourseEntity
         holder.bind(course)
     }
 
-    override fun getItemCount(): Int {
-        return listCourses.size
+    fun getSwipedData(swipedPosition: Int): CourseEntity {
+        return getItem(swipedPosition) as CourseEntity
     }
+
+//    override fun getItemCount(): Int {
+//        return listCourses.size
+//    }
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(course: CourseEntity){

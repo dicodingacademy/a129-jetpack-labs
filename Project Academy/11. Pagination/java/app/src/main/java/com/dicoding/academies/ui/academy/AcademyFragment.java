@@ -60,7 +60,7 @@ public class AcademyFragment extends Fragment {
                             break;
                         case SUCCESS:
                             progressBar.setVisibility(View.GONE);
-                            academyAdapter.setCourses(courses.data);
+                            academyAdapter.submitList(courses.data);
                             academyAdapter.notifyDataSetChanged();
                             break;
                         case ERROR:

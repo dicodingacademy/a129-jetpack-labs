@@ -1,6 +1,7 @@
 package com.dicoding.academies.data.source.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.data.source.local.entity.CourseWithModule
@@ -20,11 +21,11 @@ class LocalDataSource private constructor(private val mAcademyDao: AcademyDao) {
         }
     }
 
-    fun getAllCourses(): LiveData<List<CourseEntity>>{
+    fun getAllCourses(): DataSource.Factory<Int, CourseEntity> {
         return mAcademyDao.getCourses()
     }
 
-    fun getBookmarkedCourses(): LiveData<List<CourseEntity>>{
+    fun getBookmarkedCourses(): DataSource.Factory<Int, CourseEntity> {
         return mAcademyDao.getBookmarkedCourse()
     }
 

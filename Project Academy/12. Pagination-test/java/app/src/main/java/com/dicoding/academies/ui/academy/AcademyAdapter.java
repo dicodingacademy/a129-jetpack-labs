@@ -38,13 +38,6 @@ public class AcademyAdapter extends PagedListAdapter<CourseEntity, AcademyAdapte
                     return oldItem.equals(newItem);
                 }
             };
-//    private List<CourseEntity> listCourses = new ArrayList<>();
-//
-//    void setCourses(List<CourseEntity> listCourses) {
-//        if (listCourses == null) return;
-//        this.listCourses.clear();
-//        this.listCourses.addAll(listCourses);
-//    }
 
     @NonNull
     @Override
@@ -56,13 +49,10 @@ public class AcademyAdapter extends PagedListAdapter<CourseEntity, AcademyAdapte
     @Override
     public void onBindViewHolder(@NonNull final CourseViewHolder holder, int position) {
         CourseEntity course = getItem(position);
-        holder.bind(course);
+        if (course != null) {
+            holder.bind(course);
+        }
     }
-
-//    @Override
-//    public int getItemCount() {
-//        return listCourses.size();
-//    }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle;

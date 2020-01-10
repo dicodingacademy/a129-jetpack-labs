@@ -41,6 +41,8 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity, BookmarkAdap
                     return oldItem.equals(newItem);
                 }
             };
+
+//    hapus kode di bawah ini
 //    private ArrayList<CourseEntity> listCourses = new ArrayList<>();
 //    public void setCourses(List<CourseEntity> courses) {
 //        if (courses == null) return;

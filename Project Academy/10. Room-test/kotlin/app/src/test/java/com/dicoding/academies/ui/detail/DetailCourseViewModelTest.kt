@@ -41,7 +41,7 @@ class DetailCourseViewModelTest {
         val course = MutableLiveData<Resource<CourseWithModule>>()
         course.value = dummyCourseWithModule
 
-        `when`<LiveData<Resource<CourseWithModule>>>(academyRepository.getCourseWithModules(courseId)).thenReturn(course)
+        `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(course)
 
         val observer = mock(Observer::class.java) as Observer<Resource<CourseWithModule>>
         viewModel.courseModule.observeForever(observer)

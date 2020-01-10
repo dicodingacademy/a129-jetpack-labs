@@ -16,13 +16,6 @@ import com.dicoding.academies.ui.detail.DetailCourseActivity
 import kotlinx.android.synthetic.main.items_academy.view.*
 
 class AcademyAdapter internal constructor() : PagedListAdapter<CourseEntity, AcademyAdapter.CourseViewHolder>(DIFF_CALLBACK) {
-//    private var listCourses = ArrayList<CourseEntity>()
-//
-//    fun setCourses(courses: List<CourseEntity>?) {
-//        if (courses == null) return
-//        this.listCourses.clear()
-//        this.listCourses.addAll(courses)
-//    }
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CourseEntity>() {
@@ -46,10 +39,6 @@ class AcademyAdapter internal constructor() : PagedListAdapter<CourseEntity, Aca
         val course = getItem(position) as CourseEntity
         holder.bind(course)
     }
-
-//    override fun getItemCount(): Int {
-//        return listCourses.size
-//    }
 
     class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(course: CourseEntity) {

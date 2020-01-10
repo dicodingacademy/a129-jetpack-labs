@@ -51,7 +51,6 @@ public class BookmarkViewModelTest {
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
-
         Observer<List<CourseEntity>> observer = mock(Observer.class);
         viewModel.getBookmarks().observeForever(observer);
         verify(observer).onChanged(dummyCourses);

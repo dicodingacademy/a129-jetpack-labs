@@ -47,7 +47,7 @@ class CourseReaderViewModelTest {
         val modules = MutableLiveData<Resource<List<ModuleEntity>>>()
         val resource = Resource.success(dummyModules) as Resource<List<ModuleEntity>>
         modules.value = resource
-        `when`<LiveData<Resource<List<ModuleEntity>>>>(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
+        `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
 
         val observer = mock(Observer::class.java) as Observer<Resource<List<ModuleEntity>>>
         viewModel.modules.observeForever(observer)

@@ -11,7 +11,7 @@ class BookmarkViewModel(private val academyRepository: AcademyRepository) : View
         return academyRepository.getBookmarkedCourses()
     }
 
-    internal fun setBookmark(courseEntity: CourseEntity) {
+    fun setBookmark(courseEntity: CourseEntity) {
         val newState = !courseEntity.bookmarked
         academyRepository.setCourseBookmark(courseEntity, newState)
     }

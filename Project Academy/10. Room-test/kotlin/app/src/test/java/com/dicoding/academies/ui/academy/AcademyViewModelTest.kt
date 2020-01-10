@@ -40,7 +40,7 @@ class AcademyViewModelTest {
         val courses = MutableLiveData<Resource<List<CourseEntity>>>()
         courses.value = dummyCourses
 
-        `when`<LiveData<Resource<List<CourseEntity>>>>(academyRepository.getAllCourses()).thenReturn(courses)
+        `when`(academyRepository.getAllCourses()).thenReturn(courses)
         val courseEntities = viewModel.getCourses().value?.data
         verify(academyRepository).getAllCourses()
         assertNotNull(courseEntities)

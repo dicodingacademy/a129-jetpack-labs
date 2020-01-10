@@ -41,12 +41,6 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity, BookmarkAdap
                     return oldItem.equals(newItem);
                 }
             };
-//    private ArrayList<CourseEntity> listCourses = new ArrayList<>();
-//    public void setCourses(List<CourseEntity> courses) {
-//        if (courses == null) return;
-//        this.listCourses.clear();
-//        this.listCourses.addAll(courses);
-//    }
 
     @NonNull
     @Override
@@ -66,11 +60,6 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity, BookmarkAdap
     public CourseEntity getSwipedData(int swipedPosition) {
         return getItem(swipedPosition);
     }
-
-//    @Override
-//    public int getItemCount() {
-//        return listCourses.size();
-//    }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle;

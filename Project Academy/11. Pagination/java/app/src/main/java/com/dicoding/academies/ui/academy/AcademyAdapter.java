@@ -38,6 +38,8 @@ public class AcademyAdapter extends PagedListAdapter<CourseEntity, AcademyAdapte
                     return oldItem.equals(newItem);
                 }
             };
+
+//    hapus kode di bawah ini
 //    private List<CourseEntity> listCourses = new ArrayList<>();
 //
 //    void setCourses(List<CourseEntity> listCourses) {

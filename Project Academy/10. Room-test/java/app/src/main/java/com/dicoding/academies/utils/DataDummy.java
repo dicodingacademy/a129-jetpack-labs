@@ -176,15 +176,13 @@ public class DataDummy {
         return courseWithModule;
     }
 
-    public static ContentEntity generateDummyContent(String moduleId) {
-
+    private static ContentEntity generateDummyContent(String moduleId) {
         return new ContentEntity("This is a dummy content");
     }
 
     public static ModuleEntity generateDummyModuleWithContent(String courseId) {
         ModuleEntity moduleEntity = generateDummyModules(courseId).get(0);
         moduleEntity.contentEntity = generateDummyContent(moduleEntity.getModuleId());
-
         return moduleEntity;
     }
 }

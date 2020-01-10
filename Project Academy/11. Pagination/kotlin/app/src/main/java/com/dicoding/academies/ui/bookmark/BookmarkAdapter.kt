@@ -32,7 +32,7 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
             }
         }
     }
-
+//    hapus kode di bawah ini
 //    private val listCourses = ArrayList<CourseEntity>()
 //
 //    fun setCourses(courses: List<CourseEntity>?) {
@@ -55,6 +55,7 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
         return getItem(swipedPosition) as CourseEntity
     }
 
+//    hapus kode di bawah ini
 //    override fun getItemCount(): Int {
 //        return listCourses.size
 //    }

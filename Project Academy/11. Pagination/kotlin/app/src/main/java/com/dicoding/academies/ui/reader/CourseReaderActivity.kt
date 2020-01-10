@@ -72,7 +72,7 @@ class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
                 fragmentTransaction.addToBackStack(null)
             }
             fragmentTransaction.commit()
-        } else run {
+        } else {
 
             var fragmentList = supportFragmentManager.findFragmentByTag(ModuleListFragment.TAG)
 

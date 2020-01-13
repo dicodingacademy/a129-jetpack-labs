@@ -53,7 +53,7 @@ class NoteAddUpdateActivity : AppCompatActivity() {
             actionBarTitle = getString(R.string.change)
             btnTitle = getString(R.string.update)
             if (note != null) {
-                note?.let {note ->
+                note?.let { note ->
                     edt_title.setText(note.title)
                     edt_description.setText(note.description)
                 }
@@ -131,15 +131,21 @@ class NoteAddUpdateActivity : AppCompatActivity() {
             dialogMessage = getString(R.string.message_delete)
             dialogTitle = getString(R.string.delete)
         }
+
         val alertDialogBuilder = AlertDialog.Builder(this)
         with(alertDialogBuilder) {
             setTitle(dialogTitle)
             setMessage(dialogMessage)
             setCancelable(false)
             setPositiveButton(getString(R.string.yes)) { dialog, id ->
+<<<<<<< HEAD
                 if (isDialogClose) {
                     finish()
                 } else {
+=======
+                if (isDialogClose) finish()
+                else {
+>>>>>>> kotlin
                     noteAddUpdateViewModel.delete(note as Note)
                     val intent = Intent()
                     intent.putExtra(EXTRA_POSITION, position)
@@ -149,12 +155,16 @@ class NoteAddUpdateActivity : AppCompatActivity() {
             }
             setNegativeButton(getString(R.string.no)) { dialog, id -> dialog.cancel() }
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> kotlin
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }
 
     private fun obtainViewModel(activity: AppCompatActivity): NoteAddUpdateViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory).get(NoteAddUpdateViewModel::class.java)
+        return ViewModelProvider(activity, factory)[NoteAddUpdateViewModel::class.java]
     }
 }

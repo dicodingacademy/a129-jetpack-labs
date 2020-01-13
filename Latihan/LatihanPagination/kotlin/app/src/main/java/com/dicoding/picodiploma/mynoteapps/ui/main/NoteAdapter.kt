@@ -39,8 +39,8 @@ class NoteAdapter internal constructor(private val activity: Activity) : Recycle
     }
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(note: Note){
-            with(itemView){
+        fun bind(note: Note) {
+            with(itemView) {
                 tv_item_title.text = note.title
                 tv_item_date.text = note.date
                 tv_item_description.text = note.description

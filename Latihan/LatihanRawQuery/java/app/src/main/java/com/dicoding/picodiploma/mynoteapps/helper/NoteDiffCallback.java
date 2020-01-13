@@ -39,10 +39,4 @@ public class NoteDiffCallback extends DiffUtil.Callback {
 
         return oldEmployee.getTitle().equals(newEmployee.getTitle());
     }
-
-    @Nullable
-    @Override
-    public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        return super.getChangePayload(oldItemPosition, newItemPosition);
-    }
 }

@@ -6,7 +6,7 @@ public class SortUtils {
     public static final String NEWEST = "Newest";
     public static final String OLDEST = "Oldest";
 
-    public static SimpleSQLiteQuery getSorteredQuery(String filter) {
+    public static SimpleSQLiteQuery getSortedQuery(String filter) {
         StringBuilder simpleQuery = new StringBuilder().append("SELECT * FROM note ");
         if (filter.equals(NEWEST)) {
             simpleQuery.append("ORDER BY id DESC");

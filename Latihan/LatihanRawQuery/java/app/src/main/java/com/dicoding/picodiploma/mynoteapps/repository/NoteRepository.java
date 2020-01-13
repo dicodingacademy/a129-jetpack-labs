@@ -25,7 +25,7 @@ public class NoteRepository {
     }
 
     public DataSource.Factory<Integer, Note> getAllNotes(String sort) {
-        SimpleSQLiteQuery query = SortUtils.getSorteredQuery(sort);
+        SimpleSQLiteQuery query = SortUtils.getSortedQuery(sort);
         return mNotesDao.getAllNotes(query);
     }
 

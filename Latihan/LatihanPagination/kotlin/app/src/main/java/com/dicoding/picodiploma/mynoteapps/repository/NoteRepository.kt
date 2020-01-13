@@ -17,9 +17,7 @@ class NoteRepository(application: Application) {
         mNotesDao = db.noteDao()
     }
 
-    fun getAllNotes(): DataSource.Factory<Int, Note> {
-        return mNotesDao.getAllNotes()
-    }
+    fun getAllNotes(): DataSource.Factory<Int, Note> = mNotesDao.getAllNotes()
 
     fun insert(note: Note) {
         executorService.execute { mNotesDao.insert(note) }

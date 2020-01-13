@@ -26,9 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         btnCity.setOnClickListener {
             val city = editCity.text.toString()
-
             if (city.isEmpty()) return@setOnClickListener
-
             mainViewModel.setWeather(city)
             showLoading(true)
         }

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun obtainViewModel(activity: AppCompatActivity): MainViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory).get(MainViewModel::class.java)
+        return ViewModelProvider(activity, factory)[MainViewModel::class.java]
     }
 
     private val noteObserver = Observer<PagedList<Note>> { noteList ->

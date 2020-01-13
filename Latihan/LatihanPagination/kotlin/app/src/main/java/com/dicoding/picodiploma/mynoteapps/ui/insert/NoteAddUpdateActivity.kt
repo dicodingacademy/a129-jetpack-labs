@@ -153,6 +153,6 @@ class NoteAddUpdateActivity : AppCompatActivity() {
 
     private fun obtainViewModel(activity: AppCompatActivity): NoteAddUpdateViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory).get(NoteAddUpdateViewModel::class.java)
+        return ViewModelProvider(activity, factory)[NoteAddUpdateViewModel::class.java]
     }
 }

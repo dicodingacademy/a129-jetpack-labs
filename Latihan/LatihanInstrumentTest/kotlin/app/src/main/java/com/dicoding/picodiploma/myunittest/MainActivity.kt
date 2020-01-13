@@ -35,20 +35,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val w = width.toDouble()
                 val h = height.toDouble()
 
-                when {
-                    v.id == R.id.btn_save -> {
+                when (v.id) {
+                    R.id.btn_save -> {
                         mainViewModel.save(l, w, h)
                         visible()
                     }
-                    v.id == R.id.btn_calculate_circumference -> {
+                    R.id.btn_calculate_circumference -> {
                         tv_result.text = mainViewModel.circumference.toString()
                         gone()
                     }
-                    v.id == R.id.btn_calculate_surface_area -> {
+                    R.id.btn_calculate_surface_area -> {
                         tv_result.text = mainViewModel.surfaceArea.toString()
                         gone()
                     }
-                    v.id == R.id.btn_calculate_volume -> {
+                    R.id.btn_calculate_volume -> {
                         tv_result.text = mainViewModel.volume.toString()
                         gone()
                     }

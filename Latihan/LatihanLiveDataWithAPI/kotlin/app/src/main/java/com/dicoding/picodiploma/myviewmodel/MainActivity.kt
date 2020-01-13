@@ -22,18 +22,16 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
 
         btnCity.setOnClickListener {
             val city = editCity.text.toString()
-
             if (city.isEmpty()) return@setOnClickListener
-
             mainViewModel.setWeather(city)
             showLoading(true)
         }
 
-        mainViewModel.getweathers().observe(this, Observer { weatherItems ->
+        mainViewModel.getWeathers().observe(this, Observer { weatherItems ->
             if (weatherItems != null) {
                 adapter.setData(weatherItems)
                 showLoading(false)

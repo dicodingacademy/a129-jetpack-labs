@@ -22,4 +22,8 @@ class NoteDiffCallback(private val mOldNoteList: List<Note>, private val mNewNot
         return oldEmployee.title == newEmployee.title && oldEmployee.description == newEmployee.description
     }
 
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+        return super.getChangePayload(oldItemPosition, newItemPosition)
+    }
+
 }

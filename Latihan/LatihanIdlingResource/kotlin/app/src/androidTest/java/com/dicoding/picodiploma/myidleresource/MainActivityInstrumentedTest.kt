@@ -17,7 +17,8 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class MainActivityInstrumentedTest {
-    @Rule
+
+    @get:Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
 
     @Before

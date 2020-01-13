@@ -20,7 +20,7 @@ class NoteRepository(application: Application) {
     }
 
     fun getAllNotes(sort: String): DataSource.Factory<Int, Note> {
-        val query = SortUtils.getSorteredQuery(sort)
+        val query = SortUtils.getSortedQuery(sort)
         return mNotesDao.getAllNotes(query)
     }
 

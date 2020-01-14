@@ -31,9 +31,7 @@ class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewH
         viewHolder.bind(module)
     }
 
-    override fun getItemCount(): Int {
-        return listModules.size
-    }
+    override fun getItemCount(): Int = listModules.size
 
     inner class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(module: ModuleEntity) {

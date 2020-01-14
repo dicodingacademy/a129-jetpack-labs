@@ -46,7 +46,7 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
                     .from(activity)
                     .setType(mimeType)
                     .setChooserTitle("Bagikan aplikasi ini sekarang.")
-                    .setText("Segera daftar kelas ${course.title} di dicoding.com")
+                    .setText(resources.getString(R.string.share_text, course.title))
                     .startChooser()
         }
     }

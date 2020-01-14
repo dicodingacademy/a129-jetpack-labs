@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -70,7 +69,7 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
                     .from(getActivity())
                     .setType(mimeType)
                     .setChooserTitle("Bagikan aplikasi ini sekarang.")
-                    .setText(String.format("Segera daftar kelas %s di dicoding.com", course.getTitle()))
+                    .setText(getResources().getString(R.string.share_text, course.getTitle()))
                     .startChooser();
         }
     }

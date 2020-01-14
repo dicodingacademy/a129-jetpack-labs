@@ -38,16 +38,14 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : Recycler
         holder.bind(course)
     }
 
-    override fun getItemCount(): Int {
-        return listCourses.size
-    }
+    override fun getItemCount(): Int = listCourses.size
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(course: CourseEntity){
             with(itemView){
                 tv_item_title.text = course.title
                 tv_item_description.text = course.description
-                tv_item_date.text = String.format(itemView.resources.getString(R.string.deadline_date), course.deadline)
+                tv_item_date.text = itemView.resources.getString(R.string.deadline_date, course.deadline)
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailCourseActivity::class.java)
                     intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.courseId)

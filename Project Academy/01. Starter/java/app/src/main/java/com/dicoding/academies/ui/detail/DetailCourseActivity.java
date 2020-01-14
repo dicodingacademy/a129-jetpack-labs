@@ -80,7 +80,7 @@ public class DetailCourseActivity extends AppCompatActivity {
     private void populateCourse(CourseEntity courseEntity) {
         textTitle.setText(courseEntity.getTitle());
         textDesc.setText(courseEntity.getDescription());
-        textDate.setText(String.format("Deadline %s", courseEntity.getDeadline()));
+        textDate.setText(getResources().getString(R.string.deadline_date, courseEntity.getDeadline()));
 
         Glide.with(this)
                 .load(courseEntity.getImagePath())

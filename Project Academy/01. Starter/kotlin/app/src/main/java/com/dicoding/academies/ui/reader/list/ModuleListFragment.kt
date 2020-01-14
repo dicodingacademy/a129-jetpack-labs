@@ -42,7 +42,6 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         super.onActivityCreated(savedInstanceState)
         adapter = ModuleListAdapter(this)
         populateRecyclerView(DataDummy.generateDummyModules("a14"))
-
     }
 
     override fun onAttach(context: Context) {
@@ -57,14 +56,11 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
     private fun populateRecyclerView(modules: List<ModuleEntity>) {
         progress_bar.visibility = View.GONE
         adapter.setModules(modules)
-        with(rv_module) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            this.adapter = adapter
-            val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
-            addItemDecoration(dividerItemDecoration)
-
-        }
+        rv_module.layoutManager = LinearLayoutManager(context)
+        rv_module.setHasFixedSize(true)
+        rv_module.adapter = adapter
+        val dividerItemDecoration = DividerItemDecoration(rv_module.context, DividerItemDecoration.VERTICAL)
+        rv_module.addItemDecoration(dividerItemDecoration)
     }
 }
 

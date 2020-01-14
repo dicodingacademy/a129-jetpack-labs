@@ -15,10 +15,9 @@ class DetailCourseViewModel : ViewModel() {
     }
 
     fun getCourse(): CourseEntity {
-        for (i in 0 until DataDummy.generateDummyCourses().size) {
-            val courseEntity = DataDummy.generateDummyCourses()[i]
-            if (courseEntity.courseId == courseId) {
-                course = courseEntity
+        for(course in DataDummy.generateDummyCourses()) {
+            if(course.courseId == courseId) {
+                this.course = course
             }
         }
         return course as CourseEntity

@@ -2,9 +2,9 @@ package com.dicoding.picodiploma.myunittest
 
 // Cuboid == Balok
 internal class CuboidModel {
-    private var width: Double = 0.0
-    private var length: Double = 0.0
-    private var height: Double = 0.0
+    private var width = 0.0
+    private var length = 0.0
+    private var height = 0.0
 
     fun getVolume(): Double = width * length * height
 

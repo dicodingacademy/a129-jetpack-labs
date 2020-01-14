@@ -42,12 +42,14 @@ class DetailCourseActivity : AppCompatActivity() {
             }
         }
 
-        rv_module.isNestedScrollingEnabled = false
-        rv_module.layoutManager = LinearLayoutManager(this)
-        rv_module.setHasFixedSize(true)
-        rv_module.adapter = adapter
-        val dividerItemDecoration = DividerItemDecoration(rv_module.context, DividerItemDecoration.VERTICAL)
-        rv_module.addItemDecoration(dividerItemDecoration)
+        with(rv_module) {
+            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(this@DetailCourseActivity)
+            setHasFixedSize(true)
+            this.adapter = adapter
+            val dividerItemDecoration = DividerItemDecoration(rv_module.context, DividerItemDecoration.VERTICAL)
+            addItemDecoration(dividerItemDecoration)
+        }
     }
 
     private fun populateCourse(courseEntity: CourseEntity) {

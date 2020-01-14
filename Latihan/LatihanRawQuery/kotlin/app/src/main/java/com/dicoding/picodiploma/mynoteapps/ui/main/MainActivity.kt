@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         when (item.getItemId()) {
             R.id.action_newest -> sort = SortUtils.NEWEST
             R.id.action_oldest -> sort = SortUtils.OLDEST
+            R.id.action_random -> sort = SortUtils.RANDOM
         }
         mainViewModel.getAllNotes(sort).observe(this, noteObserver)
         item.setChecked(true)

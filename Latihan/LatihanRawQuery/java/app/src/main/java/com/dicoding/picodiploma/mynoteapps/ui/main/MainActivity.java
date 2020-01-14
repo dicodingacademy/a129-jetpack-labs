@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_oldest:
                 sort = SortUtils.OLDEST;
                 break;
+            case R.id.action_random:
+                sort = SortUtils.RANDOM;
+                break;
         }
         mainViewModel.getAllNotes(sort).observe(this, noteObserver);
         item.setChecked(true);

@@ -18,10 +18,7 @@ class ModuleContentFragment : Fragment() {
 
     companion object {
         val TAG = ModuleContentFragment::class.java.simpleName
-
-        fun newInstance(): ModuleContentFragment {
-            return ModuleContentFragment()
-        }
+        fun newInstance(): ModuleContentFragment = ModuleContentFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -34,27 +34,28 @@ class DetailCourseActivity : AppCompatActivity() {
             if (courseId != null) {
                 val modules = DataDummy.generateDummyModules(courseId)
                 adapter.setModules(modules)
-                for (i in 0 until DataDummy.generateDummyCourses().size) {
-                    val courseEntity = DataDummy.generateDummyCourses()[i]
-                    if (courseEntity.courseId == courseId) {
-                        populateCourse(courseEntity)
+                for(course in DataDummy.generateDummyCourses()) {
+                    if(course.courseId == courseId) {
+                        populateCourse(course)
                     }
                 }
             }
         }
 
-        rv_module.isNestedScrollingEnabled = false
-        rv_module.layoutManager = LinearLayoutManager(this)
-        rv_module.setHasFixedSize(true)
-        rv_module.adapter = adapter
-        val dividerItemDecoration = DividerItemDecoration(rv_module.context, DividerItemDecoration.VERTICAL)
-        rv_module.addItemDecoration(dividerItemDecoration)
+        with(rv_module) {
+            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(this@DetailCourseActivity)
+            setHasFixedSize(true)
+            this.adapter = adapter
+            val dividerItemDecoration = DividerItemDecoration(rv_module.context, DividerItemDecoration.VERTICAL)
+            addItemDecoration(dividerItemDecoration)
+        }
     }
 
     private fun populateCourse(courseEntity: CourseEntity) {
         text_title.text = courseEntity.title
         text_desc.text = courseEntity.description
-        text_date.text = "Deadline ${courseEntity.deadline}"
+        text_date.text = String.format(resources.getString(R.string.deadline_date), courseEntity.deadline)
 
         Glide.with(this)
                 .load(courseEntity.imagePath)

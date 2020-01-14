@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.academies.R
 import com.dicoding.academies.data.CourseEntity
 import com.dicoding.academies.ui.detail.DetailCourseActivity
 import kotlinx.android.synthetic.main.items_academy.view.*
-
-import java.util.ArrayList
+import java.util.*
 
 class AcademyAdapter : RecyclerView.Adapter<AcademyAdapter.CourseViewHolder>() {
     private var listCourses = ArrayList<CourseEntity>()
@@ -42,7 +40,7 @@ class AcademyAdapter : RecyclerView.Adapter<AcademyAdapter.CourseViewHolder>() {
             with(itemView) {
                 tv_item_title.text = course.title
                 tv_item_description.text = course.description
-                tv_item_date.text = "Deadline ${course.deadline}"
+                tv_item_date.text = String.format(itemView.resources.getString(R.string.deadline_date), course.deadline)
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailCourseActivity::class.java)
                     intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.courseId)

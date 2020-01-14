@@ -29,13 +29,13 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
             val courses = DataDummy.generateDummyCourses()
+            val adapter = BookmarkAdapter(this).apply { setCourses(courses) }
 
-            val adapter = BookmarkAdapter(this)
-            adapter.setCourses(courses)
-
-            rv_bookmark.layoutManager = LinearLayoutManager(context)
-            rv_bookmark.setHasFixedSize(true)
-            rv_bookmark.adapter = adapter
+            with(rv_bookmark) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                this.adapter = adapter
+            }
         }
     }
 

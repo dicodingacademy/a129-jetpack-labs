@@ -34,10 +34,9 @@ class DetailCourseActivity : AppCompatActivity() {
             if (courseId != null) {
                 val modules = DataDummy.generateDummyModules(courseId)
                 adapter.setModules(modules)
-                for (i in 0 until DataDummy.generateDummyCourses().size) {
-                    val courseEntity = DataDummy.generateDummyCourses()[i]
-                    if (courseEntity.courseId == courseId) {
-                        populateCourse(courseEntity)
+                for(course in DataDummy.generateDummyCourses()) {
+                    if(course.courseId == courseId) {
+                        populateCourse(course)
                     }
                 }
             }

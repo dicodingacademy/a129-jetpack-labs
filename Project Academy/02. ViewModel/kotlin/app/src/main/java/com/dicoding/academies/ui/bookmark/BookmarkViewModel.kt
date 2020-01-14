@@ -6,8 +6,7 @@ import com.dicoding.academies.data.CourseEntity
 import com.dicoding.academies.utils.DataDummy
 
 class BookmarkViewModel : ViewModel() {
-    fun getBookmarks(): List<CourseEntity> {
-        return DataDummy.generateDummyCourses()
-    }
+
+    fun getBookmarks(): List<CourseEntity> = DataDummy.generateDummyCourses()
 }
 

@@ -21,9 +21,7 @@ class CourseReaderViewModel : ViewModel() {
         this.moduleId = moduleId
     }
 
-    fun getModules(): ArrayList<ModuleEntity> {
-        return DataDummy.generateDummyModules(courseId)
-    }
+    fun getModules(): ArrayList<ModuleEntity> = DataDummy.generateDummyModules(courseId)
 
     fun getSelectedModule(): ModuleEntity {
         var module: ModuleEntity? = null

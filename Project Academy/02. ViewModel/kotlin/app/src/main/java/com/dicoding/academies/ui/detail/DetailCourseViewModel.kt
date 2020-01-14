@@ -24,9 +24,7 @@ class DetailCourseViewModel : ViewModel() {
         return course as CourseEntity
     }
 
-    fun getModules(): List<ModuleEntity> {
-        return DataDummy.generateDummyModules(courseId)
-    }
+    fun getModules(): List<ModuleEntity> = DataDummy.generateDummyModules(courseId)
 }
 
 

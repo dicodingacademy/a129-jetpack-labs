@@ -25,13 +25,13 @@ class AcademyFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
             val courses = DataDummy.generateDummyCourses()
+            val academyAdapter = AcademyAdapter().apply { setCourses(courses) }
 
-            val academyAdapter = AcademyAdapter()
-            academyAdapter.setCourses(courses)
-
-            rv_academy.layoutManager = LinearLayoutManager(context)
-            rv_academy.setHasFixedSize(true)
-            rv_academy.adapter = academyAdapter
+            with(rv_academy) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = academyAdapter
+            }
         }
     }
 }

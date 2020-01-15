@@ -19,8 +19,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     }
 
     override fun getAllCourses(): ArrayList<CourseEntity> {
-        val courseList = ArrayList<CourseEntity>()
         val courseResponses = remoteDataSource.getAllCourses()
+        val courseList = ArrayList<CourseEntity>()
         for (response in courseResponses) {
             val course = CourseEntity(response.id,
                     response.title,
@@ -35,8 +35,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     }
 
     override fun getBookmarkedCourses(): ArrayList<CourseEntity> {
-        val courseList = ArrayList<CourseEntity>()
         val courseResponses = remoteDataSource.getAllCourses()
+        val courseList = ArrayList<CourseEntity>()
         for (response in courseResponses) {
             val course = CourseEntity(response.id,
                     response.title,
@@ -51,8 +51,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
     override fun getCourseWithModules(courseId: String): CourseEntity {
-        lateinit var course: CourseEntity
         val courseResponses = remoteDataSource.getAllCourses()
+        lateinit var course: CourseEntity
         for (response in courseResponses) {
             if (response.id == courseId) {
                 course = CourseEntity(response.id,
@@ -67,8 +67,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     }
 
     override fun getAllModulesByCourse(courseId: String): ArrayList<ModuleEntity> {
-        val moduleList = ArrayList<ModuleEntity>()
         val moduleResponses = remoteDataSource.getModules(courseId)
+        val moduleList = ArrayList<ModuleEntity>()
         for(response in moduleResponses) {
             val course = ModuleEntity(response.moduleId,
                     response.courseId,
@@ -83,8 +83,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
 
     override fun getContent(courseId: String, moduleId: String): ModuleEntity {
-        lateinit var module: ModuleEntity
         val moduleResponses = remoteDataSource.getModules(courseId)
+        lateinit var module: ModuleEntity
         for(response in moduleResponses) {
             if (response.moduleId == moduleId) {
                 module = ModuleEntity(response.moduleId,
@@ -99,4 +99,3 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
         return module
     }
 }
-

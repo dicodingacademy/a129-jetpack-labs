@@ -10,15 +10,14 @@ import java.util.List;
 
 public class DetailCourseViewModel extends ViewModel {
     private String courseId;
-    private CourseEntity course;
 
-    public void setCourseId(String courseId) {
+    public void setSelectedCourse(String courseId) {
         this.courseId = courseId;
     }
 
     public CourseEntity getCourse() {
-        for (int i = 0; i < DataDummy.generateDummyCourses().size(); i++) {
-            CourseEntity courseEntity = DataDummy.generateDummyCourses().get(i);
+        CourseEntity course = null;
+        for (CourseEntity courseEntity : DataDummy.generateDummyCourses()) {
             if (courseEntity.getCourseId().equals(courseId)) {
                 course = courseEntity;
             }

@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_detail_course.*
 import kotlinx.android.synthetic.main.content_detail_course.*
 
 class DetailCourseActivity : AppCompatActivity() {
+
     companion object {
         const val EXTRA_COURSE = "extra_course"
     }
@@ -51,7 +52,7 @@ class DetailCourseActivity : AppCompatActivity() {
     private fun populateCourse(courseEntity: CourseEntity) {
         text_title.text = courseEntity.title
         text_desc.text = courseEntity.description
-        text_date.text = "Deadline ${courseEntity.deadline}"
+        text_date.text = resources.getString(R.string.deadline_date, courseEntity.deadline)
 
         Glide.with(this)
                 .load(courseEntity.imagePath)

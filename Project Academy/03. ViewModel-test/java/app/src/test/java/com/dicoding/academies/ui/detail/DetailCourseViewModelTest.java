@@ -21,12 +21,12 @@ public class DetailCourseViewModelTest {
     @Before
     public void setUp() {
         viewModel = new DetailCourseViewModel();
-        viewModel.setCourseId(courseId);
+        viewModel.setSelectedCourse(courseId);
     }
 
     @Test
     public void getCourse() {
-        viewModel.setCourseId(dummyCourse.getCourseId());
+        viewModel.setSelectedCourse(dummyCourse.getCourseId());
         CourseEntity courseEntity = viewModel.getCourse();
         assertNotNull(courseEntity);
         assertEquals(dummyCourse.getCourseId(), courseEntity.getCourseId());

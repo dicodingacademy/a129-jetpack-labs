@@ -2,11 +2,11 @@ package com.dicoding.academies.ui.home;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import com.dicoding.academies.R;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class HomeActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() !=null) {
             getSupportActionBar().setElevation(0);
         }
     }

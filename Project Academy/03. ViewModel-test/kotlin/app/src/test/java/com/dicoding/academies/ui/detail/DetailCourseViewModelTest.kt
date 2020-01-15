@@ -19,7 +19,7 @@ class DetailCourseViewModelTest {
 
     @Test
     fun getCourse() {
-        viewModel.courseId = dummyCourse.courseId
+        viewModel.setSelectedCourse(dummyCourse.courseId)
         val courseEntity = viewModel.getCourse()
         assertNotNull(courseEntity)
         assertEquals(dummyCourse.courseId, courseEntity.courseId)

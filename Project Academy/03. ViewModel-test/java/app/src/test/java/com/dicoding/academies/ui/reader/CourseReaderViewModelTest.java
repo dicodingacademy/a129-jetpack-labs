@@ -25,7 +25,7 @@ public class CourseReaderViewModelTest {
     @Before
     public void setUp() {
         viewModel = new CourseReaderViewModel();
-        viewModel.setCourseId(courseId);
+        viewModel.setSelectedCourse(courseId);
         viewModel.setSelectedModule(moduleId);
 
         ModuleEntity dummyModule = dummyModules.get(0);

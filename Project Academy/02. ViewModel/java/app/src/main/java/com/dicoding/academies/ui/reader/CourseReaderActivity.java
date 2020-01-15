@@ -26,7 +26,7 @@ public class CourseReaderActivity extends AppCompatActivity implements CourseRea
         if (bundle != null) {
             String courseId = bundle.getString(EXTRA_COURSE_ID);
             if (courseId != null) {
-                viewModel.setCourseId(courseId);
+                viewModel.setSelectedCourse(courseId);
                 populateFragment();
             }
         }

@@ -8,8 +8,8 @@ import java.util.*
 
 class CourseReaderViewModel : ViewModel() {
 
-    var courseId: String = ""
-    var moduleId: String = ""
+    private lateinit var courseId: String
+    private lateinit var moduleId: String
 
     fun setSelectedCourse(courseId: String) {
         this.courseId = courseId
@@ -19,18 +19,18 @@ class CourseReaderViewModel : ViewModel() {
         this.moduleId = moduleId
     }
 
-    fun getModules(): ArrayList<ModuleEntity> {
-        return DataDummy.generateDummyModules(courseId)
-    }
+    fun getModules(): ArrayList<ModuleEntity> = DataDummy.generateDummyModules(courseId)
 
     fun getSelectedModule(): ModuleEntity {
-        var module: ModuleEntity? = null
-        for (dataModule in getModules()) {
-            module = dataModule
-            module.contentEntity = ContentEntity("<h3 class=\\\"fr-text-bordered\\\">" + module.title + "</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>")
-            break
+        lateinit var module: ModuleEntity
+        for (moduleEntity in getModules()) {
+            if (moduleEntity.moduleId == moduleId) {
+                module = moduleEntity
+                module.contentEntity = ContentEntity("<h3 class=\\\"fr-text-bordered\\\">" + module.title + "</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>")
+                break
+            }
         }
-        return module as ModuleEntity
+        return module
     }
 }
 

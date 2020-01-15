@@ -19,8 +19,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     }
 
     override fun getAllCourses(): ArrayList<CourseEntity> {
-        val courseResponses = remoteDataSource.getAllCourses()
         val courseList = ArrayList<CourseEntity>()
+        val courseResponses = remoteDataSource.getAllCourses()
         for (response in courseResponses) {
             val course = CourseEntity(response.id,
                     response.title,
@@ -34,11 +34,10 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
         return courseList
     }
 
-
     override fun getBookmarkedCourses(): ArrayList<CourseEntity> {
         val courseList = ArrayList<CourseEntity>()
-        val courses = remoteDataSource.getAllCourses()
-        for (response in courses) {
+        val courseResponses = remoteDataSource.getAllCourses()
+        for (response in courseResponses) {
             val course = CourseEntity(response.id,
                     response.title,
                     response.description,
@@ -53,8 +52,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
     override fun getCourseWithModules(courseId: String): CourseEntity {
         lateinit var course: CourseEntity
-        val courses = remoteDataSource.getAllCourses()
-        for (response in courses) {
+        val courseResponses = remoteDataSource.getAllCourses()
+        for (response in courseResponses) {
             if (response.id == courseId) {
                 course = CourseEntity(response.id,
                         response.title,
@@ -84,12 +83,15 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
 
     override fun getContent(courseId: String, moduleId: String): ModuleEntity {
-        val moduleResponses = remoteDataSource.getModules(courseId)
         lateinit var module: ModuleEntity
+        val moduleResponses = remoteDataSource.getModules(courseId)
         for(response in moduleResponses) {
-            val id = response.moduleId
-            if (id == moduleId) {
-                module = ModuleEntity(id, response.courseId, response.title, response.position, false)
+            if (response.moduleId == moduleId) {
+                module = ModuleEntity(response.moduleId,
+                        response.courseId,
+                        response.title,
+                        response.position,
+                        false)
                 module.contentEntity = ContentEntity(remoteDataSource.getContent(moduleId).content)
                 break
             }

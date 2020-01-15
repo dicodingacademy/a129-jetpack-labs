@@ -7,8 +7,8 @@ import java.util.*
 
 class CourseReaderViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
 
-    var courseId: String = ""
-    var moduleId: String = ""
+    private lateinit var courseId: String
+    private lateinit var moduleId: String
 
     fun setSelectedCourse(courseId: String) {
         this.courseId = courseId

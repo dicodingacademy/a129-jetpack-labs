@@ -18,20 +18,20 @@ public class CourseReaderViewModel extends ViewModel {
         this.academyRepository = mAcademyRepository;
     }
 
-    public ArrayList<ModuleEntity> getModules() {
-        return academyRepository.getAllModulesByCourse(courseId);
-    }
-
-    public void setCourseId(String courseId) {
+    public void setSelectedCourse(String courseId) {
         this.courseId = courseId;
-    }
-
-    public ModuleEntity getSelectedModule() {
-        return academyRepository.getContent(courseId, moduleId);
     }
 
     public void setSelectedModule(String moduleId) {
         this.moduleId = moduleId;
+    }
+
+    public ArrayList<ModuleEntity> getModules() {
+        return academyRepository.getAllModulesByCourse(courseId);
+    }
+
+    public ModuleEntity getSelectedModule() {
+        return academyRepository.getContent(courseId, moduleId);
     }
 }
 

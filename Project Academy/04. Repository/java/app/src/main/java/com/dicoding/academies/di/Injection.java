@@ -9,8 +9,8 @@ import com.dicoding.academies.utils.JsonHelper;
 public class Injection {
     public static AcademyRepository provideRepository(Context context) {
 
-        RemoteDataSource remoteRepository = RemoteDataSource.getInstance(new JsonHelper(context));
+        RemoteDataSource remoteDataSource = RemoteDataSource.getInstance(new JsonHelper(context));
 
-        return AcademyRepository.getInstance(remoteRepository);
+        return AcademyRepository.getInstance(remoteDataSource);
     }
 }

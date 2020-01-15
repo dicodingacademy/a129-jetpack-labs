@@ -52,7 +52,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
     override fun getCourseWithModules(courseId: String): CourseEntity {
-        var course: CourseEntity? = null
+        lateinit var course: CourseEntity
         val courses = remoteDataSource.getAllCourses()
         for (response in courses) {
             if (response.id == courseId) {
@@ -64,7 +64,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
                         response.imagePath)
             }
         }
-        return course as CourseEntity
+        return course
     }
 
     override fun getAllModulesByCourse(courseId: String): ArrayList<ModuleEntity> {
@@ -85,16 +85,16 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
     override fun getContent(courseId: String, moduleId: String): ModuleEntity {
         val moduleResponses = remoteDataSource.getModules(courseId)
-        var module: ModuleEntity? = null
-        for(moduleResponse in moduleResponses) {
-            val id = moduleResponse.moduleId
+        lateinit var module: ModuleEntity
+        for(response in moduleResponses) {
+            val id = response.moduleId
             if (id == moduleId) {
-                module = ModuleEntity(id, moduleResponse.courseId, moduleResponse.title, moduleResponse.position, false)
+                module = ModuleEntity(id, response.courseId, response.title, response.position, false)
                 module.contentEntity = ContentEntity(remoteDataSource.getContent(moduleId).content)
                 break
             }
         }
-        return module as ModuleEntity
+        return module
     }
 }
 

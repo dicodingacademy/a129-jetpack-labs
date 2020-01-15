@@ -37,8 +37,7 @@ public class AcademyRepository implements AcademyDataSource {
     public ArrayList<CourseEntity> getAllCourses() {
         List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
         ArrayList<CourseEntity> courseList = new ArrayList<>();
-        for (int i = 0; i < courseResponses.size(); i++) {
-            CourseResponse response = courseResponses.get(i);
+        for (CourseResponse response : courseResponses) {
             CourseEntity course = new CourseEntity(response.getId(),
                     response.getTitle(),
                     response.getDescription(),
@@ -56,8 +55,7 @@ public class AcademyRepository implements AcademyDataSource {
     public CourseEntity getCourseWithModules(final String courseId) {
         CourseEntity course = null;
         List<CourseResponse> courses = remoteDataSource.getAllCourses();
-        for (int i = 0; i < courses.size(); i++) {
-            CourseResponse response = courses.get(i);
+        for (CourseResponse response : courses) {
             if (response.getId().equals(courseId)) {
                 course = new CourseEntity(response.getId(),
                         response.getTitle(),
@@ -75,8 +73,7 @@ public class AcademyRepository implements AcademyDataSource {
     public ArrayList<CourseEntity> getBookmarkedCourses() {
         ArrayList<CourseEntity> courseList = new ArrayList<>();
         List<CourseResponse> courses = remoteDataSource.getAllCourses();
-        for (int i = 0; i < courses.size(); i++) {
-            CourseResponse response = courses.get(i);
+        for (CourseResponse response : courses) {
             CourseEntity course = new CourseEntity(response.getId(),
                     response.getTitle(),
                     response.getDescription(),
@@ -92,8 +89,7 @@ public class AcademyRepository implements AcademyDataSource {
     public ArrayList<ModuleEntity> getAllModulesByCourse(String courseId) {
         ArrayList<ModuleEntity> moduleList = new ArrayList<>();
         List<ModuleResponse> moduleResponses = remoteDataSource.getModules(courseId);
-        for (int i = 0; i < moduleResponses.size(); i++) {
-            ModuleResponse response = moduleResponses.get(i);
+        for (ModuleResponse response : moduleResponses) {
             ModuleEntity course = new ModuleEntity(response.getModuleId(),
                     response.getCourseId(),
                     response.getTitle(),
@@ -102,7 +98,6 @@ public class AcademyRepository implements AcademyDataSource {
 
             moduleList.add(course);
         }
-
         return moduleList;
     }
 
@@ -110,21 +105,15 @@ public class AcademyRepository implements AcademyDataSource {
     @Override
     public ModuleEntity getContent(String courseId, String moduleId) {
         List<ModuleResponse> moduleResponses = remoteDataSource.getModules(courseId);
-
         ModuleEntity module = null;
-        for (int i = 0; i < moduleResponses.size(); i++) {
-            ModuleResponse moduleResponse = moduleResponses.get(i);
-
-            String id = moduleResponse.getModuleId();
-
+        for (ModuleResponse response : moduleResponses) {
+            String id = response.getModuleId();
             if (id.equals(moduleId)) {
-                module = new ModuleEntity(id, moduleResponse.getCourseId(), moduleResponse.getTitle(), moduleResponse.getPosition(), false);
-
+                module = new ModuleEntity(id, response.getCourseId(), response.getTitle(), response.getPosition(), false);
                 module.contentEntity = new ContentEntity(remoteDataSource.getContent(moduleId).getContent());
                 break;
             }
         }
-
         return module;
     }
 }

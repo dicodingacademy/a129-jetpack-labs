@@ -1,11 +1,10 @@
 package com.dicoding.academies.ui.detail
 
-import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.utils.DataDummy
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
+import org.junit.Test
 
 class DetailCourseViewModelTest {
     private lateinit var viewModel: DetailCourseViewModel

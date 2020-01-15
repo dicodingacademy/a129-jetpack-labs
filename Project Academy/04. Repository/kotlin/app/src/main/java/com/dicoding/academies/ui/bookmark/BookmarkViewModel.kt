@@ -7,5 +7,6 @@ import com.dicoding.academies.data.source.local.entity.CourseEntity
 class BookmarkViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
 
     fun getBookmarks(): List<CourseEntity> = academyRepository.getBookmarkedCourses()
+
 }
 

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.academies.R
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
-import com.dicoding.academies.ui.bookmark.BookmarkViewModel
 import com.dicoding.academies.ui.reader.CourseReaderActivity
 import com.dicoding.academies.ui.reader.CourseReaderCallback
 import com.dicoding.academies.ui.reader.CourseReaderViewModel

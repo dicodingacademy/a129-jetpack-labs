@@ -9,8 +9,8 @@ import com.dicoding.academies.utils.JsonHelper
 object Injection {
     fun provideRepository(context: Context): AcademyRepository {
 
-        val remoteRepository = RemoteDataSource.getInstance(JsonHelper(context))
+        val remoteDataSource = RemoteDataSource.getInstance(JsonHelper(context))
 
-        return AcademyRepository.getInstance(remoteRepository)
+        return AcademyRepository.getInstance(remoteDataSource)
     }
 }

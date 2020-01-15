@@ -2,7 +2,6 @@ package com.dicoding.academies.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -61,7 +60,7 @@ public class DetailCourseActivity extends AppCompatActivity {
         if (extras != null) {
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
-                viewModel.setCourseId(courseId);
+                viewModel.setSelectedCourse(courseId);
                 List<ModuleEntity> modules = viewModel.getModules();
                 adapter.setModules(modules);
                 populateCourse(viewModel.getCourse());

@@ -16,20 +16,16 @@ public class DetailCourseViewModel extends ViewModel {
         this.academyRepository = mAcademyRepository;
     }
 
+    public void setSelectedCourse(String courseId) {
+        this.courseId = courseId;
+    }
+
     public CourseEntity getCourse() {
         return academyRepository.getCourseWithModules(courseId);
     }
 
     public List<ModuleEntity> getModules() {
         return academyRepository.getAllModulesByCourse(courseId);
-    }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
     }
 }
 

@@ -33,21 +33,18 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         return INSTANCE;
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
 
         if (modelClass.isAssignableFrom(AcademyViewModel.class)) {
-            //noinspection unchecked
             return (T) new AcademyViewModel(mAcademyRepository);
         } else if (modelClass.isAssignableFrom(DetailCourseViewModel.class)) {
-            //noinspection unchecked
             return (T) new DetailCourseViewModel(mAcademyRepository);
         } else if (modelClass.isAssignableFrom(BookmarkViewModel.class)) {
-            //noinspection unchecked
             return (T) new BookmarkViewModel(mAcademyRepository);
         } else if (modelClass.isAssignableFrom(CourseReaderViewModel.class)) {
-            //noinspection unchecked
             return (T) new CourseReaderViewModel(mAcademyRepository);
         }
 

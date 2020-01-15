@@ -23,6 +23,7 @@ public class JsonHelper {
         this.context = context;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private String parsingFileToString(String fileName) {
         try {
             InputStream is = context.getAssets().open(fileName);
@@ -39,19 +40,22 @@ public class JsonHelper {
     public List<CourseResponse> loadCourses() {
         ArrayList<CourseResponse> list = new ArrayList<>();
         try {
-            JSONObject responseObject = new JSONObject(parsingFileToString("CourseResponses.json"));
-            JSONArray listArray = responseObject.getJSONArray("courses");
-            for (int i = 0; i < listArray.length(); i++) {
-                JSONObject course = listArray.getJSONObject(i);
+            String json = parsingFileToString("CourseResponses.json");
+            if (json != null) {
+                JSONObject responseObject = new JSONObject(json);
+                JSONArray listArray = responseObject.getJSONArray("courses");
+                for (int i = 0; i < listArray.length(); i++) {
+                    JSONObject course = listArray.getJSONObject(i);
 
-                String id = course.getString("id");
-                String title = course.getString("title");
-                String description = course.getString("description");
-                String date = course.getString("date");
-                String imagePath = course.getString("imagePath");
+                    String id = course.getString("id");
+                    String title = course.getString("title");
+                    String description = course.getString("description");
+                    String date = course.getString("date");
+                    String imagePath = course.getString("imagePath");
 
-                CourseResponse courseResponse = new CourseResponse(id, title, description, date, imagePath);
-                list.add(courseResponse);
+                    CourseResponse courseResponse = new CourseResponse(id, title, description, date, imagePath);
+                    list.add(courseResponse);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

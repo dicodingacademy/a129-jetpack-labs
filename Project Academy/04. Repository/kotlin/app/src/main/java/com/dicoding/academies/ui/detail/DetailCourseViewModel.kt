@@ -12,13 +12,9 @@ class DetailCourseViewModel(private val academyRepository: AcademyRepository) : 
         this.courseId = courseId
     }
 
-    fun getCourse(): CourseEntity {
-        return academyRepository.getCourseWithModules(courseId)
-    }
+    fun getCourse(): CourseEntity = academyRepository.getCourseWithModules(courseId)
 
-    fun getModules(): List<ModuleEntity> {
-        return academyRepository.getAllModulesByCourse(courseId)
-    }
+    fun getModules(): List<ModuleEntity> = academyRepository.getAllModulesByCourse(courseId)
 }
 
 

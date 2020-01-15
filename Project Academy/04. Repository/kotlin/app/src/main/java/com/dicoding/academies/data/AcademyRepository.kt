@@ -21,8 +21,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     override fun getAllCourses(): ArrayList<CourseEntity> {
         val courseResponses = remoteDataSource.getAllCourses()
         val courseList = ArrayList<CourseEntity>()
-        for (i in courseResponses.indices) {
-            val response = courseResponses[i]
+        for (response in courseResponses) {
             val course = CourseEntity(response.id,
                     response.title,
                     response.description,
@@ -39,8 +38,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     override fun getBookmarkedCourses(): ArrayList<CourseEntity> {
         val courseList = ArrayList<CourseEntity>()
         val courses = remoteDataSource.getAllCourses()
-        for (i in courses.indices) {
-            val response = courses[i]
+        for (response in courses) {
             val course = CourseEntity(response.id,
                     response.title,
                     response.description,
@@ -56,8 +54,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     override fun getCourseWithModules(courseId: String): CourseEntity {
         var course: CourseEntity? = null
         val courses = remoteDataSource.getAllCourses()
-        for (i in courses.indices) {
-            val response = courses[i]
+        for (response in courses) {
             if (response.id == courseId) {
                 course = CourseEntity(response.id,
                         response.title,
@@ -73,8 +70,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
     override fun getAllModulesByCourse(courseId: String): ArrayList<ModuleEntity> {
         val moduleList = ArrayList<ModuleEntity>()
         val moduleResponses = remoteDataSource.getModules(courseId)
-        for (i in moduleResponses.indices) {
-            val response = moduleResponses[i]
+        for(response in moduleResponses) {
             val course = ModuleEntity(response.moduleId,
                     response.courseId,
                     response.title,
@@ -83,28 +79,21 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
             moduleList.add(course)
         }
-
         return moduleList
     }
 
 
     override fun getContent(courseId: String, moduleId: String): ModuleEntity {
         val moduleResponses = remoteDataSource.getModules(courseId)
-
         var module: ModuleEntity? = null
-        for (i in moduleResponses.indices) {
-            val moduleResponse = moduleResponses[i]
-
+        for(moduleResponse in moduleResponses) {
             val id = moduleResponse.moduleId
-
             if (id == moduleId) {
                 module = ModuleEntity(id, moduleResponse.courseId, moduleResponse.title, moduleResponse.position, false)
-
                 module.contentEntity = ContentEntity(remoteDataSource.getContent(moduleId).content)
                 break
             }
         }
-
         return module as ModuleEntity
     }
 }

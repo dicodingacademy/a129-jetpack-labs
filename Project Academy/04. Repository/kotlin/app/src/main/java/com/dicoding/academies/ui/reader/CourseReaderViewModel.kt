@@ -18,12 +18,8 @@ class CourseReaderViewModel(private val academyRepository: AcademyRepository) : 
         this.moduleId = moduleId
     }
 
-    fun getModules(): ArrayList<ModuleEntity> {
-        return academyRepository.getAllModulesByCourse(courseId)
-    }
+    fun getModules(): ArrayList<ModuleEntity> = academyRepository.getAllModulesByCourse(courseId)
 
-    fun getSelectedModule(): ModuleEntity {
-        return academyRepository.getContent(courseId, moduleId)
-    }
+    fun getSelectedModule(): ModuleEntity = academyRepository.getContent(courseId, moduleId)
 }
 

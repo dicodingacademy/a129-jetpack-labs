@@ -23,7 +23,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private static final int[] TAB_TITLES = new int[]{R.string.home, R.string.bookmark};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
     }
@@ -31,13 +31,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
-        if (position == 0) {
-            fragment = new AcademyFragment();
-        } else if (position == 1) {
-            fragment = new BookmarkFragment();
+        switch (position){
+            case 0:
+                return new AcademyFragment();
+            case 1:
+                return new BookmarkFragment();
+            default:
+                return new Fragment();
         }
-        return fragment;
     }
 
     @Nullable
@@ -48,7 +49,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
         return 2;
     }
 }

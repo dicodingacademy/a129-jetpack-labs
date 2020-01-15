@@ -65,7 +65,7 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
             with(itemView){
                 tv_item_title.text = course.title
                 tv_item_description.text = course.description
-                tv_item_date.text = "Deadline ${course.deadline}"
+                tv_item_date.text = itemView.resources.getString(R.string.deadline_date, course.deadline)
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailCourseActivity::class.java)
                     intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.courseId)

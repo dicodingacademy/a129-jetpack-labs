@@ -15,10 +15,11 @@ class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewH
 
     private val listModules = ArrayList<ModuleEntity>()
 
+
     fun setModules(modules: List<ModuleEntity>?) {
         if (modules == null) return
-        this.listModules.clear()
-        this.listModules.addAll(modules)
+        listModules.clear()
+        listModules.addAll(modules)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {

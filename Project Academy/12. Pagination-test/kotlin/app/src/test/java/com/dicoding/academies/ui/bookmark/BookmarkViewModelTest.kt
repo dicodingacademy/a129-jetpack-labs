@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
-import com.dicoding.academies.utils.DataDummy
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before

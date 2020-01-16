@@ -1,14 +1,9 @@
 package com.dicoding.academies.utils
 
 import androidx.paging.PagedList
-import net.bytebuddy.description.method.MethodDescription
-
-import org.mockito.stubbing.Answer
-
 import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 object PagedListUtil {
 

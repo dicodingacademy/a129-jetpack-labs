@@ -149,7 +149,6 @@ public class CourseReaderActivity extends AppCompatActivity implements CourseRea
                 default:
                     break;
             }
-
         }
     };
 }

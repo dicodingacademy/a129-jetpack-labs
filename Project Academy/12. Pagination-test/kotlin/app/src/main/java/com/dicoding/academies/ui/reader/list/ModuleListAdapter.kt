@@ -35,9 +35,7 @@ class ModuleListAdapter internal constructor(private val listener: MyAdapterClic
         }
     }
 
-    override fun getItemCount(): Int {
-        return listModules.size
-    }
+    override fun getItemCount(): Int = listModules.size
 
     override fun getItemViewType(position: Int): Int {
         val modulePosition = listModules[position].position

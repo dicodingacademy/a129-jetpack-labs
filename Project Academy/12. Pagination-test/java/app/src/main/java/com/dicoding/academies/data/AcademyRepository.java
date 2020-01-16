@@ -71,8 +71,7 @@ public class AcademyRepository implements AcademyDataSource {
             @Override
             public void saveCallResult(List<CourseResponse> courseResponses) {
                 ArrayList<CourseEntity> courseList = new ArrayList<>();
-                for (int i = 0; i < courseResponses.size(); i++) {
-                    CourseResponse response = courseResponses.get(i);
+                for (CourseResponse response : courseResponses) {
                     CourseEntity course = new CourseEntity(response.getId(),
                             response.getTitle(),
                             response.getDescription(),
@@ -87,7 +86,16 @@ public class AcademyRepository implements AcademyDataSource {
         }.asLiveData();
     }
 
-    // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
+    @Override
+    public LiveData<PagedList<CourseEntity>> getBookmarkedCourses() {
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(4)
+                .setPageSize(4)
+                .build();
+        return new LivePagedListBuilder<>(localDataSource.getBookmarkedCourses(), config).build();
+    }
+
     @Override
     public LiveData<Resource<CourseWithModule>> getCourseWithModules(final String courseId) {
         return new NetworkBoundResource<CourseWithModule, List<ModuleResponse>>(appExecutors) {
@@ -110,8 +118,7 @@ public class AcademyRepository implements AcademyDataSource {
             protected void saveCallResult(List<ModuleResponse> moduleResponses) {
 
                 ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-                for (int i = 0; i < moduleResponses.size(); i++) {
-                    ModuleResponse response = moduleResponses.get(i);
+                for (ModuleResponse response : moduleResponses) {
                     ModuleEntity course = new ModuleEntity(response.getModuleId(),
                             response.getCourseId(),
                             response.getTitle(),
@@ -148,8 +155,7 @@ public class AcademyRepository implements AcademyDataSource {
             protected void saveCallResult(List<ModuleResponse> moduleResponses) {
 
                 ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-                for (int i = 0; i < moduleResponses.size(); i++) {
-                    ModuleResponse response = moduleResponses.get(i);
+                for (ModuleResponse response : moduleResponses) {
                     ModuleEntity course = new ModuleEntity(response.getModuleId(),
                             response.getCourseId(),
                             response.getTitle(),
@@ -190,16 +196,6 @@ public class AcademyRepository implements AcademyDataSource {
                 localDataSource.updateContent(contentResponse.getContent(), moduleId);
             }
         }.asLiveData();
-    }
-
-    @Override
-    public LiveData<PagedList<CourseEntity>> getBookmarkedCourses() {
-        PagedList.Config config = new PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(4)
-                .setPageSize(4)
-                .build();
-        return new LivePagedListBuilder<>(localDataSource.getBookmarkedCourses(), config).build();
     }
 
     @Override

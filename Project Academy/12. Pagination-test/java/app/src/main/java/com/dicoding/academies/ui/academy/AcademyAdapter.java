@@ -39,6 +39,15 @@ public class AcademyAdapter extends PagedListAdapter<CourseEntity, AcademyAdapte
                 }
             };
 
+//    hapus kode di bawah ini
+//    private List<CourseEntity> listCourses = new ArrayList<>();
+//
+//    void setCourses(List<CourseEntity> listCourses) {
+//        if (listCourses == null) return;
+//        this.listCourses.clear();
+//        this.listCourses.addAll(listCourses);
+//    }
+
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,10 +58,13 @@ public class AcademyAdapter extends PagedListAdapter<CourseEntity, AcademyAdapte
     @Override
     public void onBindViewHolder(@NonNull final CourseViewHolder holder, int position) {
         CourseEntity course = getItem(position);
-        if (course != null) {
-            holder.bind(course);
-        }
+        holder.bind(course);
     }
+
+//    @Override
+//    public int getItemCount() {
+//        return listCourses.size();
+//    }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle;
@@ -71,7 +83,7 @@ public class AcademyAdapter extends PagedListAdapter<CourseEntity, AcademyAdapte
         void bind(CourseEntity course) {
             tvTitle.setText(course.getTitle());
             tvDescription.setText(course.getDescription());
-            tvDate.setText(String.format("Deadline %s", course.getDeadline()));
+            tvDate.setText(itemView.getResources().getString(R.string.deadline_date, course.getDeadline()));
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailCourseActivity.class);
                 intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.getCourseId());

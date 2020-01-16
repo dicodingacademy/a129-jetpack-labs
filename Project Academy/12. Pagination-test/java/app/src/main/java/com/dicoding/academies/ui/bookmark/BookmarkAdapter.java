@@ -42,6 +42,14 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity, BookmarkAdap
                 }
             };
 
+//    hapus kode di bawah ini
+//    private ArrayList<CourseEntity> listCourses = new ArrayList<>();
+//    public void setCourses(List<CourseEntity> courses) {
+//        if (courses == null) return;
+//        this.listCourses.clear();
+//        this.listCourses.addAll(courses);
+//    }
+
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,6 +68,11 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity, BookmarkAdap
     public CourseEntity getSwipedData(int swipedPosition) {
         return getItem(swipedPosition);
     }
+
+//    @Override
+//    public int getItemCount() {
+//        return listCourses.size();
+//    }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle;
@@ -80,7 +93,7 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity, BookmarkAdap
         void bind(CourseEntity course) {
             tvTitle.setText(course.getTitle());
             tvDescription.setText(course.getDescription());
-            tvDate.setText(String.format("Deadline %s", course.getDeadline()));
+            tvDate.setText(itemView.getResources().getString(R.string.deadline_date, course.getDeadline()));
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailCourseActivity.class);
                 intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.getCourseId());

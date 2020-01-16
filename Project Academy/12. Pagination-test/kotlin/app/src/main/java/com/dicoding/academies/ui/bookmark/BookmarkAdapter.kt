@@ -32,6 +32,14 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
             }
         }
     }
+//    hapus kode di bawah ini
+//    private val listCourses = ArrayList<CourseEntity>()
+//
+//    fun setCourses(courses: List<CourseEntity>?) {
+//        if (courses == null) return
+//        this.listCourses.clear()
+//        this.listCourses.addAll(courses)
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.items_bookmark, parent, false)
@@ -43,9 +51,10 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
         holder.bind(course)
     }
 
-    fun getSwipedData(swipedPosition: Int): CourseEntity {
-        return getItem(swipedPosition) as CourseEntity
-    }
+    fun getSwipedData(swipedPosition: Int): CourseEntity = getItem(swipedPosition) as CourseEntity
+
+//    hapus kode di bawah ini
+//    override fun getItemCount(): Int = listCourses.size
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(course: CourseEntity){

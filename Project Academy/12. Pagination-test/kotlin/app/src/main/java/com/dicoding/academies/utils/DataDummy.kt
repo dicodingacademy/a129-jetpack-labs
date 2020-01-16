@@ -160,18 +160,16 @@ object DataDummy {
         return modules
     }
 
-    fun generateRemoteDummyContent(moduleId: String): ContentResponse {
-        return ContentResponse(moduleId, "This is a dummy content")
-    }
+    fun generateRemoteDummyContent(moduleId: String): ContentResponse =
+            ContentResponse(moduleId, "This is a dummy content")
 
     fun generateDummyCourseWithModules(course: CourseEntity, bookmarked: Boolean): CourseWithModule {
         course.bookmarked = bookmarked
         return CourseWithModule(course, generateDummyModules(course.courseId))
     }
 
-    fun generateDummyContent(moduleId: String): ContentEntity {
-        return ContentEntity("This is a dummy content")
-    }
+    private fun generateDummyContent(moduleId: String): ContentEntity =
+            ContentEntity("This is a dummy content")
 
     fun generateDummyModuleWithContent(courseId: String): ModuleEntity {
         val moduleEntity = generateDummyModules(courseId)[0]

@@ -1,13 +1,11 @@
 package com.dicoding.academies.ui.academy
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
-import com.dicoding.academies.utils.DataDummy
 import com.dicoding.academies.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

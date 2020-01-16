@@ -8,7 +8,6 @@ import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseWithModule
 import com.dicoding.academies.vo.Resource
 
-
 class DetailCourseViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
     val courseId = MutableLiveData<String>()
 

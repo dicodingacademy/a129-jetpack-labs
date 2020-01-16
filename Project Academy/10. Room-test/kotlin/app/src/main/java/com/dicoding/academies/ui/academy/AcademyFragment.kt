@@ -52,9 +52,11 @@ class AcademyFragment : Fragment() {
                 }
             })
 
-            rv_academy.layoutManager = LinearLayoutManager(context)
-            rv_academy.setHasFixedSize(true)
-            rv_academy.adapter = academyAdapter
+            with(rv_academy) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = academyAdapter
+            }
         }
     }
 }

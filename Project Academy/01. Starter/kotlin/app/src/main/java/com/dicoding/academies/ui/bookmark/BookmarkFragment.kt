@@ -29,7 +29,8 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
             val courses = DataDummy.generateDummyCourses()
-            val adapter = BookmarkAdapter(this).apply { setCourses(courses) }
+            val adapter = BookmarkAdapter(this)
+            adapter.setCourses(courses)
 
             with(rv_bookmark) {
                 layoutManager = LinearLayoutManager(context)

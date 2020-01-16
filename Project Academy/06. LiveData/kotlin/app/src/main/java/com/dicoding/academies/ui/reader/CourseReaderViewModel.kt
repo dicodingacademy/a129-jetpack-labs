@@ -7,8 +7,8 @@ import com.dicoding.academies.data.source.local.entity.ModuleEntity
 
 class CourseReaderViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
 
-    var courseId: String = ""
-    var moduleId: String = ""
+    lateinit var courseId: String
+    lateinit var moduleId: String
 
     fun setSelectedCourse(courseId: String) {
         this.courseId = courseId
@@ -18,12 +18,10 @@ class CourseReaderViewModel(private val academyRepository: AcademyRepository) : 
         this.moduleId = moduleId
     }
 
-    fun getModules(): LiveData<List<ModuleEntity>> {
-        return academyRepository.getAllModulesByCourse(courseId)
-    }
+    fun getModules(): LiveData<List<ModuleEntity>> =
+            academyRepository.getAllModulesByCourse(courseId)
 
-    fun getSelectedModule(): LiveData<ModuleEntity> {
-        return academyRepository.getContent(courseId, moduleId)
-    }
+    fun getSelectedModule(): LiveData<ModuleEntity> =
+            academyRepository.getContent(courseId, moduleId)
 }
 

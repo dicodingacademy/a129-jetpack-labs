@@ -36,11 +36,10 @@ public class FakeAcademyRepository implements AcademyDataSource {
     }
 
     @Override
-    public LiveData<List<CourseEntity>> getAllCourses() {
+    public ArrayList<CourseEntity> getAllCourses() {
         List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
         ArrayList<CourseEntity> courseList = new ArrayList<>();
-        for (int i = 0; i < courseResponses.size(); i++) {
-            CourseResponse response = courseResponses.get(i);
+        for (CourseResponse response : courseResponses) {
             CourseEntity course = new CourseEntity(response.getId(),
                     response.getTitle(),
                     response.getDescription(),
@@ -53,13 +52,28 @@ public class FakeAcademyRepository implements AcademyDataSource {
         return courseList;
     }
 
+    @Override
+    public ArrayList<CourseEntity> getBookmarkedCourses() {
+        List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
+        ArrayList<CourseEntity> courseList = new ArrayList<>();
+        for (CourseResponse response : courseResponses) {
+            CourseEntity course = new CourseEntity(response.getId(),
+                    response.getTitle(),
+                    response.getDescription(),
+                    response.getDate(),
+                    false,
+                    response.getImagePath());
+            courseList.add(course);
+        }
+        return courseList;
+    }
+
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
     @Override
-    public MutableLiveData<CourseEntity> getCourseWithModules(final String courseId) {
+    public CourseEntity getCourseWithModules(final String courseId) {
+        List<CourseResponse> courseResponses = remoteDataSource.getAllCourses();
         CourseEntity course = null;
-        List<CourseResponse> courses = remoteDataSource.getAllCourses();
-        for (int i = 0; i < courses.size(); i++) {
-            CourseResponse response = courses.get(i);
+        for (CourseResponse response : courseResponses) {
             if (response.getId().equals(courseId)) {
                 course = new CourseEntity(response.getId(),
                         response.getTitle(),
@@ -72,30 +86,11 @@ public class FakeAcademyRepository implements AcademyDataSource {
         return course;
     }
 
-
-    @Override
-    public ArrayList<CourseEntity> getBookmarkedCourses() {
-        ArrayList<CourseEntity> courseList = new ArrayList<>();
-        List<CourseResponse> courses = remoteDataSource.getAllCourses();
-        for (int i = 0; i < courses.size(); i++) {
-            CourseResponse response = courses.get(i);
-            CourseEntity course = new CourseEntity(response.getId(),
-                    response.getTitle(),
-                    response.getDescription(),
-                    response.getDate(),
-                    false,
-                    response.getImagePath());
-            courseList.add(course);
-        }
-        return courseList;
-    }
-
     @Override
     public ArrayList<ModuleEntity> getAllModulesByCourse(String courseId) {
-        ArrayList<ModuleEntity> moduleList = new ArrayList<>();
         List<ModuleResponse> moduleResponses = remoteDataSource.getModules(courseId);
-        for (int i = 0; i < moduleResponses.size(); i++) {
-            ModuleResponse response = moduleResponses.get(i);
+        ArrayList<ModuleEntity> moduleList = new ArrayList<>();
+        for (ModuleResponse response : moduleResponses) {
             ModuleEntity course = new ModuleEntity(response.getModuleId(),
                     response.getCourseId(),
                     response.getTitle(),
@@ -104,7 +99,6 @@ public class FakeAcademyRepository implements AcademyDataSource {
 
             moduleList.add(course);
         }
-
         return moduleList;
     }
 
@@ -112,21 +106,18 @@ public class FakeAcademyRepository implements AcademyDataSource {
     @Override
     public ModuleEntity getContent(String courseId, String moduleId) {
         List<ModuleResponse> moduleResponses = remoteDataSource.getModules(courseId);
-
         ModuleEntity module = null;
-        for (int i = 0; i < moduleResponses.size(); i++) {
-            ModuleResponse moduleResponse = moduleResponses.get(i);
-
-            String id = moduleResponse.getModuleId();
-
-            if (id.equals(moduleId)) {
-                module = new ModuleEntity(id, moduleResponse.getCourseId(), moduleResponse.getTitle(), moduleResponse.getPosition(), false);
-
+        for (ModuleResponse response : moduleResponses) {
+            if (response.getModuleId().equals(moduleId)) {
+                module = new ModuleEntity(response.getModuleId(),
+                        response.getCourseId(),
+                        response.getTitle(),
+                        response.getPosition(),
+                        false);
                 module.contentEntity = new ContentEntity(remoteDataSource.getContent(moduleId).getContent());
                 break;
             }
         }
-
         return module;
     }
 }

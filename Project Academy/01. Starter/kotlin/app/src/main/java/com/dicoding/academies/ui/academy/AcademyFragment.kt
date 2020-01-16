@@ -25,7 +25,8 @@ class AcademyFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         if (activity != null) {
             val courses = DataDummy.generateDummyCourses()
-            val academyAdapter = AcademyAdapter().apply { setCourses(courses) }
+            val academyAdapter = AcademyAdapter()
+            academyAdapter.setCourses(courses)
 
             with(rv_academy) {
                 layoutManager = LinearLayoutManager(context)

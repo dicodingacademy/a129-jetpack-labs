@@ -11,8 +11,7 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
     override fun getAllCourses(): ArrayList<CourseEntity> {
         val courseResponses = remoteDataSource.getAllCourses()
         val courseList = ArrayList<CourseEntity>()
-        for (i in courseResponses.indices) {
-            val response = courseResponses[i]
+        for (response in courseResponses) {
             val course = CourseEntity(response.id,
                     response.title,
                     response.description,
@@ -25,12 +24,10 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
         return courseList
     }
 
-
     override fun getBookmarkedCourses(): ArrayList<CourseEntity> {
+        val courseResponses = remoteDataSource.getAllCourses()
         val courseList = ArrayList<CourseEntity>()
-        val courses = remoteDataSource.getAllCourses()
-        for (i in courses.indices) {
-            val response = courses[i]
+        for (response in courseResponses) {
             val course = CourseEntity(response.id,
                     response.title,
                     response.description,
@@ -44,10 +41,9 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
 
     // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
     override fun getCourseWithModules(courseId: String): CourseEntity {
-        var course: CourseEntity? = null
-        val courses = remoteDataSource.getAllCourses()
-        for (i in courses.indices) {
-            val response = courses[i]
+        val courseResponses = remoteDataSource.getAllCourses()
+        lateinit var course: CourseEntity
+        for (response in courseResponses) {
             if (response.id == courseId) {
                 course = CourseEntity(response.id,
                         response.title,
@@ -57,14 +53,13 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
                         response.imagePath)
             }
         }
-        return course as CourseEntity
+        return course
     }
 
     override fun getAllModulesByCourse(courseId: String): ArrayList<ModuleEntity> {
-        val moduleList = ArrayList<ModuleEntity>()
         val moduleResponses = remoteDataSource.getModules(courseId)
-        for (i in moduleResponses.indices) {
-            val response = moduleResponses[i]
+        val moduleList = ArrayList<ModuleEntity>()
+        for(response in moduleResponses) {
             val course = ModuleEntity(response.moduleId,
                     response.courseId,
                     response.title,
@@ -73,29 +68,25 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
 
             moduleList.add(course)
         }
-
         return moduleList
     }
 
 
     override fun getContent(courseId: String, moduleId: String): ModuleEntity {
         val moduleResponses = remoteDataSource.getModules(courseId)
-
-        var module: ModuleEntity? = null
-        for (i in moduleResponses.indices) {
-            val moduleResponse = moduleResponses[i]
-
-            val id = moduleResponse.moduleId
-
-            if (id == moduleId) {
-                module = ModuleEntity(id, moduleResponse.courseId, moduleResponse.title, moduleResponse.position, false)
-
+        lateinit var module: ModuleEntity
+        for(response in moduleResponses) {
+            if (response.moduleId == moduleId) {
+                module = ModuleEntity(response.moduleId,
+                        response.courseId,
+                        response.title,
+                        response.position,
+                        false)
                 module.contentEntity = ContentEntity(remoteDataSource.getContent(moduleId).content)
                 break
             }
         }
-
-        return module as ModuleEntity
+        return module
     }
 }
 

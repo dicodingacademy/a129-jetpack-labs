@@ -29,15 +29,13 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
         remoteDataSource.getAllCourses(object : LoadCoursesCallback {
             override fun onAllCoursesReceived(courseResponses: List<CourseResponse>) {
                 val courseList = ArrayList<CourseEntity>()
-                for (i in courseResponses.indices) {
-                    val response = courseResponses[i]
+                for (response in courseResponses) {
                     val course = CourseEntity(response.id,
                             response.title,
                             response.description,
                             response.date,
                             false,
                             response.imagePath)
-
                     courseList.add(course)
                 }
                 courseResults.postValue(courseList)
@@ -52,9 +50,8 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
         remoteDataSource.getAllCourses(object : LoadCoursesCallback {
             override fun onAllCoursesReceived(courseResponses: List<CourseResponse>) {
-                val courseList = ArrayList<CourseEntity>()
-                for (i in courseResponses.indices) {
-                    val response = courseResponses[i]
+                val courseList = java.util.ArrayList<CourseEntity>()
+                for (response in courseResponses) {
                     val course = CourseEntity(response.id,
                             response.title,
                             response.description,
@@ -74,18 +71,18 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
         remoteDataSource.getAllCourses(object : LoadCoursesCallback {
             override fun onAllCoursesReceived(courseResponses: List<CourseResponse>) {
-                for (i in courseResponses.indices) {
-                    val response = courseResponses[i]
+                lateinit var course: CourseEntity
+                for (response in courseResponses) {
                     if (response.id == courseId) {
-                        val course = CourseEntity(response.id,
+                        course = CourseEntity(response.id,
                                 response.title,
                                 response.description,
                                 response.date,
                                 false,
                                 response.imagePath)
-                        courseResult.postValue(course)
                     }
                 }
+                courseResult.postValue(course)
             }
         })
 
@@ -98,8 +95,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
         remoteDataSource.getModules(courseId, object : RemoteDataSource.LoadModulesCallback {
             override fun onAllModulesReceived(moduleResponses: List<ModuleResponse>) {
                 val moduleList = ArrayList<ModuleEntity>()
-                for (i in moduleResponses.indices) {
-                    val response = moduleResponses[i]
+                for (response in moduleResponses) {
                     val course = ModuleEntity(response.moduleId,
                             response.courseId,
                             response.title,
@@ -120,15 +116,14 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
         remoteDataSource.getModules(courseId, object : RemoteDataSource.LoadModulesCallback {
             override fun onAllModulesReceived(moduleResponses: List<ModuleResponse>) {
-                val module: ModuleEntity
-                for (i in moduleResponses.indices) {
-                    val moduleResponse = moduleResponses[i]
-
-                    val id = moduleResponse.moduleId
-
-                    if (id == moduleId) {
-                        module = ModuleEntity(id, moduleResponse.courseId, moduleResponse.title, moduleResponse.position, false)
-
+                lateinit var module: ModuleEntity
+                for (response in moduleResponses) {
+                    if (response.moduleId == moduleId) {
+                        module = ModuleEntity(response.moduleId,
+                                response.courseId,
+                                response.title,
+                                response.position,
+                                false)
                         remoteDataSource.getContent(moduleId, object : RemoteDataSource.LoadContentCallback {
                             override fun onContentReceived(contentResponse: ContentResponse) {
                                 module.contentEntity = ContentEntity(contentResponse.content)

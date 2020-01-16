@@ -41,9 +41,11 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
                 adapter.notifyDataSetChanged()
             })
 
-            rv_bookmark.layoutManager = LinearLayoutManager(context)
-            rv_bookmark.setHasFixedSize(true)
-            rv_bookmark.adapter = adapter
+            with(rv_bookmark) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                this.adapter = adapter
+            }
         }
     }
 

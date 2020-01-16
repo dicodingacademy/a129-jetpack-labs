@@ -23,6 +23,7 @@ class ViewModelFactory private constructor(private val mAcademyRepository: Acade
                 }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(AcademyViewModel::class.java) -> {

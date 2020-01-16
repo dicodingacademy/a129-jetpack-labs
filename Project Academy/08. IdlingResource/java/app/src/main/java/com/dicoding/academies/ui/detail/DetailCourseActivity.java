@@ -58,7 +58,7 @@ public class DetailCourseActivity extends AppCompatActivity {
         if (extras != null) {
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
-                viewModel.setCourseId(courseId);
+                viewModel.setSelectedCourse(courseId);
 
                 progressBar.setVisibility(View.VISIBLE);
                 viewModel.getModules().observe(this, modules -> {

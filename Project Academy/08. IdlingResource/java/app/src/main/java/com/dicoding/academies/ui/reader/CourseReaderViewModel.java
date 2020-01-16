@@ -19,20 +19,20 @@ public class CourseReaderViewModel extends ViewModel {
         this.academyRepository = mAcademyRepository;
     }
 
-    public LiveData<List<ModuleEntity>> getModules() {
-        return academyRepository.getAllModulesByCourse(courseId);
-    }
-
-    public void setCourseId(String courseId) {
+    public void setSelectedCourse(String courseId) {
         this.courseId = courseId;
-    }
-
-    public LiveData<ModuleEntity> getSelectedModule() {
-        return academyRepository.getContent(courseId, moduleId);
     }
 
     public void setSelectedModule(String moduleId) {
         this.moduleId = moduleId;
+    }
+
+    public LiveData<List<ModuleEntity>> getModules() {
+        return academyRepository.getAllModulesByCourse(courseId);
+    }
+
+    public LiveData<ModuleEntity> getSelectedModule() {
+        return academyRepository.getContent(courseId, moduleId);
     }
 }
 

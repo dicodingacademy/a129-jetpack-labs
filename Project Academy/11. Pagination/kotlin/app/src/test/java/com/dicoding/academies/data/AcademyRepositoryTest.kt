@@ -76,7 +76,7 @@ class AcademyRepositoryTest {
     fun getContent() {
         val dummyEntity = MutableLiveData<ModuleEntity>()
         dummyEntity.value = DataDummy.generateDummyModuleWithContent(moduleId)
-        `when`<LiveData<ModuleEntity>>(local.getModuleWithContent(courseId)).thenReturn(dummyEntity)
+        `when`(local.getModuleWithContent(courseId)).thenReturn(dummyEntity)
 
         val courseEntitiesContent = LiveDataTestUtil.getValue(academyRepository.getContent(courseId))
         verify(local).getModuleWithContent(courseId)
@@ -91,7 +91,7 @@ class AcademyRepositoryTest {
     fun getCourseWithModules() {
         val dummyEntity = MutableLiveData<CourseWithModule>()
         dummyEntity.value = DataDummy.generateDummyCourseWithModules(DataDummy.generateDummyCourses()[0], false)
-        `when`<LiveData<CourseWithModule>>(local.getCourseWithModules(courseId)).thenReturn(dummyEntity)
+        `when`(local.getCourseWithModules(courseId)).thenReturn(dummyEntity)
 
         val courseEntities = LiveDataTestUtil.getValue(academyRepository.getCourseWithModules(courseId))
         verify(local).getCourseWithModules(courseId)

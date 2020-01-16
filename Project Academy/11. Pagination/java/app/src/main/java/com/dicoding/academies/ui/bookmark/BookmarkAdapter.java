@@ -93,7 +93,7 @@ public class BookmarkAdapter extends PagedListAdapter<CourseEntity, BookmarkAdap
         void bind(CourseEntity course) {
             tvTitle.setText(course.getTitle());
             tvDescription.setText(course.getDescription());
-            tvDate.setText(String.format("Deadline %s", course.getDeadline()));
+            tvDate.setText(itemView.getResources().getString(R.string.deadline_date, course.getDeadline()));
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailCourseActivity.class);
                 intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.getCourseId());

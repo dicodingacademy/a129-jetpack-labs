@@ -169,7 +169,7 @@ object DataDummy {
         return CourseWithModule(course, generateDummyModules(course.courseId))
     }
 
-    fun generateDummyContent(moduleId: String): ContentEntity {
+    private fun generateDummyContent(moduleId: String): ContentEntity {
         return ContentEntity("This is a dummy content")
     }
 

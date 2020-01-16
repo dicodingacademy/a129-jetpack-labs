@@ -51,14 +51,14 @@ public class FakeAcademyRepository implements AcademyDataSource {
             @Override
             public void saveCallResult(List<CourseResponse> courseResponses) {
                 ArrayList<CourseEntity> courseList = new ArrayList<>();
-                for (int i = 0; i < courseResponses.size(); i++) {
-                    CourseResponse response = courseResponses.get(i);
+                for (CourseResponse response : courseResponses) {
                     CourseEntity course = new CourseEntity(response.getId(),
                             response.getTitle(),
                             response.getDescription(),
                             response.getDate(),
                             false,
                             response.getImagePath());
+
                     courseList.add(course);
                 }
 
@@ -67,7 +67,11 @@ public class FakeAcademyRepository implements AcademyDataSource {
         }.asLiveData();
     }
 
-    // Pada metode ini di modul selanjutnya akan mengembalikan kelas POJO baru, gabungan antara course dengan module-nya.
+    @Override
+    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
+        return localDataSource.getBookmarkedCourses();
+    }
+
     @Override
     public LiveData<Resource<CourseWithModule>> getCourseWithModules(final String courseId) {
         return new NetworkBoundResource<CourseWithModule, List<ModuleResponse>>(appExecutors) {
@@ -90,8 +94,7 @@ public class FakeAcademyRepository implements AcademyDataSource {
             protected void saveCallResult(List<ModuleResponse> moduleResponses) {
 
                 ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-                for (int i = 0; i < moduleResponses.size(); i++) {
-                    ModuleResponse response = moduleResponses.get(i);
+                for (ModuleResponse response : moduleResponses) {
                     ModuleEntity course = new ModuleEntity(response.getModuleId(),
                             response.getCourseId(),
                             response.getTitle(),
@@ -128,8 +131,7 @@ public class FakeAcademyRepository implements AcademyDataSource {
             protected void saveCallResult(List<ModuleResponse> moduleResponses) {
 
                 ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-                for (int i = 0; i < moduleResponses.size(); i++) {
-                    ModuleResponse response = moduleResponses.get(i);
+                for (ModuleResponse response : moduleResponses) {
                     ModuleEntity course = new ModuleEntity(response.getModuleId(),
                             response.getCourseId(),
                             response.getTitle(),
@@ -170,11 +172,6 @@ public class FakeAcademyRepository implements AcademyDataSource {
                 localDataSource.updateContent(contentResponse.getContent(), moduleId);
             }
         }.asLiveData();
-    }
-
-    @Override
-    public LiveData<List<CourseEntity>> getBookmarkedCourses() {
-        return localDataSource.getBookmarkedCourses();
     }
 
     @Override

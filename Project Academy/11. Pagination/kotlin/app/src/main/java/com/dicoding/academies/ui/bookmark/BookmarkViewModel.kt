@@ -7,9 +7,7 @@ import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 
 class BookmarkViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
-    fun getBookmarks(): LiveData<PagedList<CourseEntity>> {
-        return academyRepository.getBookmarkedCourses()
-    }
+    fun getBookmarks(): LiveData<PagedList<CourseEntity>> = academyRepository.getBookmarkedCourses()
 
     fun setBookmark(courseEntity: CourseEntity) {
         val newState = !courseEntity.bookmarked

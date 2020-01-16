@@ -47,9 +47,7 @@ class AcademyAdapter internal constructor() : PagedListAdapter<CourseEntity, Aca
         holder.bind(course)
     }
 
-//    override fun getItemCount(): Int {
-//        return listCourses.size
-//    }
+//    override fun getItemCount(): Int = listCourses.size
 
     class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(course: CourseEntity) {

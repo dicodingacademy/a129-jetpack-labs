@@ -51,14 +51,10 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
         holder.bind(course)
     }
 
-    fun getSwipedData(swipedPosition: Int): CourseEntity {
-        return getItem(swipedPosition) as CourseEntity
-    }
+    fun getSwipedData(swipedPosition: Int): CourseEntity = getItem(swipedPosition) as CourseEntity
 
 //    hapus kode di bawah ini
-//    override fun getItemCount(): Int {
-//        return listCourses.size
-//    }
+//    override fun getItemCount(): Int = listCourses.size
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(course: CourseEntity){

@@ -72,8 +72,9 @@ class DetailCourseActivity : AppCompatActivity() {
                 .into(image_poster)
 
         btn_start.setOnClickListener {
-            val intent = Intent(this@DetailCourseActivity, CourseReaderActivity::class.java)
-            intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID, courseEntity.courseId)
+            val intent = Intent(this@DetailCourseActivity, CourseReaderActivity::class.java).apply {
+                putExtra(CourseReaderActivity.EXTRA_COURSE_ID, courseEntity.courseId)
+            }
             startActivity(intent)
         }
     }

@@ -42,8 +42,9 @@ class AcademyAdapter : RecyclerView.Adapter<AcademyAdapter.CourseViewHolder>() {
                 tv_item_description.text = course.description
                 tv_item_date.text = resources.getString(R.string.deadline_date, course.deadline)
                 setOnClickListener {
-                    val intent = Intent(context, DetailCourseActivity::class.java)
-                    intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.courseId)
+                    val intent = Intent(context, DetailCourseActivity::class.java).apply {
+                        putExtra(DetailCourseActivity.EXTRA_COURSE, course.courseId)
+                    }
                     context.startActivity(intent)
                 }
                 Glide.with(itemView.context)

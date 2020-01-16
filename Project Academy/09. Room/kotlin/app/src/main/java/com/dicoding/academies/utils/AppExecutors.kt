@@ -23,17 +23,11 @@ class AppExecutors @VisibleForTesting constructor(
             MainThreadExecutor()
     )
 
-    fun diskIO(): Executor {
-        return diskIO
-    }
+    fun diskIO(): Executor = diskIO
 
-    fun networkIO(): Executor {
-        return networkIO
-    }
+    fun networkIO(): Executor = networkIO
 
-    fun mainThread(): Executor {
-        return mainThread
-    }
+    fun mainThread(): Executor = mainThread
 
     private class MainThreadExecutor : Executor {
         private val mainThreadHandler = Handler(Looper.getMainLooper())

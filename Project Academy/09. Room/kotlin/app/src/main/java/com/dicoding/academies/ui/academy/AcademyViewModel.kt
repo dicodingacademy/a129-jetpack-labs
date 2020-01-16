@@ -8,8 +8,6 @@ import com.dicoding.academies.vo.Resource
 
 class AcademyViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
 
-    fun getCourses(): LiveData<Resource<List<CourseEntity>>> {
-        return academyRepository.getAllCourses()
-    }
+    fun getCourses(): LiveData<Resource<List<CourseEntity>>> = academyRepository.getAllCourses()
 }
 

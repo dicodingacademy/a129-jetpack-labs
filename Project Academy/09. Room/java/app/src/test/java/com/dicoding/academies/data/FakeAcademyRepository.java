@@ -16,11 +16,9 @@ import java.util.List;
 
 public class FakeAcademyRepository implements AcademyDataSource {
 
-    private volatile static FakeAcademyRepository INSTANCE = null;
-
     private final RemoteDataSource remoteDataSource;
 
-    FakeAcademyRepository(@NonNull RemoteDataSource remoteDataSource) {
+    public FakeAcademyRepository(@NonNull RemoteDataSource remoteDataSource) {
         this.remoteDataSource = remoteDataSource;
     }
 
@@ -28,9 +26,8 @@ public class FakeAcademyRepository implements AcademyDataSource {
     public LiveData<List<CourseEntity>> getAllCourses() {
         MutableLiveData<List<CourseEntity>> courseResults = new MutableLiveData<>();
         remoteDataSource.getAllCourses(courseResponses -> {
-            List<CourseEntity> courseList = new ArrayList<>();
-            for (int i = 0; i < courseResponses.size(); i++) {
-                CourseResponse response = courseResponses.get(i);
+            ArrayList<CourseEntity> courseList = new ArrayList<>();
+            for (CourseResponse response : courseResponses) {
                 CourseEntity course = new CourseEntity(response.getId(),
                         response.getTitle(),
                         response.getDescription(),
@@ -52,8 +49,7 @@ public class FakeAcademyRepository implements AcademyDataSource {
 
         remoteDataSource.getAllCourses(courseResponses -> {
             ArrayList<CourseEntity> courseList = new ArrayList<>();
-            for (int i = 0; i < courseResponses.size(); i++) {
-                CourseResponse response = courseResponses.get(i);
+            for (CourseResponse response : courseResponses) {
                 CourseEntity course = new CourseEntity(response.getId(),
                         response.getTitle(),
                         response.getDescription(),
@@ -74,18 +70,18 @@ public class FakeAcademyRepository implements AcademyDataSource {
         MutableLiveData<CourseEntity> courseResult = new MutableLiveData<>();
 
         remoteDataSource.getAllCourses(courseResponses -> {
-            for (int i = 0; i < courseResponses.size(); i++) {
-                CourseResponse response = courseResponses.get(i);
+            CourseEntity course = null;
+            for (CourseResponse response : courseResponses) {
                 if (response.getId().equals(courseId)) {
-                    CourseEntity course = new CourseEntity(response.getId(),
+                    course = new CourseEntity(response.getId(),
                             response.getTitle(),
                             response.getDescription(),
                             response.getDate(),
                             false,
                             response.getImagePath());
-                    courseResult.postValue(course);
                 }
             }
+            courseResult.postValue(course);
         });
 
         return courseResult;
@@ -97,8 +93,7 @@ public class FakeAcademyRepository implements AcademyDataSource {
 
         remoteDataSource.getModules(courseId, moduleResponses -> {
             ArrayList<ModuleEntity> moduleList = new ArrayList<>();
-            for (int i = 0; i < moduleResponses.size(); i++) {
-                ModuleResponse response = moduleResponses.get(i);
+            for (ModuleResponse response : moduleResponses) {
                 ModuleEntity course = new ModuleEntity(response.getModuleId(),
                         response.getCourseId(),
                         response.getTitle(),
@@ -113,26 +108,23 @@ public class FakeAcademyRepository implements AcademyDataSource {
         return moduleResults;
     }
 
-
     @Override
     public LiveData<ModuleEntity> getContent(String courseId, String moduleId) {
         MutableLiveData<ModuleEntity> moduleResult = new MutableLiveData<>();
 
         remoteDataSource.getModules(courseId, moduleResponses -> {
             ModuleEntity module;
-            for (int i = 0; i < moduleResponses.size(); i++) {
-                ModuleResponse moduleResponse = moduleResponses.get(i);
-
-                String id = moduleResponse.getModuleId();
-
-                if (id.equals(moduleId)) {
-                    module = new ModuleEntity(id, moduleResponse.getCourseId(), moduleResponse.getTitle(), moduleResponse.getPosition(), false);
-
+            for (ModuleResponse response : moduleResponses) {
+                if (response.getModuleId().equals(moduleId)) {
+                    module = new ModuleEntity(response.getModuleId(),
+                            response.getCourseId(),
+                            response.getTitle(),
+                            response.getPosition(),
+                            false);
                     remoteDataSource.getContent(moduleId, contentResponse -> {
                         module.contentEntity = new ContentEntity(contentResponse.getContent());
                         moduleResult.postValue(module);
                     });
-
                     break;
                 }
             }

@@ -20,38 +20,27 @@ class LocalDataSource private constructor(private val mAcademyDao: AcademyDao) {
         }
     }
 
-    fun getAllCourses(): LiveData<List<CourseEntity>>{
-        return mAcademyDao.getCourses()
-    }
+    fun getAllCourses(): LiveData<List<CourseEntity>> = mAcademyDao.getCourses()
 
-    fun getBookmarkedCourses(): LiveData<List<CourseEntity>>{
-        return mAcademyDao.getBookmarkedCourse()
-    }
+    fun getBookmarkedCourses(): LiveData<List<CourseEntity>> = mAcademyDao.getBookmarkedCourse()
 
-    fun getCourseWithModules(courseId: String): LiveData<CourseWithModule> {
-        return mAcademyDao.getCourseWithModuleById(courseId)
-    }
+    fun getCourseWithModules(courseId: String): LiveData<CourseWithModule> =
+            mAcademyDao.getCourseWithModuleById(courseId)
 
-    fun getAllModulesByCourse(courseId: String): LiveData<List<ModuleEntity>> {
-        return mAcademyDao.getModulesByCourseId(courseId)
-    }
+    fun getAllModulesByCourse(courseId: String): LiveData<List<ModuleEntity>> =
+            mAcademyDao.getModulesByCourseId(courseId)
 
-    fun insertCourses(courses: List<CourseEntity>) {
-        mAcademyDao.insertCourses(courses)
-    }
+    fun insertCourses(courses: List<CourseEntity>) = mAcademyDao.insertCourses(courses)
 
-    fun insertModules(modules: List<ModuleEntity>) {
-        mAcademyDao.insertModules(modules)
-    }
+    fun insertModules(modules: List<ModuleEntity>) = mAcademyDao.insertModules(modules)
 
     fun setCourseBookmark(course: CourseEntity, newState: Boolean) {
         course.bookmarked = newState
         mAcademyDao.updateCourse(course)
     }
 
-    fun getModuleWithContent(moduleId: String): LiveData<ModuleEntity> {
-        return mAcademyDao.getModuleById(moduleId)
-    }
+    fun getModuleWithContent(moduleId: String): LiveData<ModuleEntity> =
+            mAcademyDao.getModuleById(moduleId)
 
     fun updateContent(content: String, moduleId: String) {
         mAcademyDao.updateModuleByContent(content, moduleId)

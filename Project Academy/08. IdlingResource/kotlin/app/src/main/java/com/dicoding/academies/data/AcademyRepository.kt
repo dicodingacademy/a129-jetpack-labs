@@ -50,7 +50,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
         remoteDataSource.getAllCourses(object : LoadCoursesCallback {
             override fun onAllCoursesReceived(courseResponses: List<CourseResponse>) {
-                val courseList = java.util.ArrayList<CourseEntity>()
+                val courseList = ArrayList<CourseEntity>()
                 for (response in courseResponses) {
                     val course = CourseEntity(response.id,
                             response.title,

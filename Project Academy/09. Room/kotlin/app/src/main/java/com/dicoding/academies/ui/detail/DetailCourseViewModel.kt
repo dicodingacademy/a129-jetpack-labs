@@ -7,10 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseWithModule
 import com.dicoding.academies.vo.Resource
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
-
 
 class DetailCourseViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
     val courseId = MutableLiveData<String>()

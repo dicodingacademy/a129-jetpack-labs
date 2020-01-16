@@ -76,12 +76,12 @@ object DataDummy {
                 4, false))
 
         modules.add(ModuleEntity("{$courseId}m6",
-                courseId.toString(),
+                courseId,
                 "Latihan 2",
                 5, false))
 
         modules.add(ModuleEntity("{$courseId}m7",
-                courseId.toString(),
+                courseId,
                 "Bedah Kode 2",
                 6, false))
 

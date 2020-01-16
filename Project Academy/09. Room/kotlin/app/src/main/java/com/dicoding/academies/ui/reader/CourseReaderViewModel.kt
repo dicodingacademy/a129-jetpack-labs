@@ -7,11 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
 import com.dicoding.academies.vo.Resource
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 
 class CourseReaderViewModel(private val academyRepository: AcademyRepository) : ViewModel() {

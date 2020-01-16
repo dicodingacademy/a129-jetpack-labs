@@ -27,7 +27,7 @@ class AcademyRepositoryTest {
     private val courseId = courseResponses[0].id
     private val moduleResponses = DataDummy.generateRemoteDummyModules(courseId)
     private val moduleId = moduleResponses[0].moduleId
-    private val content = DataDummy.generateRemoteDummyContent(moduleId)
+    private val content = DataDummy.generateRemoteDummyContent(moduleId.toString())
 
     @Test
     fun getAllCourses() {
@@ -48,11 +48,11 @@ class AcademyRepositoryTest {
             (invocation.arguments[1] as RemoteDataSource.LoadModulesCallback)
                     .onAllModulesReceived(moduleResponses)
             null
-        }.`when`(remote).getModules(eq(courseId), any())
+        }.`when`(remote).getModules(eq("$courseId"), any())
 
-        val courseEntities = LiveDataTestUtil.getValue(academyRepository.getAllModulesByCourse(courseId))
+        val courseEntities = LiveDataTestUtil.getValue(academyRepository.getAllModulesByCourse("$courseId"))
 
-        verify(remote).getModules(eq(courseId), any())
+        verify(remote).getModules(eq("$courseId"), any())
 
         assertNotNull(courseEntities)
         assertEquals(moduleResponses.size.toLong(), courseEntities.size.toLong())
@@ -110,7 +110,7 @@ class AcademyRepositoryTest {
             null
         }.`when`(remote).getAllCourses(any())
 
-        val courseEntities = LiveDataTestUtil.getValue(academyRepository.getCourseWithModules(courseId))
+        val courseEntities = LiveDataTestUtil.getValue(academyRepository.getCourseWithModules(courseId.toString()))
 
         verify(remote).getAllCourses(any())
 

@@ -41,7 +41,7 @@ public class DetailCourseViewModelTest {
     @Before
     public void setUp() {
         viewModel = new DetailCourseViewModel(academyRepository);
-        viewModel.setCourseId(courseId);
+        viewModel.setSelectedCourse(courseId);
     }
 
     @Test

@@ -1,17 +1,13 @@
 package com.dicoding.academies.utils
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-
+import android.view.Gravity.CENTER
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
-
 import com.dicoding.academies.R
-
-import android.view.Gravity.CENTER
 
 class MyButton : AppCompatButton {
 

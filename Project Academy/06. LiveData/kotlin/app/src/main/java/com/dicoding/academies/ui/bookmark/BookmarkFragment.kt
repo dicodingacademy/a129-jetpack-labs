@@ -35,7 +35,7 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
             val adapter = BookmarkAdapter(this)
             progress_bar.visibility = View.VISIBLE
-            viewModel.getBookmarks().observe(this, Observer{ courses ->
+            viewModel.getBookmarks().observe(this, Observer { courses ->
                 progress_bar.visibility = View.GONE
                 adapter.setCourses(courses)
                 adapter.notifyDataSetChanged()
@@ -52,12 +52,11 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
     override fun onShareClick(course: CourseEntity) {
         if (activity != null) {
             val mimeType = "text/plain"
-            ShareCompat.IntentBuilder
-                    .from(activity)
-                    .setType(mimeType)
-                    .setChooserTitle("Bagikan aplikasi ini sekarang.")
-                    .setText("Segera daftar kelas ${course.title} di dicoding.com")
-                    .startChooser()
+            ShareCompat.IntentBuilder.from(activity).apply {
+                setType(mimeType)
+                setChooserTitle("Bagikan aplikasi ini sekarang.")
+                setText("Segera daftar kelas ${course.title} di dicoding.com")
+            }.startChooser()
         }
     }
 }

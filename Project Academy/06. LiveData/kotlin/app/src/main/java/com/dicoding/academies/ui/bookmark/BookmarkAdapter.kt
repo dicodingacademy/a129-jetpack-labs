@@ -45,11 +45,11 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : Recycler
             with(itemView){
                 tv_item_title.text = course.title
                 tv_item_description.text = course.description
-                tv_item_date.text = itemView.resources.getString(R.string.deadline_date, course.deadline)
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailCourseActivity::class.java)
+                tv_item_date.text = resources.getString(R.string.deadline_date, course.deadline)
+                setOnClickListener {
+                    val intent = Intent(context, DetailCourseActivity::class.java)
                     intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.courseId)
-                    itemView.context.startActivity(intent)
+                    context.startActivity(intent)
                 }
                 img_share.setOnClickListener { callback.onShareClick(course) }
                 Glide.with(itemView.context)

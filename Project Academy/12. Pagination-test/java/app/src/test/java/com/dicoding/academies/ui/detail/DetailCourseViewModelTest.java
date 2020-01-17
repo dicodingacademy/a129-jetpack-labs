@@ -37,6 +37,9 @@ public class DetailCourseViewModelTest {
     @Mock
     private AcademyRepository academyRepository;
 
+    @Mock
+    private Observer<Resource<CourseWithModule>> observer;
+
     @Before
     public void setUp() {
         viewModel = new DetailCourseViewModel(academyRepository);
@@ -51,7 +54,6 @@ public class DetailCourseViewModelTest {
 
         when(academyRepository.getCourseWithModules(courseId)).thenReturn(course);
 
-        Observer<Resource<CourseWithModule>> observer = mock(Observer.class);
         viewModel.courseModule.observeForever(observer);
 
         verify(observer).onChanged(dummyCourseWithModule);

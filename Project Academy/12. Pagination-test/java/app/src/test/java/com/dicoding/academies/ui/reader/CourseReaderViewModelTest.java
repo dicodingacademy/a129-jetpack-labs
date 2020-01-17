@@ -39,6 +39,12 @@ public class CourseReaderViewModelTest {
     @Mock
     private AcademyRepository academyRepository;
 
+    @Mock
+    private Observer<Resource<List<ModuleEntity>>> modulesObserver;
+
+    @Mock
+    private Observer<Resource<ModuleEntity>> moduleObserver;
+
     @Before
     public void setUp() {
         viewModel = new CourseReaderViewModel(academyRepository);
@@ -56,9 +62,8 @@ public class CourseReaderViewModelTest {
         modules.setValue(resource);
         when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules);
 
-        Observer<Resource<List<ModuleEntity>>> observer = mock(Observer.class);
-        viewModel.modules.observeForever(observer);
-        verify(observer).onChanged(resource);
+        viewModel.modules.observeForever(modulesObserver);
+        verify(modulesObserver).onChanged(resource);
     }
 
     @Test
@@ -68,8 +73,8 @@ public class CourseReaderViewModelTest {
         module.setValue(resource);
         when(academyRepository.getContent(moduleId)).thenReturn(module);
 
-        Observer<Resource<ModuleEntity>> observer = mock(Observer.class);
-        viewModel.selectedModule.observeForever(observer);
-        verify(observer).onChanged(resource);
+
+        viewModel.selectedModule.observeForever(moduleObserver);
+        verify(moduleObserver).onChanged(resource);
     }
 }

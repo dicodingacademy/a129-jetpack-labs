@@ -29,6 +29,9 @@ class DetailCourseViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var observer: Observer<Resource<CourseWithModule>>
+
     @Before
     fun setUp() {
         viewModel = DetailCourseViewModel(academyRepository)
@@ -43,7 +46,6 @@ class DetailCourseViewModelTest {
 
         `when`<LiveData<Resource<CourseWithModule>>>(academyRepository.getCourseWithModules(courseId)).thenReturn(course)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<CourseWithModule>>
         viewModel.courseModule.observeForever(observer)
 
         verify(observer).onChanged(dummyCourseWithModule)

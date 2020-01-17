@@ -34,7 +34,6 @@ class AcademyViewModelTest {
     @Mock
     private lateinit var pagedList: PagedList<CourseEntity>
 
-
     @Before
     fun setUp() {
         viewModel = AcademyViewModel(academyRepository)

@@ -14,10 +14,7 @@ class LocalDataSource private constructor(private val mAcademyDao: AcademyDao) {
         private var INSTANCE: LocalDataSource? = null
 
         fun getInstance(academyDao: AcademyDao): LocalDataSource {
-            if (INSTANCE == null) {
-                INSTANCE = LocalDataSource(academyDao)
-            }
-            return INSTANCE as LocalDataSource
+            return INSTANCE ?: LocalDataSource(academyDao)
         }
     }
 

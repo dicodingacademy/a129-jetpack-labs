@@ -9,7 +9,9 @@ import androidx.room.RoomDatabase
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
 
-@Database(entities = [CourseEntity::class, ModuleEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CourseEntity::class, ModuleEntity::class],
+        version = 1,
+        exportSchema = false)
 abstract class AcademyDatabase : RoomDatabase() {
     abstract fun academyDao(): AcademyDao
 
@@ -18,12 +20,11 @@ abstract class AcademyDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AcademyDatabase? = null
 
-        fun getInstance(context: Context): AcademyDatabase {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(context.applicationContext,
-                        AcademyDatabase::class.java,
-                        "Academies.db").build()
-            }
-        }
+        fun getInstance(context: Context): AcademyDatabase =
+                INSTANCE ?: synchronized(this) {
+                    INSTANCE ?: Room.databaseBuilder(context.applicationContext,
+                            AcademyDatabase::class.java,
+                            "Academies.db").build()
+                }
     }
 }

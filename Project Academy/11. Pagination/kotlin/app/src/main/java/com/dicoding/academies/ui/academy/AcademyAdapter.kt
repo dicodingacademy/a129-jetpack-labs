@@ -41,8 +41,10 @@ class AcademyAdapter internal constructor() : PagedListAdapter<CourseEntity, Aca
     }
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
-        val course = getItem(position) as CourseEntity
-        holder.bind(course)
+        val course = getItem(position)
+        if (course != null) {
+            holder.bind(course)
+        }
     }
 
 //    override fun getItemCount(): Int = listCourses.size

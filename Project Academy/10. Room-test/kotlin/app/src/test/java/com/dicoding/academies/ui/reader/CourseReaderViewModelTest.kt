@@ -32,6 +32,12 @@ class CourseReaderViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var modulesObserver: Observer<Resource<List<ModuleEntity>>>
+
+    @Mock
+    private lateinit var moduleObserver: Observer<Resource<ModuleEntity>>
+
     @Before
     fun setUp() {
         viewModel = CourseReaderViewModel(academyRepository)
@@ -49,9 +55,8 @@ class CourseReaderViewModelTest {
         modules.value = resource
         `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<List<ModuleEntity>>>
-        viewModel.modules.observeForever(observer)
-        verify(observer).onChanged(resource)
+        viewModel.modules.observeForever(modulesObserver)
+        verify(modulesObserver).onChanged(resource)
     }
 
     @Test
@@ -61,8 +66,7 @@ class CourseReaderViewModelTest {
         module.value = resource
         `when`(academyRepository.getContent(moduleId)).thenReturn(module)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<ModuleEntity>>
-        viewModel.selectedModule.observeForever(observer)
-        verify(observer).onChanged(resource)
+        viewModel.selectedModule.observeForever(moduleObserver)
+        verify(moduleObserver).onChanged(resource)
     }
 }

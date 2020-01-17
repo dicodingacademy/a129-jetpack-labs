@@ -4,10 +4,11 @@ import com.dicoding.academies.data.CourseEntity;
 import com.dicoding.academies.data.ModuleEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataDummy {
 
-    public static ArrayList<CourseEntity> generateDummyCourses() {
+    public static List<CourseEntity> generateDummyCourses() {
 
         ArrayList<CourseEntity> courses = new ArrayList<>();
 
@@ -44,7 +45,7 @@ public class DataDummy {
         return courses;
     }
 
-    public static ArrayList<ModuleEntity> generateDummyModules(String courseId) {
+    public static List<ModuleEntity> generateDummyModules(String courseId) {
 
         ArrayList<ModuleEntity> modules = new ArrayList<>();
 

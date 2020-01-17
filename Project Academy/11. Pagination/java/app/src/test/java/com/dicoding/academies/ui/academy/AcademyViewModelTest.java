@@ -34,6 +34,9 @@ public class AcademyViewModelTest {
     @Mock
     private AcademyRepository academyRepository;
 
+    @Mock
+    private Observer<Resource<List<CourseEntity>>> observer;
+
     @Before
     public void setUp() {
         viewModel = new AcademyViewModel(academyRepository);
@@ -51,7 +54,6 @@ public class AcademyViewModelTest {
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
-        Observer<Resource<List<CourseEntity>>> observer = mock(Observer.class);
         viewModel.getCourses().observeForever(observer);
         verify(observer).onChanged(dummyCourses);
     }

@@ -32,6 +32,15 @@ class CourseReaderViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var resource: Resource<List<ModuleEntity>>
+
+    @Mock
+    private lateinit var entitiesObserver: Observer<Resource<List<ModuleEntity>>>
+
+    @Mock
+    private lateinit var entityObserver: Observer<Resource<ModuleEntity>>
+
     @Before
     fun setUp() {
         viewModel = CourseReaderViewModel(academyRepository)
@@ -45,13 +54,11 @@ class CourseReaderViewModelTest {
     @Test
     fun getModules() {
         val modules = MutableLiveData<Resource<List<ModuleEntity>>>()
-        val resource = Resource.success(dummyModules) as Resource<List<ModuleEntity>>
         modules.value = resource
         `when`<LiveData<Resource<List<ModuleEntity>>>>(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<List<ModuleEntity>>>
-        viewModel.modules.observeForever(observer)
-        verify(observer).onChanged(resource)
+        viewModel.modules.observeForever(entitiesObserver)
+        verify(entitiesObserver).onChanged(resource)
     }
 
     @Test
@@ -61,8 +68,7 @@ class CourseReaderViewModelTest {
         module.value = resource
         `when`(academyRepository.getContent(moduleId)).thenReturn(module)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<ModuleEntity>>
-        viewModel.selectedModule.observeForever(observer)
-        verify(observer).onChanged(resource)
+        viewModel.selectedModule.observeForever(entityObserver)
+        verify(entityObserver).onChanged(resource)
     }
 }

@@ -21,13 +21,15 @@ class DetailCourseViewModelTest {
     private lateinit var viewModel: DetailCourseViewModel
     private val dummyCourse = DataDummy.generateDummyCourses()[0]
     private val courseId = dummyCourse.courseId
-    private val dummyModules = DataDummy.generateDummyModules(courseId)
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var academyRepository: AcademyRepository
+
+    @Mock
+    private lateinit var observer: Observer<Resource<CourseWithModule>>
 
     @Before
     fun setUp() {
@@ -43,7 +45,6 @@ class DetailCourseViewModelTest {
 
         `when`<LiveData<Resource<CourseWithModule>>>(academyRepository.getCourseWithModules(courseId)).thenReturn(course)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<CourseWithModule>>
         viewModel.courseModule.observeForever(observer)
 
         verify(observer).onChanged(dummyCourseWithModule)

@@ -17,21 +17,31 @@ import com.dicoding.academies.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.MockitoAnnotations
 
 class AcademyRepositoryTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val remote = mock(RemoteDataSource::class.java)
-    private val local = mock(LocalDataSource::class.java)
-    private val appExecutors = mock(AppExecutors::class.java)
+    @Mock
+    private lateinit var remote: RemoteDataSource
 
-    private val academyRepository = FakeAcademyRepository(remote, local, appExecutors)
+    @Mock
+    private lateinit var local: LocalDataSource
+
+    @Mock
+    private lateinit var appExecutors : AppExecutors
+
+    @Mock
+    private lateinit var dataSourceFactory: DataSource.Factory<Int, CourseEntity>
+
+    private lateinit var academyRepository: FakeAcademyRepository
 
     private val courseResponses = DataDummy.generateRemoteDummyCourses()
     private val courseId = courseResponses[0].id
@@ -39,9 +49,14 @@ class AcademyRepositoryTest {
     private val moduleId = moduleResponses[0].moduleId
     private val content = DataDummy.generateRemoteDummyContent(moduleId)
 
+    @Before
+    fun setup() {
+        MockitoAnnotations.initMocks(this)
+        academyRepository = FakeAcademyRepository(remote, local, appExecutors)
+    }
+
     @Test
     fun getAllCourses() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, CourseEntity>
         `when`(local.getAllCourses()).thenReturn(dataSourceFactory)
         academyRepository.getAllCourses()
 
@@ -65,7 +80,6 @@ class AcademyRepositoryTest {
 
     @Test
     fun getBookmarkedCourses() {
-        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, CourseEntity>
         `when`(local.getBookmarkedCourses()).thenReturn(dataSourceFactory)
         academyRepository.getBookmarkedCourses()
 

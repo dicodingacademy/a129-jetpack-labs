@@ -58,7 +58,9 @@ public class AcademyAdapter extends PagedListAdapter<CourseEntity, AcademyAdapte
     @Override
     public void onBindViewHolder(@NonNull final CourseViewHolder holder, int position) {
         CourseEntity course = getItem(position);
-        holder.bind(course);
+        if (course != null) {
+            holder.bind(course);
+        }
     }
 
 //    @Override

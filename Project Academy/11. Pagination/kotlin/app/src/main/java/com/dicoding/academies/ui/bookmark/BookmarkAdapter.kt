@@ -45,13 +45,13 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
     }
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
-       val course = getItem(position)
-        if(course != null) {
+        val course = getItem(position)
+        if (course != null) {
             holder.bind(course)
         }
     }
 
-    fun getSwipedData(swipedPosition: Int): CourseEntity? = getItem(swipedPosition) as CourseEntity
+    fun getSwipedData(swipedPosition: Int): CourseEntity? = getItem(swipedPosition)
 
 //    hapus kode di bawah ini
 //    override fun getItemCount(): Int = listCourses.size

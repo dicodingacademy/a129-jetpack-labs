@@ -7,6 +7,7 @@ import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,6 +34,12 @@ public class BookmarkViewModelTest {
     @Mock
     private AcademyRepository academyRepository;
 
+    @Mock
+    private Observer<PagedList<CourseEntity>> observer;
+
+    @Mock
+    private PagedList<CourseEntity> pagedList;
+
     @Before
     public void setUp() {
         viewModel = new BookmarkViewModel(academyRepository);
@@ -40,7 +47,7 @@ public class BookmarkViewModelTest {
 
     @Test
     public void getBookmark() {
-        PagedList<CourseEntity> dummyCourses = mock(PagedList.class);
+        PagedList<CourseEntity> dummyCourses = pagedList;
         when(dummyCourses.size()).thenReturn(5);
         MutableLiveData<PagedList<CourseEntity>> courses = new MutableLiveData<>();
         courses.setValue(dummyCourses);
@@ -51,7 +58,6 @@ public class BookmarkViewModelTest {
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
-        Observer<List<CourseEntity>> observer = mock(Observer.class);
         viewModel.getBookmarks().observeForever(observer);
         verify(observer).onChanged(dummyCourses);
     }

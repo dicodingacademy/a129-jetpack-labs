@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
+import com.dicoding.academies.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -26,6 +27,12 @@ class BookmarkViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var observer: Observer<PagedList<CourseEntity>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<CourseEntity>
+
     @Before
     fun setUp() {
         viewModel = BookmarkViewModel(academyRepository)
@@ -33,7 +40,7 @@ class BookmarkViewModelTest {
 
     @Test
     fun getBookmark() {
-        val dummyCourses = mock(PagedList::class.java) as PagedList<CourseEntity>
+        val dummyCourses = pagedList
         `when`(dummyCourses.size).thenReturn(5)
         val courses = MutableLiveData<PagedList<CourseEntity>>()
         courses.value = dummyCourses
@@ -44,7 +51,6 @@ class BookmarkViewModelTest {
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 
-        val observer = mock(Observer::class.java) as Observer<List<CourseEntity>>
         viewModel.getBookmarks().observeForever(observer)
         verify(observer).onChanged(dummyCourses)
     }

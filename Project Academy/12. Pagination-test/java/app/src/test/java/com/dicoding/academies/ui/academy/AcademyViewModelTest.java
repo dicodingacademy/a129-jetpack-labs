@@ -34,6 +34,12 @@ public class AcademyViewModelTest {
     @Mock
     private AcademyRepository academyRepository;
 
+    @Mock
+    private Observer<Resource<PagedList<CourseEntity>>> observer;
+
+    @Mock
+    private PagedList<CourseEntity> pagedList;
+
     @Before
     public void setUp() {
         viewModel = new AcademyViewModel(academyRepository);
@@ -41,7 +47,6 @@ public class AcademyViewModelTest {
 
     @Test
     public void getCourses() {
-        PagedList pagedList = mock(PagedList.class);
         Resource<PagedList<CourseEntity>> dummyCourses = Resource.success(pagedList);
         when(dummyCourses.data.size()).thenReturn(5);
         MutableLiveData<Resource<PagedList<CourseEntity>>> courses = new MutableLiveData<>();
@@ -53,7 +58,6 @@ public class AcademyViewModelTest {
         assertNotNull(courseEntities);
         assertEquals(5, courseEntities.size());
 
-        Observer<Resource<PagedList<CourseEntity>>> observer = mock(Observer.class);
         viewModel.getCourses().observeForever(observer);
         verify(observer).onChanged(dummyCourses);
     }

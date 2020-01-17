@@ -28,6 +28,13 @@ class AcademyViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var observer: Observer<Resource<PagedList<CourseEntity>>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<CourseEntity>
+
+
     @Before
     fun setUp() {
         viewModel = AcademyViewModel(academyRepository)
@@ -35,7 +42,6 @@ class AcademyViewModelTest {
 
     @Test
     fun getCourses() {
-        val pagedList = mock(PagedList::class.java) as PagedList<CourseEntity>
         val dummyCourses = Resource.success(pagedList)
         `when`(dummyCourses.data?.size).thenReturn(5)
         val courses = MutableLiveData<Resource<PagedList<CourseEntity>>>()
@@ -47,7 +53,6 @@ class AcademyViewModelTest {
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 
-        val observer = mock(Observer::class.java) as Observer<Resource<PagedList<CourseEntity>>>
         viewModel.getCourses().observeForever(observer)
         verify(observer).onChanged(dummyCourses)
     }

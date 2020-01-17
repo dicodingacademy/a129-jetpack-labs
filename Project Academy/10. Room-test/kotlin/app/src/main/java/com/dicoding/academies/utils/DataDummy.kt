@@ -13,7 +13,7 @@ import com.dicoding.academies.data.source.remote.response.ContentResponse
 
 object DataDummy {
 
-    fun generateDummyCourses(): ArrayList<CourseEntity> {
+    fun generateDummyCourses(): List<CourseEntity> {
 
         val courses = ArrayList<CourseEntity>()
 
@@ -50,7 +50,7 @@ object DataDummy {
         return courses
     }
 
-    fun generateDummyModules(courseId: String): ArrayList<ModuleEntity> {
+    fun generateDummyModules(courseId: String): List<ModuleEntity> {
 
         val modules = ArrayList<ModuleEntity>()
 
@@ -89,7 +89,7 @@ object DataDummy {
         return modules
     }
 
-    fun generateRemoteDummyCourses(): ArrayList<CourseResponse> {
+    fun generateRemoteDummyCourses(): List<CourseResponse> {
 
         val courses = ArrayList<CourseResponse>()
 
@@ -121,7 +121,7 @@ object DataDummy {
         return courses
     }
 
-    fun generateRemoteDummyModules(courseId: String): ArrayList<ModuleResponse> {
+    fun generateRemoteDummyModules(courseId: String): List<ModuleResponse> {
 
         val modules = ArrayList<ModuleResponse>()
 

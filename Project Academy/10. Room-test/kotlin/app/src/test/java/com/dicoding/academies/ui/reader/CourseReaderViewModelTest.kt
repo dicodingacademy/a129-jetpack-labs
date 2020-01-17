@@ -45,7 +45,7 @@ class CourseReaderViewModelTest {
     @Test
     fun getModules() {
         val modules = MutableLiveData<Resource<List<ModuleEntity>>>()
-        val resource = Resource.success(dummyModules) as Resource<List<ModuleEntity>>
+        val resource = Resource.success(dummyModules)
         modules.value = resource
         `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
 

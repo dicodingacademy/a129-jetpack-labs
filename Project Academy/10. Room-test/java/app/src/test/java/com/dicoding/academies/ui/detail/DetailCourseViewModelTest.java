@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -29,13 +30,15 @@ public class DetailCourseViewModelTest {
     private DetailCourseViewModel viewModel;
     private CourseEntity dummyCourse = DataDummy.generateDummyCourses().get(0);
     private String courseId = dummyCourse.getCourseId();
-    private ArrayList<ModuleEntity> dummyModules = DataDummy.generateDummyModules(courseId);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Mock
     private AcademyRepository academyRepository;
+
+    @Mock
+    private Observer<Resource<CourseWithModule>> observer;
 
     @Before
     public void setUp() {
@@ -51,7 +54,6 @@ public class DetailCourseViewModelTest {
 
         when(academyRepository.getCourseWithModules(courseId)).thenReturn(course);
 
-        Observer<Resource<CourseWithModule>> observer = mock(Observer.class);
         viewModel.courseModule.observeForever(observer);
 
         verify(observer).onChanged(dummyCourseWithModule);

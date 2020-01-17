@@ -41,6 +41,12 @@ public class CourseReaderViewModelTest {
     @Mock
     private AcademyRepository academyRepository;
 
+    @Mock
+    private Observer<List<ModuleEntity>> modulesObserver;
+
+    @Mock
+    private Observer<ModuleEntity> moduleObserver;
+
     @Before
     public void setUp() {
         viewModel = new CourseReaderViewModel(academyRepository);
@@ -60,10 +66,8 @@ public class CourseReaderViewModelTest {
         verify(academyRepository).getAllModulesByCourse(courseId);
         assertNotNull(moduleEntities);
         assertEquals(7, moduleEntities.size());
-
-        Observer<List<ModuleEntity>> observer = mock(Observer.class);
-        viewModel.getModules().observeForever(observer);
-        verify(observer).onChanged(dummyModules);
+        viewModel.getModules().observeForever(modulesObserver);
+        verify(modulesObserver).onChanged(dummyModules);
     }
 
     @Test
@@ -81,8 +85,7 @@ public class CourseReaderViewModelTest {
         assertNotNull(content);
         assertEquals(content,  dummyModules.get(0).contentEntity.getContent());
 
-        Observer<ModuleEntity> observer = mock(Observer.class);
-        viewModel.getSelectedModule().observeForever(observer);
-        verify(observer).onChanged(dummyModules.get(0));
+        viewModel.getSelectedModule().observeForever(moduleObserver);
+        verify(moduleObserver).onChanged(dummyModules.get(0));
     }
 }

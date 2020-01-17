@@ -27,6 +27,9 @@ class AcademyViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var observer: Observer<List<CourseEntity>>
+
     @Before
     fun setUp() {
         viewModel = AcademyViewModel(academyRepository)
@@ -44,7 +47,6 @@ class AcademyViewModelTest {
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 
-        val observer = mock(Observer::class.java) as Observer<List<CourseEntity>>
         viewModel.getCourses().observeForever(observer)
         verify(observer).onChanged(dummyCourses)
     }

@@ -32,11 +32,17 @@ class CourseReaderViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var modulesObserver: Observer<List<ModuleEntity>>
+
+    @Mock
+    private lateinit var moduleObserver: Observer<ModuleEntity>
+
     @Before
     fun setUp() {
         viewModel = CourseReaderViewModel(academyRepository)
-        viewModel.courseId = courseId
-        viewModel.moduleId = moduleId
+        viewModel.setSelectedCourse(courseId)
+        viewModel.setSelectedModule(moduleId)
 
         val dummyModule = dummyModules[0]
         dummyModule.contentEntity = ContentEntity("<h3 class=\\\"fr-text-bordered\\\">"+dummyModule.title+"</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>")
@@ -53,9 +59,8 @@ class CourseReaderViewModelTest {
         assertNotNull(moduleEntities)
         assertEquals(7, moduleEntities?.size)
 
-        val observer = mock(Observer::class.java) as Observer<List<ModuleEntity>>
-        viewModel.getModules().observeForever(observer)
-        verify(observer).onChanged(dummyModules)
+        viewModel.getModules().observeForever(modulesObserver)
+        verify(modulesObserver).onChanged(dummyModules)
     }
 
     @Test
@@ -73,9 +78,8 @@ class CourseReaderViewModelTest {
         assertNotNull(content)
         assertEquals(content, dummyModules[0].contentEntity?.content)
 
-        val observer = mock(Observer::class.java) as Observer<ModuleEntity>
-        viewModel.getSelectedModule().observeForever(observer)
-        verify<Observer<ModuleEntity>>(observer).onChanged(dummyModules[0])
+        viewModel.getSelectedModule().observeForever(moduleObserver)
+        verify<Observer<ModuleEntity>>(moduleObserver).onChanged(dummyModules[0])
 
     }
 }

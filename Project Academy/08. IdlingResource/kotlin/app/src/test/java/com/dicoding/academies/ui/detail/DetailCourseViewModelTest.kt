@@ -30,6 +30,12 @@ class DetailCourseViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var courseObserver: Observer<CourseEntity>
+
+    @Mock
+    private lateinit var modulesObserver: Observer<List<ModuleEntity>>
+
     @Before
     fun setUp() {
         viewModel = DetailCourseViewModel(academyRepository)
@@ -51,9 +57,8 @@ class DetailCourseViewModelTest {
         assertEquals(dummyCourse.imagePath, courseEntity.imagePath)
         assertEquals(dummyCourse.title, courseEntity.title)
 
-        val observer = mock(Observer::class.java) as Observer<CourseEntity>
-        viewModel.getCourse().observeForever(observer)
-        verify(observer).onChanged(dummyCourse)
+        viewModel.getCourse().observeForever(courseObserver)
+        verify(courseObserver).onChanged(dummyCourse)
     }
 
     @Test
@@ -67,8 +72,7 @@ class DetailCourseViewModelTest {
         assertNotNull(moduleEntities)
         assertEquals(7, moduleEntities?.size)
 
-        val observer = mock(Observer::class.java) as Observer<List<ModuleEntity>>
-        viewModel.getModules().observeForever(observer)
-        verify(observer).onChanged(dummyModules)
+        viewModel.getModules().observeForever(modulesObserver)
+        verify(modulesObserver).onChanged(dummyModules)
     }
 }

@@ -77,9 +77,15 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
             if (view != null) {
                 val swipedPosition = viewHolder.adapterPosition
                 val courseEntity = adapter.getSwipedData(swipedPosition)
-                viewModel.setBookmark(courseEntity)
+                if (courseEntity != null) {
+                    viewModel.setBookmark(courseEntity)
+                }
                 val snackbar = Snackbar.make(view as View, R.string.message_undo, Snackbar.LENGTH_LONG)
-                snackbar.setAction(R.string.message_ok) { v -> viewModel.setBookmark(courseEntity) }
+                snackbar.setAction(R.string.message_ok) { v ->
+                    if (courseEntity != null) {
+                        viewModel.setBookmark(courseEntity)
+                    }
+                }
                 snackbar.show()
             }
         }

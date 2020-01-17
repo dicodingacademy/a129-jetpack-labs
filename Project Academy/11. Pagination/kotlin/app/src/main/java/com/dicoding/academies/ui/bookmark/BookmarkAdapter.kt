@@ -1,6 +1,5 @@
 package com.dicoding.academies.ui.bookmark
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +25,6 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
                 return oldItem.courseId == newItem.courseId
             }
 
-            @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: CourseEntity, newItem: CourseEntity): Boolean {
                 return oldItem == newItem
             }
@@ -47,11 +45,13 @@ class BookmarkAdapter(private val callback: BookmarkFragmentCallback) : PagedLis
     }
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
-        val course = getItem(position) as CourseEntity
-        holder.bind(course)
+       val course = getItem(position)
+        if(course != null) {
+            holder.bind(course)
+        }
     }
 
-    fun getSwipedData(swipedPosition: Int): CourseEntity = getItem(swipedPosition) as CourseEntity
+    fun getSwipedData(swipedPosition: Int): CourseEntity? = getItem(swipedPosition) as CourseEntity
 
 //    hapus kode di bawah ini
 //    override fun getItemCount(): Int = listCourses.size

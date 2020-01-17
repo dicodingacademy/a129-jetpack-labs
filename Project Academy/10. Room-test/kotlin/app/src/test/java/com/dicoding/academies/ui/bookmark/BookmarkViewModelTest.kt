@@ -26,6 +26,9 @@ class BookmarkViewModelTest {
     @Mock
     private lateinit var academyRepository: AcademyRepository
 
+    @Mock
+    private lateinit var observer : Observer<List<CourseEntity>>
+
     @Before
     fun setUp() {
         viewModel = BookmarkViewModel(academyRepository)
@@ -43,7 +46,6 @@ class BookmarkViewModelTest {
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 
-        val observer = mock(Observer::class.java) as Observer<List<CourseEntity>>
         viewModel.getBookmarks().observeForever(observer)
         verify(observer).onChanged(dummyCourses)
     }

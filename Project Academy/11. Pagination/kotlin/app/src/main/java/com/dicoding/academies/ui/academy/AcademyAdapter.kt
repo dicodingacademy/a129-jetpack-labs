@@ -1,6 +1,5 @@
 package com.dicoding.academies.ui.academy
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +29,6 @@ class AcademyAdapter internal constructor() : PagedListAdapter<CourseEntity, Aca
                 return oldItem.courseId == newItem.courseId
             }
 
-            @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: CourseEntity, newItem: CourseEntity): Boolean {
                 return oldItem == newItem
             }
@@ -43,8 +41,10 @@ class AcademyAdapter internal constructor() : PagedListAdapter<CourseEntity, Aca
     }
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
-        val course = getItem(position) as CourseEntity
-        holder.bind(course)
+        val course = getItem(position)
+        if (course != null) {
+            holder.bind(course)
+        }
     }
 
 //    override fun getItemCount(): Int = listCourses.size

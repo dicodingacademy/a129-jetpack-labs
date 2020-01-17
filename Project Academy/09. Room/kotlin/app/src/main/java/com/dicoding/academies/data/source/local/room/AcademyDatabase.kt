@@ -19,16 +19,11 @@ abstract class AcademyDatabase : RoomDatabase() {
         private var INSTANCE: AcademyDatabase? = null
 
         fun getInstance(context: Context): AcademyDatabase {
-            if (INSTANCE == null) {
-                synchronized(AcademyDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext,
-                                AcademyDatabase::class.java, "Academies.db")
-                                .build()
-                    }
-                }
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: Room.databaseBuilder(context.applicationContext,
+                        AcademyDatabase::class.java,
+                        "Academies.db").build()
             }
-            return INSTANCE as AcademyDatabase
         }
     }
 }

@@ -13,11 +13,11 @@ Dicoding sebagai satu-satunya Google Developers Authorized Training Partner di I
 - Kelas ini sebagai persiapan untuk mendapatkan sertifikasi Associate Android Developer (AAD).
 
 ## Materi apa saja yang akan dipelajari?
-**Pengenalan Android Jetpack** : Menjelaskan fitur-fitur, keisitimewaan dan keuntungan dari Android Jetpack, serta komponen komponen di dalamnya yang dibagi menjadi empat yakni Behavior, Foundation, Architecture dan UI.
-**Pengenalan Architecture Component** : Mendalami lebih dalam mengenai Architecture Component sebagai salah satu architecture pattern yang direkomendasikan oleh Google dengan banyak keuntungan di dalamnya, seperti mudah diuji, dapat dikelola dengan mudah dan menghasilkan aplikasi yang berkualitas.
-**Testing** : Mendalami materi seputar pengujian secara otomatis di dalam pengembangan aplikasi Android seperti Unit Testing dan Instrumentation Testing.
-**Studi Kasus** : Cara mengimplementasikan komponen-komponen dalam Architecture Component seperti ViewModel, LiveData, Room, Paging dan lain-lain.
-**Submission** : Pembuatan aplikasi katalog movie dengan fitur Android Jetpack seperti Room dan Pagination.
+- **Pengenalan Android Jetpack** : Menjelaskan fitur-fitur, keisitimewaan dan keuntungan dari Android Jetpack, serta komponen komponen di dalamnya yang dibagi menjadi empat yakni Behavior, Foundation, Architecture dan UI.
+- **Pengenalan Architecture Component** : Mendalami lebih dalam mengenai Architecture Component sebagai salah satu architecture pattern yang direkomendasikan oleh Google dengan banyak keuntungan di dalamnya, seperti mudah diuji, dapat dikelola dengan mudah dan menghasilkan aplikasi yang berkualitas.
+- **Testing** : Mendalami materi seputar pengujian secara otomatis di dalam pengembangan aplikasi Android seperti Unit Testing dan Instrumentation Testing.
+- **Studi Kasus** : Cara mengimplementasikan komponen-komponen dalam Architecture Component seperti ViewModel, LiveData, Room, Paging dan lain-lain.
+- **Submission** : Pembuatan aplikasi katalog movie dengan fitur Android Jetpack seperti Room dan Pagination.
 Anda tentukan sendiri berapa lama waktu belajar materi kelas ini. Materi kelas didesain untuk diselesaikan dalam waktu 70 jam. Jika Anda meluangkan waktu sedikitnya 10 jam saja dalam seminggu, maka sangat dimungkinkan Anda bisa menuntaskan kelas ini dalam waktu 50 hari. Namun tidak menutup kemungkinan Anda menyelesaikan dalam waktu yang jauh lebih cepat.
 
 ## Prasyarat untuk mengikuti kelas ini adalah:

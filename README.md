@@ -1,7 +1,7 @@
 # Belajar Android Jetpack Pro
 ### Kuasai Android Jetpack sebagai persiapan Associate Android Developer Certification dari Google. Materi disusun oleh Dicoding sebagai Google Developers Authorized Training Partner.
 
-![alt text](https://dicodingacademy.blob.core.windows.net/academies/201912201536064b66945dbf3f75c51d11b08c891dca66.jpgg)
+![BAJP](https://dicodingacademy.blob.core.windows.net/academies/201912201536064b66945dbf3f75c51d11b08c891dca66.jpg)
 Android Jetpack terinspirasi oleh Support Library, seperangkat komponen untuk memudahkan pemanfaatan fitur Android terbaru sembari tetap menjaga kompatibilitas dengan versi-versi sebelumnya. Google memperkenalkan Architecture Components sebagai bagian dari Android Jetpack yang dirancang untuk memudahkan penanganan data dalam menghadapi perubahan siklus hidup aplikasi. Sejak Google perkenalkan pada I/O 2018, banyak sekali dari perusahaan IT yang telah mengadopsinya. Google menyatakan bahwa Android Jetpack digunakan oleh 80% dari 1000 aplikasi terbaik Google Play Store. Perusahaan seperti LinkedIn, Traveloka dan Kakao Corporation (KakaoTalk) menjumpai lebih sedikit bug dan sukses menghemat waktu pengembangan sehingga dapat lebih berfokus pada apa yang membuat aplikasi mereka unik.
 Dicoding sebagai satu-satunya Google Developers Authorized Training Partner di Indonesia telah melalui proses penyusunan kurikulum secara komprehensif. Semua modul telah diverifikasi langsung oleh Google untuk memastikan bahwa materi yang diajarkan relevan dan sesuai dengan kebutuhan industri digital saat ini.
 

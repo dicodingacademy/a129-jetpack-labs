@@ -34,4 +34,5 @@
         <activity android:name=".ui.reader.CourseReaderActivity" />
     </application>
 
+    
 </manifest>

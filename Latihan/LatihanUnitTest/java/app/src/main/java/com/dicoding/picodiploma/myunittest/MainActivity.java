@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (TextUtils.isEmpty(height)) {
             activityMainBinding.edtHeight.setError("Field ini tidak boleh kosong");
         } else {
-            double l = Double.parseDouble(length);
-            double w = Double.parseDouble(width);
-            double h = Double.parseDouble(height);
+            double valueLenght = Double.parseDouble(length);
+            double valueWidht = Double.parseDouble(width);
+            double valueHeight = Double.parseDouble(height);
 
             if (v.getId() == R.id.btn_save) {
-                mainViewModel.save(l, w, h);
+                mainViewModel.save(valueLenght, valueWidht, valueHeight);
                 visible();
             } else if (v.getId() == R.id.btn_calculate_circumference) {
                 activityMainBinding.tvResult.setText(String.valueOf(mainViewModel.getCircumference()));

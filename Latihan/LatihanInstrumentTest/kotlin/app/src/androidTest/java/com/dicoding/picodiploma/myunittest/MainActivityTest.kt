@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.myunittest
 
+//import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -26,7 +27,7 @@ class MainActivityTest {
             = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun getCircumference() {
+    fun assertGetCircumference() {
         onView(withId(R.id.edt_length)).perform(typeText(dummyLength), closeSoftKeyboard())
         onView(withId(R.id.edt_width)).perform(typeText(dummyWidth), closeSoftKeyboard())
         onView(withId(R.id.edt_height)).perform(typeText(dummyHeight), closeSoftKeyboard())
@@ -42,7 +43,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun getSurfaceArea() {
+    fun assertGetSurfaceArea() {
         onView(withId(R.id.edt_length)).perform(typeText(dummyLength), closeSoftKeyboard())
         onView(withId(R.id.edt_width)).perform(typeText(dummyWidth), closeSoftKeyboard())
         onView(withId(R.id.edt_height)).perform(typeText(dummyHeight), closeSoftKeyboard())
@@ -58,7 +59,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun getVolume() {
+    fun assertGetVolume() {
         onView(withId(R.id.edt_length)).perform(typeText(dummyLength), closeSoftKeyboard())
         onView(withId(R.id.edt_width)).perform(typeText(dummyWidth), closeSoftKeyboard())
         onView(withId(R.id.edt_height)).perform(typeText(dummyHeight), closeSoftKeyboard())
@@ -75,7 +76,7 @@ class MainActivityTest {
 
     //Pengecekan untuk empty input
     @Test
-    fun emptyInput() {
+    fun assertEmptyInput() {
         // pengecekan input untuk length
         onView(withId(R.id.edt_length)).perform(typeText(emptyInput), closeSoftKeyboard())
 

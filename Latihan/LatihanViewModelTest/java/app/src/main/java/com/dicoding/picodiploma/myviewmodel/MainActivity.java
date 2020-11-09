@@ -1,68 +1,47 @@
 package com.dicoding.picodiploma.myviewmodel;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.dicoding.picodiploma.myviewmodel.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
 
-    // Membuat varible global
-    private EditText edtWidth, edtHeight, edtLength;
-    private TextView tvResult;
+    private ActivityMainBinding activityMainBinding;
     private MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
 
-        // Menghubungkan variable editText dan textView dengan layout
-        edtWidth = findViewById(R.id.edt_width);
-        edtHeight = findViewById(R.id.edt_height);
-        edtLength = findViewById(R.id.edt_length);
-        tvResult = findViewById(R.id.tv_result);
-
-        // Menghubungkan ViewModel dengan Activity
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        // Menampilkan hasil pertama kali
         displayResult();
 
-        // Memberikan aksi klik kepada button calculate
-        findViewById(R.id.btn_calculate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        activityMainBinding.btnCalculate.setOnClickListener(v -> {
 
-                // Mendapatkan string dari editText
-                String width = edtWidth.getText().toString();
-                String height = edtHeight.getText().toString();
-                String length = edtLength.getText().toString();
+            String width = activityMainBinding.edtWidth.getText().toString();
+            String height = activityMainBinding.edtHeight.getText().toString();
+            String length = activityMainBinding.edtLength.getText().toString();
 
-                // Melakukan pengecekan apakah empty atau tidak
-                if (width.isEmpty()) {
-                    edtWidth.setError("Masih kosong");
-                } else if (height.isEmpty()) {
-                    edtHeight.setError("Masih kosong");
-                } else if (length.isEmpty()) {
-                    edtLength.setError("Masih kosong");
-                } else {
-
-                    // Melakukan pengiriman string ke ViewModel
-                    viewModel.calculate(width, height, length);
-
-                    //Menampilkan hasil dari calculate
-                    displayResult();
-                }
+            if (width.isEmpty()) {
+                activityMainBinding.edtWidth.setError("Masih kosong");
+            } else if (height.isEmpty()) {
+                activityMainBinding.edtHeight.setError("Masih kosong");
+            } else if (length.isEmpty()) {
+                activityMainBinding.edtLength.setError("Masih kosong");
+            } else {
+                viewModel.calculate(width, height, length);
+                displayResult();
             }
         });
     }
 
-    // Menampilkan hasil dari ViewModel ke tvResults
     private void displayResult() {
-        tvResult.setText(String.valueOf(viewModel.result));
+        activityMainBinding.tvResult.setText(String.valueOf(viewModel.result));
     }
 }

@@ -5,6 +5,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
+import kotlin.jvm.Throws
 
 class MainViewModelTest {
     private lateinit var mainViewModel: MainViewModel

@@ -27,7 +27,6 @@ public class DetailCourseAdapter extends RecyclerView.Adapter<DetailCourseAdapte
     @NonNull
     @Override
     public ModuleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_module_list, parent, false);
         ItemsModuleListBinding binding = ItemsModuleListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ModuleViewHolder(binding);
     }

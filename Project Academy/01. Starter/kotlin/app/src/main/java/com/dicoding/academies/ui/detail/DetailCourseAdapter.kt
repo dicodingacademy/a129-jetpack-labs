@@ -1,15 +1,11 @@
 package com.dicoding.academies.ui.detail
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
-import com.dicoding.academies.R
 import com.dicoding.academies.data.ModuleEntity
-import kotlinx.android.synthetic.main.items_module_list.view.*
-
-import java.util.ArrayList
+import com.dicoding.academies.databinding.ItemsModuleListBinding
+import java.util.*
 
 class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewHolder>() {
 
@@ -22,8 +18,8 @@ class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewH
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.items_module_list, parent, false)
-        return ModuleViewHolder(view)
+        val itemModuleListBinding = ItemsModuleListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ModuleViewHolder(itemModuleListBinding)
     }
 
     override fun onBindViewHolder(viewHolder: ModuleViewHolder, position: Int) {
@@ -33,11 +29,9 @@ class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewH
 
     override fun getItemCount(): Int = listModules.size
 
-    inner class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ModuleViewHolder(private val binding: ItemsModuleListBinding) : RecyclerView.ViewHolder(binding.textModuleTitle) {
         fun bind(module: ModuleEntity) {
-            with(itemView) {
-                text_module_title.text = module.title
-            }
+            binding.textModuleTitle.text = module.title
         }
     }
 }

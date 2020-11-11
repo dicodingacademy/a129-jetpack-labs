@@ -1,6 +1,5 @@
 package com.dicoding.academies.ui.bookmark
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.academies.R
 import com.dicoding.academies.data.CourseEntity
+import com.dicoding.academies.databinding.FragmentBookmarkBinding
 import com.dicoding.academies.utils.DataDummy
-import kotlinx.android.synthetic.main.fragment_bookmark.*
 
 
 /**
@@ -19,20 +18,24 @@ import kotlinx.android.synthetic.main.fragment_bookmark.*
  */
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
+    lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false)
+        fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
+        return fragmentBookmarkBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         if (activity != null) {
             val courses = DataDummy.generateDummyCourses()
             val adapter = BookmarkAdapter(this)
             adapter.setCourses(courses)
 
-            with(rv_bookmark) {
+            with(fragmentBookmarkBinding.rvBookmark) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 this.adapter = adapter
@@ -44,7 +47,7 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         if (activity != null) {
             val mimeType = "text/plain"
             ShareCompat.IntentBuilder
-                    .from(activity)
+                    .from(requireActivity())
                     .setType(mimeType)
                     .setChooserTitle("Bagikan aplikasi ini sekarang.")
                     .setText(resources.getString(R.string.share_text, course.title))

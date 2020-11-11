@@ -55,7 +55,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Course
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle;
-        final TextView tvDescription;
         final TextView tvDate;
         final ImageButton imgShare;
         final ImageView imgPoster;
@@ -63,7 +62,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Course
         CourseViewHolder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_item_title);
-            tvDescription = itemView.findViewById(R.id.tv_item_description);
             tvDate = itemView.findViewById(R.id.tv_item_date);
             imgShare = itemView.findViewById(R.id.img_share);
             imgPoster = itemView.findViewById(R.id.img_poster);
@@ -71,7 +69,6 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.Course
 
         void bind(CourseEntity course) {
             tvTitle.setText(course.getTitle());
-            tvDescription.setText(course.getDescription());
             tvDate.setText(String.format("Deadline %s", course.getDeadline()));
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailCourseActivity.class);

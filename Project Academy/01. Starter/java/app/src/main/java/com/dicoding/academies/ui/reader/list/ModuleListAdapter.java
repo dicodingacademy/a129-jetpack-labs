@@ -1,15 +1,13 @@
 package com.dicoding.academies.ui.reader.list;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dicoding.academies.R;
 import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.databinding.ItemsModuleListCustomBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,8 @@ public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.Mo
     @NonNull
     @Override
     public ModuleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ModuleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.items_module_list_custom, parent, false));
+        ItemsModuleListCustomBinding binding = ItemsModuleListCustomBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ModuleViewHolder(binding);
     }
 
     @Override
@@ -50,15 +49,16 @@ public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.Mo
     }
 
     static class ModuleViewHolder extends RecyclerView.ViewHolder {
-        final TextView textTitle;
+        private final ItemsModuleListCustomBinding binding;
 
-        ModuleViewHolder(View itemView) {
-            super(itemView);
-            textTitle = itemView.findViewById(R.id.text_module_title);
+        ModuleViewHolder(ItemsModuleListCustomBinding binding) {
+            super(binding.getRoot());
+
+            this.binding = binding;
         }
 
         void bind(ModuleEntity module) {
-            textTitle.setText(module.getTitle());
+            binding.textModuleTitle.setText(module.getTitle());
         }
     }
 }

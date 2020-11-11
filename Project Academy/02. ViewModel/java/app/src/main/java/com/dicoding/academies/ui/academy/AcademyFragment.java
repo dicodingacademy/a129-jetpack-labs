@@ -1,6 +1,5 @@
 package com.dicoding.academies.ui.academy;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,38 +15,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.CourseEntity;
+import com.dicoding.academies.databinding.FragmentAcademyBinding;
 
 import java.util.List;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AcademyFragment extends Fragment {
-    private RecyclerView rvCourse;
-    private ProgressBar progressBar;
 
-    public AcademyFragment() {
-        // Required empty public constructor
-    }
+    private FragmentAcademyBinding fragmentAcademyBinding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_academy, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        fragmentAcademyBinding = FragmentAcademyBinding.inflate(inflater, container, false);
+        return fragmentAcademyBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvCourse = view.findViewById(R.id.rv_academy);
-        progressBar = view.findViewById(R.id.progress_bar);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             AcademyViewModel viewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(AcademyViewModel.class);
             List<CourseEntity> courses = viewModel.getCourses();
@@ -55,10 +43,11 @@ public class AcademyFragment extends Fragment {
             AcademyAdapter academyAdapter = new AcademyAdapter();
             academyAdapter.setCourses(courses);
 
-            rvCourse.setLayoutManager(new LinearLayoutManager(getContext()));
-            rvCourse.setHasFixedSize(true);
-            rvCourse.setAdapter(academyAdapter);
+            fragmentAcademyBinding.rvAcademy.setLayoutManager(new LinearLayoutManager(getContext()));
+            fragmentAcademyBinding.rvAcademy.setHasFixedSize(true);
+            fragmentAcademyBinding.rvAcademy.setAdapter(academyAdapter);
         }
+
     }
 }
 

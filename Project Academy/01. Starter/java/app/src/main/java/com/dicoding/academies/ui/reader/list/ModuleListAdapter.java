@@ -17,7 +17,7 @@ import java.util.List;
 public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.ModuleViewHolder> {
 
     private final MyAdapterClickListener listener;
-    private List<ModuleEntity> listModules = new ArrayList<>();
+    private final List<ModuleEntity> listModules = new ArrayList<>();
 
     ModuleListAdapter(MyAdapterClickListener listener) {
         this.listener = listener;
@@ -49,14 +49,12 @@ public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.Mo
         return listModules.size();
     }
 
-    class ModuleViewHolder extends RecyclerView.ViewHolder {
+    static class ModuleViewHolder extends RecyclerView.ViewHolder {
         final TextView textTitle;
-        final TextView textLastSeen;
 
         ModuleViewHolder(View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.text_module_title);
-            textLastSeen = itemView.findViewById(R.id.text_last_seen);
         }
 
         void bind(ModuleEntity module) {

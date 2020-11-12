@@ -29,7 +29,7 @@ class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewH
 
     override fun getItemCount(): Int = listModules.size
 
-    inner class ModuleViewHolder(private val binding: ItemsModuleListBinding) : RecyclerView.ViewHolder(binding.textModuleTitle) {
+    inner class ModuleViewHolder(private val binding: ItemsModuleListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(module: ModuleEntity) {
             binding.textModuleTitle.text = module.title
         }

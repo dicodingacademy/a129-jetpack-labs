@@ -29,7 +29,6 @@ task clean(type: Delete) {
 ext {
     //dependencies version
     appCompatVersion = '1.2.0'
-    coreVersion = '1.3.2'
     constraintLayoutVersion = '2.0.4'
     junitVersion = '4.13.1'
     junitExtversion = '1.1.2'

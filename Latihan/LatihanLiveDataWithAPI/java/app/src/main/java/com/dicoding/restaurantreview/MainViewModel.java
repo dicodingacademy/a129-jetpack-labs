@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.dicoding.restaurantreview.model.ConsumerReviewsItem;
+import com.dicoding.restaurantreview.model.CustomerReviewsItem;
 import com.dicoding.restaurantreview.model.PostReviewResponse;
 import com.dicoding.restaurantreview.model.Restaurant;
 import com.dicoding.restaurantreview.model.RestaurantResponse;
@@ -26,8 +26,8 @@ public class MainViewModel extends ViewModel {
         return _restaurant;
     }
 
-    private final MutableLiveData<List<ConsumerReviewsItem>> _listReview = new MutableLiveData<>();
-    public LiveData<List<ConsumerReviewsItem>> getListReview() {
+    private final MutableLiveData<List<CustomerReviewsItem>> _listReview = new MutableLiveData<>();
+    public LiveData<List<CustomerReviewsItem>> getListReview() {
         return _listReview;
     }
 
@@ -49,7 +49,7 @@ public class MainViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         _restaurant.setValue(response.body().getRestaurant());
-                        _listReview.setValue(response.body().getRestaurant().getConsumerReviews());
+                        _listReview.setValue(response.body().getRestaurant().getCustomerReviews());
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}");
@@ -73,7 +73,7 @@ public class MainViewModel extends ViewModel {
                 _isLoading.setValue(false);
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        _listReview.setValue(response.body().getConsumerReviews());
+                        _listReview.setValue(response.body().getCustomerReviews());
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}");

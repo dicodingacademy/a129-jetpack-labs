@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Restaurant{
 
-	@SerializedName("consumerReviews")
-	private List<ConsumerReviewsItem> consumerReviews;
+	@SerializedName("customerReviews")
+	private List<CustomerReviewsItem> customerReviews;
 
 	@SerializedName("pictureId")
 	private String pictureId;
@@ -23,8 +23,8 @@ public class Restaurant{
 	@SerializedName("id")
 	private String id;
 
-	public List<ConsumerReviewsItem> getConsumerReviews(){
-		return consumerReviews;
+	public List<CustomerReviewsItem> getCustomerReviews(){
+		return customerReviews;
 	}
 
 	public String getPictureId(){

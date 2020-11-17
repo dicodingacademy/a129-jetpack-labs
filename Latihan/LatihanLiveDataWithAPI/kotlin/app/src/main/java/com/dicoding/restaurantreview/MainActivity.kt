@@ -22,21 +22,21 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         mainViewModel.findRestaurant()
-        mainViewModel.restaurant.observe(this, Observer { restaurant ->
+        mainViewModel.restaurant.observe(this, { restaurant ->
             tvTitle.text = restaurant.name
             tvDescription.text = "${restaurant.description.take(100)}..."
             Glide.with(this).load("https://restaurant-api.dicoding.dev/images/large/${restaurant.pictureId}").into(ivPicture)
         })
 
-        mainViewModel.listReview.observe(this, Observer { consumerReviews ->
+        mainViewModel.listReview.observe(this, { customerReviews ->
             val listReview = ArrayList<String>()
-            consumerReviews.forEach {
+            customerReviews.forEach {
                 listReview.add("${it.review}\n- ${it.name}")
             }
             lvReview.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listReview)
         })
 
-        mainViewModel.isLoading.observe(this, Observer {
+        mainViewModel.isLoading.observe(this, {
             progressBar.visibility = if (it) View.VISIBLE else View.GONE
         })
 

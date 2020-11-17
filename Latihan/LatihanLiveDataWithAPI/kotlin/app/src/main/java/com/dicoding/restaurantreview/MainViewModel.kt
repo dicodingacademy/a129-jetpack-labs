@@ -11,8 +11,8 @@ class MainViewModel : ViewModel() {
     private val _restaurant = MutableLiveData<Restaurant>()
     val restaurant: LiveData<Restaurant> = _restaurant
 
-    private val _listReview = MutableLiveData<List<ConsumerReviewsItem>>()
-    val listReview: LiveData<List<ConsumerReviewsItem>> = _listReview
+    private val _listReview = MutableLiveData<List<CustomerReviewsItem>>()
+    val listReview: LiveData<List<CustomerReviewsItem>> = _listReview
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -33,7 +33,7 @@ class MainViewModel : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     _restaurant.value = response.body()?.restaurant
-                    _listReview.value = response.body()?.restaurant?.consumerReviews
+                    _listReview.value = response.body()?.restaurant?.customerReviews
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -53,7 +53,7 @@ class MainViewModel : ViewModel() {
             override fun onResponse(call: Call<PostReviewResponse>, response: Response<PostReviewResponse>) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
-                    _listReview.value = response.body()?.consumerReviews
+                    _listReview.value = response.body()?.customerReviews
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }

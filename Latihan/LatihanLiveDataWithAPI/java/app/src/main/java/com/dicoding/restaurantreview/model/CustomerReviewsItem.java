@@ -2,7 +2,7 @@ package com.dicoding.restaurantreview.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ConsumerReviewsItem{
+public class CustomerReviewsItem {
 
 	@SerializedName("date")
 	private String date;

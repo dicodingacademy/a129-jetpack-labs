@@ -19,7 +19,6 @@ class RestaurantRepository {
             ) {
                 if (response.isSuccessful) {
                     restaurant.postValue(response.body()?.restaurant)
-//                    _listReview.value = response.body()?.restaurant?.consumerReviews
                 } else {
                     Log.e("MainViewModel", "onFailure: ${response.message()}")
                 }

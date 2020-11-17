@@ -16,8 +16,8 @@ data class RestaurantResponse(
 
 data class Restaurant(
 
-	@field:SerializedName("consumerReviews")
-	val consumerReviews: List<ConsumerReviewsItem>,
+	@field:SerializedName("customerReviews")
+	val customerReviews: List<CustomerReviewsItem>,
 
 	@field:SerializedName("pictureId")
 	val pictureId: String,
@@ -35,7 +35,7 @@ data class Restaurant(
 	val id: String
 )
 
-data class ConsumerReviewsItem(
+data class CustomerReviewsItem(
 
 	@field:SerializedName("date")
 	val date: String,
@@ -50,7 +50,7 @@ data class ConsumerReviewsItem(
 data class PostReviewResponse(
 
 	@field:SerializedName("customerReviews")
-	val consumerReviews: List<ConsumerReviewsItem>,
+	val customerReviews: List<CustomerReviewsItem>,
 
 	@field:SerializedName("error")
 	val error: Boolean,

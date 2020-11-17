@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PostReviewResponse {
     @SerializedName("customerReviews")
-    private List<ConsumerReviewsItem> consumerReviews;
+    private List<CustomerReviewsItem> customerReviews;
 
     @SerializedName("error")
     private boolean error;
@@ -14,8 +14,8 @@ public class PostReviewResponse {
     @SerializedName("message")
     private String message;
 
-    public List<ConsumerReviewsItem> getConsumerReviews(){
-        return consumerReviews;
+    public List<CustomerReviewsItem> getCustomerReviews(){
+        return customerReviews;
     }
 
     public boolean isError(){

@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.dicoding.restaurantreview.model.ConsumerReviewsItem;
+import com.dicoding.restaurantreview.model.CustomerReviewsItem;
 
 import java.util.ArrayList;
 
@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(this).load("https://restaurant-api.dicoding.dev/images/large/"+restaurant.getPictureId()).into(ivPicture);
         });
 
-        mainViewModel.getListReview().observe(this, consumerReviews -> {
+        mainViewModel.getListReview().observe(this, customerReviews -> {
             ArrayList<String> listReview = new ArrayList<>();
-            for (ConsumerReviewsItem review : consumerReviews){
+            for (CustomerReviewsItem review : customerReviews){
                 listReview.add(review.getReview()+"\n- "+review.getName());
             }
             lvReview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listReview));

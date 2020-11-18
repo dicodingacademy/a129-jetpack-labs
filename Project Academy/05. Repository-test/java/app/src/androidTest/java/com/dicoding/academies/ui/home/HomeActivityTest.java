@@ -1,5 +1,6 @@
 package com.dicoding.academies.ui.home;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
@@ -7,6 +8,7 @@ import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.DataDummy;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -23,9 +25,10 @@ public class HomeActivityTest {
 
     private ArrayList<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
 
-    @Rule
-    public ActivityTestRule activityRule = new ActivityTestRule<>(HomeActivity.class);
-
+    @Before
+    public void setup(){
+        ActivityScenario.launch(HomeActivity.class);
+    }
     @Test
     public void loadCourses() {
         onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));

@@ -1,7 +1,6 @@
 package com.dicoding.academies.ui.academy
 
 import com.dicoding.academies.data.AcademyRepository
-import com.dicoding.academies.data.FakeAcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.utils.DataDummy
 import org.junit.Assert.assertEquals
@@ -29,9 +28,9 @@ class AcademyViewModelTest {
 
     @Test
     fun getCourses() {
-        `when`<ArrayList<CourseEntity>>(academyRepository.getAllCourses()).thenReturn(DataDummy.generateDummyCourses())
+        `when`(academyRepository.getAllCourses()).thenReturn(DataDummy.generateDummyCourses() as ArrayList<CourseEntity>)
         val courseEntities = viewModel.getCourses()
-        verify<AcademyRepository>(academyRepository).getAllCourses()
+        verify(academyRepository).getAllCourses()
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities.size)
     }

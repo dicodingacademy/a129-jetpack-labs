@@ -39,7 +39,7 @@ class CourseReaderViewModelTest {
 
     @Test
     fun getModules() {
-        `when`<ArrayList<ModuleEntity>>(academyRepository.getAllModulesByCourse(courseId)).thenReturn(dummyModules)
+        `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(dummyModules as ArrayList<ModuleEntity>?)
         val moduleEntities = viewModel.getModules()
         verify<AcademyRepository>(academyRepository).getAllModulesByCourse(courseId)
         assertNotNull(moduleEntities)

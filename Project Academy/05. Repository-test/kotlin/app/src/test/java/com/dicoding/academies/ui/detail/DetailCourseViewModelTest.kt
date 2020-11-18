@@ -13,6 +13,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.ArrayList
 
 @RunWith(MockitoJUnitRunner::class)
 class DetailCourseViewModelTest {
@@ -44,7 +45,7 @@ class DetailCourseViewModelTest {
 
     @Test
     fun getModules() {
-        `when`<ArrayList<ModuleEntity>>(academyRepository.getAllModulesByCourse(courseId)).thenReturn(DataDummy.generateDummyModules(courseId))
+        `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(DataDummy.generateDummyModules(courseId) as ArrayList<ModuleEntity>?)
         val moduleEntities = viewModel.getModules()
         verify<AcademyRepository>(academyRepository).getAllModulesByCourse(courseId)
         assertNotNull(moduleEntities)

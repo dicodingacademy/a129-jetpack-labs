@@ -27,11 +27,10 @@ class MainViewModel : ViewModel() {
         private const val ONE_SECOND = 1000
     }
 
-    private val mInitialTime: Long
+    private val mInitialTime = SystemClock.elapsedRealtime()
     private val mElapsedTime = MutableLiveData<Long?>()
 
     init {
-        mInitialTime = SystemClock.elapsedRealtime()
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {

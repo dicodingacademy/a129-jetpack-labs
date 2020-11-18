@@ -17,24 +17,27 @@
 package com.dicoding.picodiploma.mylivedata;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.dicoding.picodiploma.mylivedata.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mLiveDataTimerViewModel;
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
 
         mLiveDataTimerViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
         subscribe();
     }
 
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final Long aLong) {
                 String newText = MainActivity.this.getResources().getString(R.string.seconds, aLong);
-                ((TextView) findViewById(R.id.timer_textview)).setText(newText);
+                activityMainBinding.timerTextview.setText(newText);
             }
         };
 

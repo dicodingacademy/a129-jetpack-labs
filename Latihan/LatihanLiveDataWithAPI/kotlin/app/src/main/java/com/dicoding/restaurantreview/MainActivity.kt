@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
             activityMainBinding.lvReview.adapter =
                 ArrayAdapter(this, R.layout.item_review, listReview)
+            activityMainBinding.edReview.setText("")
         })
 
         mainViewModel.isLoading.observe(this, {

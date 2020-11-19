@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 listReview.add(review.getReview()+"\n- "+review.getName());
             }
             activityMainBinding.lvReview.setAdapter(new ArrayAdapter<>(this, R.layout.item_review, listReview));
+            activityMainBinding.edReview.setText("");
         });
 
         mainViewModel.isLoading().observe(this, isLoading -> {

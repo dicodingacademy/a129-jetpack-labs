@@ -1,6 +1,7 @@
 package com.dicoding.academies.data.source.remote
 
 import android.os.Handler
+import android.os.Looper
 import com.dicoding.academies.data.source.remote.response.ContentResponse
 import com.dicoding.academies.data.source.remote.response.CourseResponse
 import com.dicoding.academies.data.source.remote.response.ModuleResponse
@@ -8,10 +9,10 @@ import com.dicoding.academies.utils.JsonHelper
 
 class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
 
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
     companion object {
-        private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
+        private const val SERVICE_LATENCY_IN_MILLIS: Long = 1000
 
         @Volatile
         private var instance: RemoteDataSource? = null

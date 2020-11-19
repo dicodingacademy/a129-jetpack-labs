@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.dicoding.academies.R
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
+import com.dicoding.academies.databinding.ItemsModuleListBinding
 import kotlinx.android.synthetic.main.items_module_list.view.*
 
 import java.util.ArrayList
@@ -15,16 +16,15 @@ class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewH
 
     private val listModules = ArrayList<ModuleEntity>()
 
-
     fun setModules(modules: List<ModuleEntity>?) {
         if (modules == null) return
-        listModules.clear()
-        listModules.addAll(modules)
+        this.listModules.clear()
+        this.listModules.addAll(modules)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.items_module_list, parent, false)
-        return ModuleViewHolder(view)
+        val itemModuleListBinding = ItemsModuleListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ModuleViewHolder(itemModuleListBinding)
     }
 
     override fun onBindViewHolder(viewHolder: ModuleViewHolder, position: Int) {
@@ -34,12 +34,9 @@ class DetailCourseAdapter : RecyclerView.Adapter<DetailCourseAdapter.ModuleViewH
 
     override fun getItemCount(): Int = listModules.size
 
-    inner class ModuleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ModuleViewHolder(private val binding: ItemsModuleListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(module: ModuleEntity) {
-            with(itemView) {
-                text_module_title.text = module.title
-            }
+            binding.textModuleTitle.text = module.title
         }
     }
 }
-

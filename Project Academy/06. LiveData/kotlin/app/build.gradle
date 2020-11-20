@@ -62,6 +62,3 @@ dependencies {
     //architecture component
     implementation "androidx.lifecycle:lifecycle-viewmodel:$archLifecycleVersion"
 }
-repositories {
-    mavenCentral()
-}

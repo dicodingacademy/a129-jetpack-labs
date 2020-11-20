@@ -68,7 +68,7 @@ class DetailCourseViewModelTest {
 
         `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(module)
         val moduleEntities = viewModel.getModules().value
-        verify<AcademyRepository>(academyRepository).getAllModulesByCourse(courseId)
+        verify(academyRepository).getAllModulesByCourse(courseId)
         assertNotNull(moduleEntities)
         assertEquals(7, moduleEntities?.size)
 

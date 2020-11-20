@@ -14,7 +14,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -55,7 +56,7 @@ class CourseReaderViewModelTest {
 
         `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
         val moduleEntities = viewModel.getModules().value
-        verify<AcademyRepository>(academyRepository).getAllModulesByCourse(courseId)
+        verify(academyRepository).getAllModulesByCourse(courseId)
         assertNotNull(moduleEntities)
         assertEquals(7, moduleEntities?.size)
 
@@ -79,7 +80,7 @@ class CourseReaderViewModelTest {
         assertEquals(content, dummyModules[0].contentEntity?.content)
 
         viewModel.getSelectedModule().observeForever(moduleObserver)
-        verify<Observer<ModuleEntity>>(moduleObserver).onChanged(dummyModules[0])
+        verify(moduleObserver).onChanged(dummyModules[0])
 
     }
 }

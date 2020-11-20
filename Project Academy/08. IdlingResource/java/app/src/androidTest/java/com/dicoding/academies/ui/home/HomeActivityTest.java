@@ -1,5 +1,6 @@
 package com.dicoding.academies.ui.home;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
@@ -27,11 +28,9 @@ public class HomeActivityTest {
 
     private ArrayList<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
 
-    @Rule
-    public ActivityTestRule activityRule = new ActivityTestRule<>(HomeActivity.class);
-
     @Before
-    public void setUp() {
+    public void setup() {
+        ActivityScenario.launch(HomeActivity.class);
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
     }
 

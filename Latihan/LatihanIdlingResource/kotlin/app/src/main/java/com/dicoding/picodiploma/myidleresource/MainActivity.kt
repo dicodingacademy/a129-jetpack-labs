@@ -2,17 +2,21 @@ package com.dicoding.picodiploma.myidleresource
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-
+import com.dicoding.picodiploma.myidleresource.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var activityMainBinding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        button.setOnClickListener {
+        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(activityMainBinding.root)
+
+        activityMainBinding.button.setOnClickListener {
             delay1()
             delay2()
         }
@@ -20,8 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun delay1() {
         EspressoIdlingResource.increment()
-        Handler().postDelayed({
-            text_view.text = getString(R.string.delay1)
+        Handler(Looper.getMainLooper()).postDelayed({
+            activityMainBinding.textView.text = getString(R.string.delay1)
             if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                 //Memberitahukan bahwa tugas sudah selesai dijalankan
                 EspressoIdlingResource.decrement()
@@ -31,8 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun delay2() {
         EspressoIdlingResource.increment()
-        Handler().postDelayed({
-            text_view.text = getString(R.string.delay2)
+        Handler(Looper.getMainLooper()).postDelayed({
+            activityMainBinding.textView.text = getString(R.string.delay2)
             if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                 //Memberitahukan bahwa tugas sudah selesai dijalankan
                 EspressoIdlingResource.decrement()

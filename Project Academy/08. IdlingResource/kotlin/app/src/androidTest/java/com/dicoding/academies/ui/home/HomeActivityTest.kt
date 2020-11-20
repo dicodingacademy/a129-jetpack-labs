@@ -1,31 +1,28 @@
 package com.dicoding.academies.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.rule.ActivityTestRule
 import com.dicoding.academies.R
 import com.dicoding.academies.utils.DataDummy
-import org.junit.Rule
-import org.junit.Test
 import com.dicoding.academies.utils.EspressoIdlingResource
-import androidx.test.espresso.IdlingRegistry
-import org.junit.Before
 import org.junit.After
+import org.junit.Before
+import org.junit.Test
 
 
 class HomeActivityTest {
 
     private val dummyCourse = DataDummy.generateDummyCourses()
 
-    @get:Rule
-    var activityRule = ActivityTestRule(HomeActivity::class.java)
-
     @Before
     fun setUp() {
+        ActivityScenario.launch(HomeActivity::class.java)
         IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
     }
 

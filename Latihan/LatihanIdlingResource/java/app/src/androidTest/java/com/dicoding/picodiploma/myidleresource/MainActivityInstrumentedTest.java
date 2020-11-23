@@ -1,12 +1,14 @@
 package com.dicoding.picodiploma.myidleresource;
 
+import android.content.Context;
+
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -19,11 +21,13 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class MainActivityInstrumentedTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+    private Context instrumentalContext;
 
     @Before
     public void setUp() {
+        instrumentalContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        ActivityScenario.launch(MainActivity.class);
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
@@ -34,12 +38,12 @@ public class MainActivityInstrumentedTest {
 
     @Test
     public void checkText() {
-        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.prepare))));
+        onView(withId(R.id.text_view)).check(matches(withText(instrumentalContext.getString(R.string.prepare))));
 
-        onView(withText(mActivityRule.getActivity().getString(R.string.start))).perform(click());
+        onView(withText(instrumentalContext.getString(R.string.start))).perform(click());
 
         //onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.delay1))));
 
-        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.delay2))));
+        onView(withId(R.id.text_view)).check(matches(withText(instrumentalContext.getString(R.string.delay2))));
     }
 }

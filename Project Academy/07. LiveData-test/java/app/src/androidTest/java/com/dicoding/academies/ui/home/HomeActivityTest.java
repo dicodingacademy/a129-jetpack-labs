@@ -24,22 +24,22 @@ public class HomeActivityTest {
     private ArrayList<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
 
     @Before
-    public void setup(){
+    public void setup() {
         ActivityScenario.launch(HomeActivity.class);
     }
 
     @Test
     public void loadCourses() {
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.scrollToPosition(dummyCourse.size()));
     }
 
     @Test
     public void loadDetailCourse() {
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.text_title)).check(matches(isDisplayed()));
         onView(withId(R.id.text_title)).check(matches(withText(dummyCourse.get(0).getTitle())));
         onView(withId(R.id.text_date)).check(matches(isDisplayed()));
@@ -48,35 +48,35 @@ public class HomeActivityTest {
 
     @Test
     public void loadModule() {
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.btn_start)).perform(click());
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
     }
 
     @Test
     public void loadDetailModule() {
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.btn_start)).perform(click());
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.rv_module)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.web_view)).check(matches(isDisplayed()));
     }
 
     @Test
     public void loadBookmarks() {
         onView(withText("Bookmark")).perform(click());
-        delayOnesecond();
+        delayOneSecond();
         onView(withId(R.id.rv_bookmark)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_bookmark)).perform(RecyclerViewActions.scrollToPosition(dummyCourse.size()));
     }
 
-    private void delayOnesecond() {
+    private void delayOneSecond() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

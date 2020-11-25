@@ -23,7 +23,7 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
     lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
         return fragmentBookmarkBinding.root
@@ -36,7 +36,10 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
             val viewModel = ViewModelProvider(this, factory)[BookmarkViewModel::class.java]
 
             val adapter = BookmarkAdapter(this)
+
+            fragmentBookmarkBinding.progressBar.visibility = View.VISIBLE
             viewModel.getBookmarks().observe(this, { courses ->
+                fragmentBookmarkBinding.progressBar.visibility = View.GONE
                 adapter.setCourses(courses)
                 adapter.notifyDataSetChanged()
             })

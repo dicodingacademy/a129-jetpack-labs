@@ -27,7 +27,7 @@ class ModuleContentFragment : Fragment() {
     private lateinit var fragmentModuleContentBinding: FragmentModuleContentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         fragmentModuleContentBinding = FragmentModuleContentBinding.inflate(inflater, container, false)
         return fragmentModuleContentBinding.root
@@ -39,7 +39,9 @@ class ModuleContentFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
 
+            fragmentModuleContentBinding.progressBar.visibility = View.VISIBLE
             viewModel.getSelectedModule().observe(this, { module ->
+                fragmentModuleContentBinding.progressBar.visibility = View.GONE
                 if (module != null) {
                     populateWebView(module)
                 }

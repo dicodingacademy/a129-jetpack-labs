@@ -43,7 +43,10 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
             BookmarkViewModel viewModel = new ViewModelProvider(this, factory).get(BookmarkViewModel.class);
 
             BookmarkAdapter adapter = new BookmarkAdapter(this);
+
+            fragmentBookmarkBinding.progressBar.setVisibility(View.VISIBLE);
             viewModel.getBookmarks().observe(this, courses -> {
+                fragmentBookmarkBinding.progressBar.setVisibility(View.GONE);
                 adapter.setCourses(courses);
                 adapter.notifyDataSetChanged();
             });

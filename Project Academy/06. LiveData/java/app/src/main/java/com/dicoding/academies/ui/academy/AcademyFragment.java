@@ -41,7 +41,10 @@ public class AcademyFragment extends Fragment {
             AcademyViewModel viewModel = new ViewModelProvider(this, factory).get(AcademyViewModel.class);
 
             AcademyAdapter academyAdapter = new AcademyAdapter();
+
+            fragmentAcademyBinding.progressBar.setVisibility(View.VISIBLE);
             viewModel.getCourses().observe(this, courses -> {
+                        fragmentAcademyBinding.progressBar.setVisibility(View.GONE);
                         academyAdapter.setCourses(courses);
                         academyAdapter.notifyDataSetChanged();
                     }

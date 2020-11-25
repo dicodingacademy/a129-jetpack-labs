@@ -44,7 +44,9 @@ public class ModuleContentFragment extends Fragment {
             ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
             CourseReaderViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
 
+            fragmentModuleContentBinding.progressBar.setVisibility(View.VISIBLE);
             viewModel.getSelectedModule().observe(this, module -> {
+                fragmentModuleContentBinding.progressBar.setVisibility(View.GONE);
                 if (module != null) {
                     populateWebView(module);
                 }

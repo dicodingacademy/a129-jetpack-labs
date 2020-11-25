@@ -2,6 +2,7 @@ package com.dicoding.academies.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -43,9 +44,14 @@ public class DetailCourseActivity extends AppCompatActivity {
         if (extras != null) {
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
-                viewModel.setSelectedCourse(courseId);
+                activityDetailCourseBinding.progressBar.setVisibility(View.VISIBLE);
+                activityDetailCourseBinding.content.setVisibility(View.GONE);
 
+                viewModel.setSelectedCourse(courseId);
                 viewModel.getModules().observe(this, modules -> {
+                    activityDetailCourseBinding.progressBar.setVisibility(View.GONE);
+                    activityDetailCourseBinding.content.setVisibility(View.VISIBLE);
+
                     adapter.setModules(modules);
                     adapter.notifyDataSetChanged();
                 });

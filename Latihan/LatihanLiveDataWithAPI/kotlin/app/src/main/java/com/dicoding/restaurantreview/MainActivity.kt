@@ -1,7 +1,6 @@
 package com.dicoding.restaurantreview
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager

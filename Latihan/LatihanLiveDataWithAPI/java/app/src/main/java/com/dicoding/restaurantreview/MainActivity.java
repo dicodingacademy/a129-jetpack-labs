@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.dicoding.restaurantreview.databinding.ActivityMainBinding;
-import com.dicoding.restaurantreview.model.ConsumerReviewsItem;
 import com.dicoding.restaurantreview.model.CustomerReviewsItem;
 
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel.getListReview().observe(this, consumerReviews -> {
             ArrayList<String> listReview = new ArrayList<>();
-            for (ConsumerReviewsItem review : consumerReviews) {
+            for (CustomerReviewsItem review : consumerReviews) {
                 listReview.add(review.getReview() + "\n- " + review.getName());
             }
             activityMainBinding.lvReview.setAdapter(new ArrayAdapter<>(this, R.layout.item_review, listReview));

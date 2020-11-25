@@ -15,7 +15,6 @@ import com.dicoding.academies.ui.reader.CourseReaderActivity
 import com.dicoding.academies.ui.reader.CourseReaderCallback
 import com.dicoding.academies.ui.reader.CourseReaderViewModel
 import com.dicoding.academies.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_module_list.*
 
 /**
  * A simple [Fragment] subclass.
@@ -35,7 +34,7 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
     private lateinit var viewModel: CourseReaderViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         fragmentModuleListBinding = FragmentModuleListBinding.inflate(inflater, container, false)
         return fragmentModuleListBinding.root
@@ -47,9 +46,9 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
         adapter = ModuleListAdapter(this)
 
-        progress_bar.visibility = View.VISIBLE
+        fragmentModuleListBinding.progressBar.visibility = View.VISIBLE
         viewModel.getModules().observe(this, { modules ->
-            progress_bar.visibility = View.GONE
+            fragmentModuleListBinding.progressBar.visibility = View.GONE
             populateRecyclerView(modules)
         })
     }

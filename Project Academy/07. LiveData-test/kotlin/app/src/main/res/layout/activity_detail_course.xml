@@ -19,12 +19,23 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include android:id="@+id/detail_content" layout="@layout/content_detail_course" />
+        <include
+            android:id="@+id/detail_content"
+            layout="@layout/content_detail_course" />
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/content"
+        app:layout_anchorGravity="center_horizontal|center_vertical" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

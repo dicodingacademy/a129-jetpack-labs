@@ -2,6 +2,7 @@ package com.dicoding.academies.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -44,9 +45,15 @@ class DetailCourseActivity : AppCompatActivity() {
         if (extras != null) {
             val courseId = extras.getString(EXTRA_COURSE)
             if (courseId != null) {
-                viewModel.setSelectedCourse(courseId)
 
+                activityDetailCourseBinding.progressBar.visibility = View.VISIBLE
+                activityDetailCourseBinding.content.visibility = View.INVISIBLE
+
+                viewModel.setSelectedCourse(courseId)
                 viewModel.getModules().observe(this, { modules ->
+                    activityDetailCourseBinding.progressBar.visibility = View.GONE
+                    activityDetailCourseBinding.content.visibility = View.VISIBLE
+
                     adapter.setModules(modules)
                     adapter.notifyDataSetChanged()
                 })

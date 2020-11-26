@@ -45,11 +45,11 @@ public class DetailCourseActivity extends AppCompatActivity {
             String courseId = extras.getString(EXTRA_COURSE);
             if (courseId != null) {
                 activityDetailCourseBinding.progressBar.setVisibility(View.VISIBLE);
-                activityDetailCourseBinding.content.setVisibility(View.GONE);
+                activityDetailCourseBinding.content.setVisibility(View.INVISIBLE);
 
                 viewModel.setSelectedCourse(courseId);
                 viewModel.getModules().observe(this, modules -> {
-                    activityDetailCourseBinding.progressBar.setVisibility(View.GONE);
+                    activityDetailCourseBinding.progressBar.setVisibility(View.INVISIBLE);
                     activityDetailCourseBinding.content.setVisibility(View.VISIBLE);
 
                     adapter.setModules(modules);

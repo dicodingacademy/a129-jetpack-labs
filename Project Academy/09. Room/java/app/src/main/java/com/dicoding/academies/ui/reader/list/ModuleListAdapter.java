@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.databinding.ItemsModuleListCustomBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,20 +37,17 @@ public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.Mo
     @NonNull
     @Override
     public ModuleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ModuleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.items_module_list_custom, parent, false));
+        ItemsModuleListCustomBinding binding = ItemsModuleListCustomBinding.inflate(LayoutInflater.from(parent.getContext()));
+        return new ModuleViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ModuleViewHolder viewHolder, int position) {
         ModuleEntity module = listModules.get(position);
         viewHolder.bind(module);
-        if (viewHolder.getItemViewType() == 0){
-            viewHolder.textTitle.setTextColor(viewHolder.itemView.getContext().getResources().getColor(R.color.colorTextSecondary));
-        } else {
-            viewHolder.itemView.setOnClickListener(v ->
-                    listener.onItemClicked(viewHolder.getAdapterPosition(), listModules.get(viewHolder.getAdapterPosition()).getModuleId())
-            );
-        }
+        viewHolder.itemView.setOnClickListener(v ->
+                listener.onItemClicked(viewHolder.getAdapterPosition(), listModules.get(viewHolder.getAdapterPosition()).getModuleId())
+        );
     }
 
     @Override
@@ -57,29 +55,17 @@ public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.Mo
         return listModules.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
+    static class ModuleViewHolder extends RecyclerView.ViewHolder {
+        final ItemsModuleListCustomBinding binding;
 
-        int modulePosition = listModules.get(position).getPosition();
-        if (modulePosition == 0) return 1;
-        else if (listModules.get(modulePosition - 1).isRead()) return 1;
-        else return 0;
+        ModuleViewHolder(ItemsModuleListCustomBinding binding) {
+            super(binding.getRoot());
 
-    }
-
-    class ModuleViewHolder extends RecyclerView.ViewHolder {
-        final TextView textTitle;
-        final TextView textLastSeen;
-
-        ModuleViewHolder(View itemView) {
-            super(itemView);
-            textTitle = itemView.findViewById(R.id.text_module_title);
-            textLastSeen = itemView.findViewById(R.id.text_last_seen);
+            this.binding = binding;
         }
 
         void bind(ModuleEntity module) {
-            textTitle.setText(module.getTitle());
+            binding.textModuleTitle.setText(module.getTitle());
         }
     }
 }
-

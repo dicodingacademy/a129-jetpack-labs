@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.databinding.ItemsAcademyBinding;
 import com.dicoding.academies.ui.detail.DetailCourseActivity;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class AcademyAdapter extends RecyclerView.Adapter<AcademyAdapter.CourseVi
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_academy, parent, false);
-        return new CourseViewHolder(view);
+        ItemsAcademyBinding binding = ItemsAcademyBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new CourseViewHolder(binding);
     }
 
     @Override
@@ -46,24 +47,19 @@ public class AcademyAdapter extends RecyclerView.Adapter<AcademyAdapter.CourseVi
         return listCourses.size();
     }
 
-    class CourseViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvTitle;
-        final TextView tvDescription;
-        final TextView tvDate;
-        final ImageView imgPoster;
+    static class CourseViewHolder extends RecyclerView.ViewHolder {
 
-        CourseViewHolder(View itemView) {
-            super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_item_title);
-            imgPoster = itemView.findViewById(R.id.img_poster);
-            tvDescription = itemView.findViewById(R.id.tv_item_description);
-            tvDate = itemView.findViewById(R.id.tv_item_date);
+        final ItemsAcademyBinding binding;
+
+        CourseViewHolder(ItemsAcademyBinding binding) {
+            super(binding.getRoot());
+
+            this.binding = binding;
         }
 
         void bind(CourseEntity course) {
-            tvTitle.setText(course.getTitle());
-            tvDescription.setText(course.getDescription());
-            tvDate.setText(String.format("Deadline %s", course.getDeadline()));
+            binding.tvItemTitle.setText(course.getTitle());
+            binding.tvItemDate.setText(String.format("Deadline %s", course.getDeadline()));
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailCourseActivity.class);
                 intent.putExtra(DetailCourseActivity.EXTRA_COURSE, course.getCourseId());
@@ -72,8 +68,7 @@ public class AcademyAdapter extends RecyclerView.Adapter<AcademyAdapter.CourseVi
             Glide.with(itemView.getContext())
                     .load(course.getImagePath())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
-                    .into(imgPoster);
+                    .into(binding.imgPoster);
         }
     }
 }
-

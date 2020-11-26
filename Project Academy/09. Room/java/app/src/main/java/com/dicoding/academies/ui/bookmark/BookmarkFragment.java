@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.databinding.FragmentBookmarkBinding;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
 
 
@@ -24,45 +25,40 @@ import com.dicoding.academies.viewmodel.ViewModelFactory;
  * A simple {@link Fragment} subclass.
  */
 public class BookmarkFragment extends Fragment implements BookmarkFragmentCallback {
-    private RecyclerView rvBookmark;
-    private ProgressBar progressBar;
+
+    private FragmentBookmarkBinding fragmentBookmarkBinding;
 
     public BookmarkFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false);
+        fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater);
+        return fragmentBookmarkBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvBookmark = view.findViewById(R.id.rv_bookmark);
-        progressBar = view.findViewById(R.id.progress_bar);
-    }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
             BookmarkViewModel viewModel = new ViewModelProvider(this, factory).get(BookmarkViewModel.class);
 
             BookmarkAdapter adapter = new BookmarkAdapter(this);
-            progressBar.setVisibility(View.VISIBLE);
+            fragmentBookmarkBinding.progressBar.setVisibility(View.VISIBLE);
             viewModel.getBookmarks().observe(this, courses -> {
-                progressBar.setVisibility(View.GONE);
+                fragmentBookmarkBinding.progressBar.setVisibility(View.GONE);
                 adapter.setCourses(courses);
                 adapter.notifyDataSetChanged();
             });
 
-            rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
-            rvBookmark.setHasFixedSize(true);
-            rvBookmark.setAdapter(adapter);
+            fragmentBookmarkBinding.rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
+            fragmentBookmarkBinding.rvBookmark.setHasFixedSize(true);
+            fragmentBookmarkBinding.rvBookmark.setAdapter(adapter);
         }
     }
 
@@ -78,5 +74,10 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
                     .startChooser();
         }
     }
-}
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentBookmarkBinding = null;
+    }
+}

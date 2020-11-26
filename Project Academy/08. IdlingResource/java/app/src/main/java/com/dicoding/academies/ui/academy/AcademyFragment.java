@@ -33,9 +33,10 @@ public class AcademyFragment extends Fragment {
         return fragmentAcademyBinding.getRoot();
     }
 
+
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
             AcademyViewModel viewModel = new ViewModelProvider(this, factory).get(AcademyViewModel.class);

@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,15 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
 import com.dicoding.academies.databinding.FragmentModuleContentBinding;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
-
-import static com.dicoding.academies.vo.Status.ERROR;
-import static com.dicoding.academies.vo.Status.LOADING;
-import static com.dicoding.academies.vo.Status.SUCCESS;
 
 /**
  * A simple {@link Fragment} subclass.

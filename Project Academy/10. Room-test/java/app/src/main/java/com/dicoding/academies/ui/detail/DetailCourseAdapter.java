@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.databinding.ItemsModuleListBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,8 @@ public class DetailCourseAdapter extends RecyclerView.Adapter<DetailCourseAdapte
     @NonNull
     @Override
     public ModuleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_module_list, parent, false);
-        return new ModuleViewHolder(view);
+        ItemsModuleListBinding binding = ItemsModuleListBinding.inflate(LayoutInflater.from(parent.getContext()));
+        return new ModuleViewHolder(binding);
     }
 
     @Override
@@ -42,17 +43,16 @@ public class DetailCourseAdapter extends RecyclerView.Adapter<DetailCourseAdapte
         return listModules.size();
     }
 
-    class ModuleViewHolder extends RecyclerView.ViewHolder {
-        final TextView textTitle;
+    static class ModuleViewHolder extends RecyclerView.ViewHolder {
+        final ItemsModuleListBinding binding;
 
-        ModuleViewHolder(View itemView) {
-            super(itemView);
-            textTitle = itemView.findViewById(R.id.text_module_title);
+        ModuleViewHolder(ItemsModuleListBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         void bind(ModuleEntity module) {
-            textTitle.setText(module.getTitle());
+            binding.textModuleTitle.setText(module.getTitle());
         }
     }
 }
-

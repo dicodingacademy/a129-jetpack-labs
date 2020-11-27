@@ -1,6 +1,5 @@
 package com.dicoding.academies.ui.reader.content;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.ModuleEntity;
+import com.dicoding.academies.databinding.FragmentModuleContentBinding;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
 
@@ -29,10 +29,8 @@ import static com.dicoding.academies.vo.Status.SUCCESS;
  */
 public class ModuleContentFragment extends Fragment {
     public static final String TAG = ModuleContentFragment.class.getSimpleName();
-    private WebView webView;
-    private ProgressBar progressBar;
-    private Button btnNext;
-    private Button btnPrev;
+    private FragmentModuleContentBinding fragmentModuleContentBinding;
+
     private CourseReaderViewModel viewModel;
 
     public ModuleContentFragment() {
@@ -44,22 +42,15 @@ public class ModuleContentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_module_content, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentModuleContentBinding = FragmentModuleContentBinding.inflate(inflater);
+        return fragmentModuleContentBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        webView = view.findViewById(R.id.web_view);
-        progressBar = view.findViewById(R.id.progress_bar);
-        btnNext = view.findViewById(R.id.btn_next);
-        btnPrev = view.findViewById(R.id.btn_prev);
-    }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
         viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
 
@@ -67,11 +58,11 @@ public class ModuleContentFragment extends Fragment {
             if (moduleEntity != null) {
                 switch (moduleEntity.status) {
                     case LOADING:
-                        progressBar.setVisibility(View.VISIBLE);
+                        fragmentModuleContentBinding.progressBar.setVisibility(View.VISIBLE);
                         break;
                     case SUCCESS:
                         if (moduleEntity.data != null) {
-                            progressBar.setVisibility(View.GONE);
+                            fragmentModuleContentBinding.progressBar.setVisibility(View.GONE);
                             if (moduleEntity.data.contentEntity != null) {
                                 populateWebView(moduleEntity.data);
                             }
@@ -83,34 +74,39 @@ public class ModuleContentFragment extends Fragment {
                         }
                         break;
                     case ERROR:
-                        progressBar.setVisibility(View.GONE);
+                        fragmentModuleContentBinding.progressBar.setVisibility(View.GONE);
                         Toast.makeText(getContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
                         break;
                 }
-                btnNext.setOnClickListener(v -> viewModel.setNextPage());
-
-                btnPrev.setOnClickListener(v -> viewModel.setPrevPage());
+                fragmentModuleContentBinding.btnNext.setOnClickListener(v -> viewModel.setNextPage());
+                fragmentModuleContentBinding.btnPrev.setOnClickListener(v -> viewModel.setPrevPage());
 
             }
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentModuleContentBinding = null;
+    }
+
     private void populateWebView(ModuleEntity module) {
-        webView.loadData(module.contentEntity.getContent(), "text/html", "UTF-8");
+        fragmentModuleContentBinding.webView.loadData(module.contentEntity.getContent(), "text/html", "UTF-8");
     }
 
     private void setButtonNextPrevState(ModuleEntity module) {
         if (getActivity() != null) {
             if (module.getPosition() == 0) {
-                btnPrev.setEnabled(false);
-                btnNext.setEnabled(true);
+                fragmentModuleContentBinding.btnPrev.setEnabled(false);
+                fragmentModuleContentBinding.btnNext.setEnabled(true);
             } else if (module.getPosition() == viewModel.getModuleSize() - 1) {
-                btnPrev.setEnabled(true);
-                btnNext.setEnabled(false);
-            } else {
-                btnPrev.setEnabled(true);
-                btnNext.setEnabled(true);
-            }
+                fragmentModuleContentBinding.btnPrev.setEnabled(true);
+                fragmentModuleContentBinding.btnNext.setEnabled(false);
+            } else
+                fragmentModuleContentBinding.btnPrev.setEnabled(true);
+            fragmentModuleContentBinding.btnNext.setEnabled(true);
+
         }
     }
 }

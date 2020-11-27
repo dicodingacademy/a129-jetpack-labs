@@ -18,8 +18,6 @@ import com.dicoding.academies.vo.Resource;
 
 import java.util.List;
 
-import static com.dicoding.academies.vo.Status.LOADING;
-
 public class CourseReaderActivity extends AppCompatActivity implements CourseReaderCallback {
 
     public static final String EXTRA_COURSE_ID = "extra_course_id";

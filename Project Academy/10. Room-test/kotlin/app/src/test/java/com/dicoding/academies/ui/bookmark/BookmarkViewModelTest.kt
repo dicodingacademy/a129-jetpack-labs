@@ -13,7 +13,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -42,7 +43,7 @@ class BookmarkViewModelTest {
 
         `when`(academyRepository.getBookmarkedCourses()).thenReturn(courses)
         val courseEntities = viewModel.getBookmarks().value
-        verify<AcademyRepository>(academyRepository).getBookmarkedCourses()
+        verify(academyRepository).getBookmarkedCourses()
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 

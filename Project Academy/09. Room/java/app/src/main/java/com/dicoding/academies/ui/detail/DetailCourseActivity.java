@@ -35,7 +35,7 @@ public class DetailCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityDetailCourseBinding activityDetailCourseBinding = ActivityDetailCourseBinding.inflate(getLayoutInflater());
+        activityDetailCourseBinding = ActivityDetailCourseBinding.inflate(getLayoutInflater());
         contentDetailCourseBinding = activityDetailCourseBinding.detailContent;
 
         setContentView(activityDetailCourseBinding.getRoot());
@@ -111,6 +111,26 @@ public class DetailCourseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detail, menu);
         this.menu = menu;
+        viewModel.courseModule.observe(this, courseWithModule -> {
+            if (courseWithModule != null) {
+                switch (courseWithModule.status) {
+                    case LOADING:
+                        activityDetailCourseBinding.progressBar.setVisibility(View.VISIBLE);
+                        break;
+                    case SUCCESS:
+                        if (courseWithModule.data != null) {
+                            activityDetailCourseBinding.progressBar.setVisibility(View.GONE);
+                            boolean state = courseWithModule.data.mCourse.isBookmarked();
+                            setBookmarkState(state);
+                        }
+                        break;
+                    case ERROR:
+                        activityDetailCourseBinding.progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
         return true;
     }
 

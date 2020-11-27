@@ -1,7 +1,6 @@
 package com.dicoding.academies.ui.reader
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.dicoding.academies.data.AcademyRepository
@@ -14,7 +13,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -53,7 +53,7 @@ class CourseReaderViewModelTest {
         val modules = MutableLiveData<Resource<List<ModuleEntity>>>()
         val resource = Resource.success(dummyModules)
         modules.value = resource
-        `when`<LiveData<Resource<List<ModuleEntity>>>>(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
+        `when`(academyRepository.getAllModulesByCourse(courseId)).thenReturn(modules)
 
         viewModel.modules.observeForever(modulesObserver)
         verify(modulesObserver).onChanged(resource)

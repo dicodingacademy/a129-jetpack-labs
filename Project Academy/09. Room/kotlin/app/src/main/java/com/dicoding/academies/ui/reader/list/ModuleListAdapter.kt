@@ -7,10 +7,10 @@ import com.dicoding.academies.data.source.local.entity.ModuleEntity
 import com.dicoding.academies.databinding.ItemsModuleListCustomBinding
 import java.util.*
 
-class ModuleListAdapter internal constructor(private val listener: MyAdapterClickListener) : RecyclerView.Adapter<ModuleListAdapter.ModuleViewHolder>() {
+class ModuleListAdapter(private val listener: MyAdapterClickListener) : RecyclerView.Adapter<ModuleListAdapter.ModuleViewHolder>() {
     private val listModules = ArrayList<ModuleEntity>()
 
-     fun setModules(modules: List<ModuleEntity>?) {
+    fun setModules(modules: List<ModuleEntity>?) {
         if (modules == null) return
         this.listModules.clear()
         this.listModules.addAll(modules)

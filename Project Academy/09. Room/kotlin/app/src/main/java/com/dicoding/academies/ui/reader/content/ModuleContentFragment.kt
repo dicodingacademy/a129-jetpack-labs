@@ -73,6 +73,11 @@ class ModuleContentFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _fragmentModuleContentBinding = null
+    }
+
     private fun populateWebView(module: ModuleEntity) {
         binding?.webView?.loadData(module.contentEntity?.content ?: "", "text/html", "UTF-8")
     }

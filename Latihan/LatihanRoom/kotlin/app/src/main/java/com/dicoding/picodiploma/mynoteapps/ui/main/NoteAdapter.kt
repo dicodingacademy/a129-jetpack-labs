@@ -13,7 +13,7 @@ import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity
 import com.dicoding.picodiploma.mynoteapps.ui.main.NoteAdapter.NoteViewHolder
 import java.util.*
 
-class NoteAdapter internal constructor(private val activity: Activity) : RecyclerView.Adapter<NoteViewHolder>() {
+class NoteAdapter(private val activity: Activity) : RecyclerView.Adapter<NoteViewHolder>() {
     private val listNotes = ArrayList<Note>()
     fun setListNotes(listNotes: List<Note>) {
         val diffCallback = NoteDiffCallback(this.listNotes, listNotes)

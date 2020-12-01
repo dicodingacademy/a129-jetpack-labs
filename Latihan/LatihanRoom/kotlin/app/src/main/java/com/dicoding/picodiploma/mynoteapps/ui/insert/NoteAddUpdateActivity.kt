@@ -147,15 +147,15 @@ class NoteAddUpdateActivity : AppCompatActivity() {
             setMessage(dialogMessage)
             setCancelable(false)
             setPositiveButton(getString(R.string.yes)) { _, _ ->
-                if (isDialogClose) {
-                    finish()
-                } else {
+                if (!isDialogClose) {
                     noteAddUpdateViewModel.delete(note as Note)
+
                     val intent = Intent()
                     intent.putExtra(EXTRA_POSITION, position)
                     setResult(RESULT_DELETE, intent)
-                    finish()
                 }
+
+                finish()
             }
             setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
         }

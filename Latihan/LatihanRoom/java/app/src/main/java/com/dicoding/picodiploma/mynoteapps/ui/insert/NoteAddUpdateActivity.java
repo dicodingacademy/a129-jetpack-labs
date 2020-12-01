@@ -1,26 +1,22 @@
 package com.dicoding.picodiploma.mynoteapps.ui.insert;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.dicoding.picodiploma.mynoteapps.R;
 import com.dicoding.picodiploma.mynoteapps.database.Note;
+import com.dicoding.picodiploma.mynoteapps.databinding.ActivityNoteAddUpdateBinding;
 import com.dicoding.picodiploma.mynoteapps.helper.DateHelper;
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory;
 
 public class NoteAddUpdateActivity extends AppCompatActivity {
-    private EditText edtTitle, edtDescription;
 
     public static final String EXTRA_NOTE = "extra_note";
     public static final String EXTRA_POSITION = "extra_position";
@@ -40,16 +36,16 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
 
     private NoteAddUpdateViewModel noteAddUpdateViewModel;
 
+    private ActivityNoteAddUpdateBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_add_update);
+
+        binding = ActivityNoteAddUpdateBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         noteAddUpdateViewModel = obtainViewModel(NoteAddUpdateActivity.this);
-
-        edtTitle = findViewById(R.id.edt_title);
-        edtDescription = findViewById(R.id.edt_description);
-        Button btnSubmit = findViewById(R.id.btn_submit);
 
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
         if (note != null) {
@@ -67,8 +63,8 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
             btnTitle = getString(R.string.update);
 
             if (note != null) {
-                edtTitle.setText(note.getTitle());
-                edtDescription.setText(note.getDescription());
+                binding.edtTitle.setText(note.getTitle());
+                binding.edtDescription.setText(note.getDescription());
             }
         } else {
             actionBarTitle = getString(R.string.add);
@@ -80,37 +76,33 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        btnSubmit.setText(btnTitle);
+        binding.btnSubmit.setText(btnTitle);
+        binding.btnSubmit.setOnClickListener(view -> {
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            String title = binding.edtTitle.getText().toString().trim();
+            String description = binding.edtDescription.getText().toString().trim();
 
-                String title = edtTitle.getText().toString().trim();
-                String description = edtDescription.getText().toString().trim();
+            if (title.isEmpty()) {
+                binding.edtTitle.setError(getString(R.string.empty));
+            } else if (description.isEmpty()) {
+                binding.edtDescription.setError(getString(R.string.empty));
+            } else {
+                note.setTitle(title);
+                note.setDescription(description);
 
-                if (title.isEmpty()) {
-                    edtTitle.setError(getString(R.string.empty));
-                } else if (description.isEmpty()) {
-                    edtDescription.setError(getString(R.string.empty));
+                Intent intent = new Intent();
+                intent.putExtra(EXTRA_NOTE, note);
+                intent.putExtra(EXTRA_POSITION, position);
+
+                if (isEdit) {
+                    noteAddUpdateViewModel.update(note);
+                    setResult(RESULT_UPDATE, intent);
+                    finish();
                 } else {
-                    note.setTitle(title);
-                    note.setDescription(description);
-
-                    Intent intent = new Intent();
-                    intent.putExtra(EXTRA_NOTE, note);
-                    intent.putExtra(EXTRA_POSITION, position);
-
-                    if (isEdit) {
-                        noteAddUpdateViewModel.update(note);
-                        setResult(RESULT_UPDATE, intent);
-                        finish();
-                    } else {
-                        note.setDate(DateHelper.getCurrentDate());
-                        noteAddUpdateViewModel.insert(note);
-                        setResult(RESULT_ADD, intent);
-                        finish();
-                    }
+                    note.setDate(DateHelper.getCurrentDate());
+                    noteAddUpdateViewModel.insert(note);
+                    setResult(RESULT_ADD, intent);
+                    finish();
                 }
             }
         });
@@ -142,6 +134,12 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
         showAlertDialog(ALERT_DIALOG_CLOSE);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
+
     private void showAlertDialog(int type) {
         final boolean isDialogClose = type == ALERT_DIALOG_CLOSE;
         String dialogTitle, dialogMessage;
@@ -160,26 +158,17 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage(dialogMessage)
                 .setCancelable(false)
-                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if (isDialogClose) {
-                            finish();
-                        } else {
-                            noteAddUpdateViewModel.delete(note);
+                .setPositiveButton(getString(R.string.yes), (dialog, id) -> {
+                    if (!isDialogClose) {
+                        noteAddUpdateViewModel.delete(note);
 
-                            Intent intent = new Intent();
-                            intent.putExtra(EXTRA_POSITION, position);
-                            setResult(RESULT_DELETE, intent);
-                            finish();
-
-                        }
+                        Intent intent = new Intent();
+                        intent.putExtra(EXTRA_POSITION, position);
+                        setResult(RESULT_DELETE, intent);
                     }
+                    finish();
                 })
-                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton(getString(R.string.no), (dialog, id) -> dialog.cancel());
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 

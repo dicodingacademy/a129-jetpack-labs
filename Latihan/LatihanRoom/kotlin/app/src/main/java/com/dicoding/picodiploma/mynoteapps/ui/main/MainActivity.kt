@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private var _activityMainBinding: ActivityMainBinding? = null
     private val binding get() = _activityMainBinding
 
-    private lateinit var mainViewModel: MainViewModel
     private lateinit var adapter: NoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         _activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        mainViewModel = obtainViewModel(this@MainActivity)
+        val mainViewModel = obtainViewModel(this@MainActivity)
         mainViewModel.getAllNotes().observe(this, noteObserver)
 
         adapter = NoteAdapter(this@MainActivity)

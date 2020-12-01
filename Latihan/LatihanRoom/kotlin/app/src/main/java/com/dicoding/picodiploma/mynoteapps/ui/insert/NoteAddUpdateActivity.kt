@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.picodiploma.mynoteapps.R
 import com.dicoding.picodiploma.mynoteapps.database.Note
+import com.dicoding.picodiploma.mynoteapps.databinding.ActivityNoteAddUpdateBinding
 import com.dicoding.picodiploma.mynoteapps.helper.DateHelper
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_note_add_update.*
 
 class NoteAddUpdateActivity : AppCompatActivity() {
 
@@ -32,9 +32,14 @@ class NoteAddUpdateActivity : AppCompatActivity() {
     private var position = 0
     private lateinit var noteAddUpdateViewModel: NoteAddUpdateViewModel
 
+    private var _activityNoteAddUpdateBinding: ActivityNoteAddUpdateBinding? = null
+    private val binding get() = _activityNoteAddUpdateBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_add_update)
+
+        _activityNoteAddUpdateBinding = ActivityNoteAddUpdateBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         noteAddUpdateViewModel = obtainViewModel(this@NoteAddUpdateActivity)
 
@@ -54,8 +59,8 @@ class NoteAddUpdateActivity : AppCompatActivity() {
             btnTitle = getString(R.string.update)
             if (note != null) {
                 note?.let { note ->
-                    edt_title.setText(note.title)
-                    edt_description.setText(note.description)
+                    binding?.edtTitle?.setText(note.title)
+                    binding?.edtDescription?.setText(note.description)
                 }
             }
         } else {
@@ -66,14 +71,14 @@ class NoteAddUpdateActivity : AppCompatActivity() {
         supportActionBar?.title = actionBarTitle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        btn_submit.text = btnTitle
-        btn_submit.setOnClickListener {
-            val title = edt_title.text.toString().trim()
-            val description = edt_description.text.toString().trim()
+        binding?.btnSubmit?.text = btnTitle
+        binding?.btnSubmit?.setOnClickListener {
+            val title = binding?.edtTitle?.text.toString().trim()
+            val description = binding?.edtDescription?.text.toString().trim()
             if (title.isEmpty()) {
-                edt_title.error = getString(R.string.empty)
+                binding?.edtTitle?.error = getString(R.string.empty)
             } else if (description.isEmpty()) {
-                edt_description.error = getString(R.string.empty)
+                binding?.edtDescription?.error = getString(R.string.empty)
             } else {
                 note.let { note ->
                     note?.title = title
@@ -120,6 +125,11 @@ class NoteAddUpdateActivity : AppCompatActivity() {
         showAlertDialog(ALERT_DIALOG_CLOSE)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _activityNoteAddUpdateBinding = null
+    }
+
     private fun showAlertDialog(type: Int) {
         val isDialogClose = type == ALERT_DIALOG_CLOSE
         val dialogTitle: String
@@ -136,7 +146,7 @@ class NoteAddUpdateActivity : AppCompatActivity() {
             setTitle(dialogTitle)
             setMessage(dialogMessage)
             setCancelable(false)
-            setPositiveButton(getString(R.string.yes)) { dialog, id ->
+            setPositiveButton(getString(R.string.yes)) { _, _ ->
                 if (isDialogClose) {
                     finish()
                 } else {
@@ -147,7 +157,7 @@ class NoteAddUpdateActivity : AppCompatActivity() {
                     finish()
                 }
             }
-            setNegativeButton(getString(R.string.no)) { dialog, id -> dialog.cancel() }
+            setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
         }
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()

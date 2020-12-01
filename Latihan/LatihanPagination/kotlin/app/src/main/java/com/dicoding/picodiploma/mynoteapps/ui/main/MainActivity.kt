@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.mynoteapps.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -9,30 +10,32 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mynoteapps.R
 import com.dicoding.picodiploma.mynoteapps.database.Note
+import com.dicoding.picodiploma.mynoteapps.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainViewModel: MainViewModel
+    private var _activityMainBinding: ActivityMainBinding? = null
+    private val binding get() = _activityMainBinding
+
     private lateinit var adapter: NotePagedListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainViewModel = obtainViewModel(this@MainActivity)
+        val mainViewModel = obtainViewModel(this@MainActivity)
         mainViewModel.getAllNotes().observe(this, noteObserver)
 
         adapter = NotePagedListAdapter(this@MainActivity)
 
-        rv_notes.layoutManager = LinearLayoutManager(this)
-        rv_notes.setHasFixedSize(true)
-        rv_notes.adapter = adapter
+        binding?.rvNotes?.layoutManager = LinearLayoutManager(this)
+        binding?.rvNotes?.setHasFixedSize(true)
+        binding?.rvNotes?.adapter = adapter
 
-        fab_add.setOnClickListener { view ->
+        binding?.fabAdd?.setOnClickListener { view ->
             if (view.id == R.id.fab_add) {
                 val intent = Intent(this@MainActivity, NoteAddUpdateActivity::class.java)
                 startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD)
@@ -69,6 +72,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSnackbarMessage(message: String) {
-        Snackbar.make(rv_notes, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
     }
 }

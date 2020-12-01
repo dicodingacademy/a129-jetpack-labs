@@ -4,18 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dicoding.picodiploma.mynoteapps.R;
 import com.dicoding.picodiploma.mynoteapps.database.Note;
+import com.dicoding.picodiploma.mynoteapps.databinding.ItemNoteBinding;
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity;
 
 public class NotePagedListAdapter extends PagedListAdapter<Note, NotePagedListAdapter.NoteViewHolder> {
@@ -28,40 +25,36 @@ public class NotePagedListAdapter extends PagedListAdapter<Note, NotePagedListAd
 
     @NonNull
     @Override
-    public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
-        return new NoteViewHolder(view);
+    public NotePagedListAdapter.NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemNoteBinding binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new NotePagedListAdapter.NoteViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final NoteViewHolder holder, int position) {
-        final Note note = getItem(position);
-        if (note != null) {
-            holder.tvTitle.setText(note.getTitle());
-            holder.tvDate.setText(note.getDate());
-            holder.tvDescription.setText(note.getDescription());
-            holder.cvNote.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(activity, NoteAddUpdateActivity.class);
-                    intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, holder.getAdapterPosition());
-                    intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, note);
-                    activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
-                }
-            });
-        }
+        holder.bind(getItem(position));
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvTitle, tvDescription, tvDate;
-        final CardView cvNote;
+        final ItemNoteBinding binding;
 
-        NoteViewHolder(View itemView) {
-            super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_item_title);
-            tvDescription = itemView.findViewById(R.id.tv_item_description);
-            tvDate = itemView.findViewById(R.id.tv_item_date);
-            cvNote = itemView.findViewById(R.id.cv_item_note);
+        NoteViewHolder(ItemNoteBinding binding) {
+            super(binding.getRoot());
+
+            this.binding = binding;
+        }
+
+        public void bind(Note note) {
+            binding.tvItemTitle.setText(note.getTitle());
+            binding.tvItemDate.setText(note.getDate());
+            binding.tvItemDescription.setText(note.getDescription());
+
+            binding.cvItemNote.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), NoteAddUpdateActivity.class);
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_POSITION, getAdapterPosition());
+                intent.putExtra(NoteAddUpdateActivity.EXTRA_NOTE, note);
+                activity.startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_UPDATE);
+            });
         }
     }
 

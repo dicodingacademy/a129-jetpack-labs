@@ -24,7 +24,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        _activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         val mainViewModel = obtainViewModel(this@MainActivity)
         mainViewModel.getAllNotes().observe(this, noteObserver)

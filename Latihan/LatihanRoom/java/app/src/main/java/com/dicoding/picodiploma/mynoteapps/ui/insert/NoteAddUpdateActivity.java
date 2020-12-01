@@ -97,13 +97,12 @@ public class NoteAddUpdateActivity extends AppCompatActivity {
                 if (isEdit) {
                     noteAddUpdateViewModel.update(note);
                     setResult(RESULT_UPDATE, intent);
-                    finish();
                 } else {
                     note.setDate(DateHelper.getCurrentDate());
                     noteAddUpdateViewModel.insert(note);
                     setResult(RESULT_ADD, intent);
-                    finish();
                 }
+                finish();
             }
         });
     }

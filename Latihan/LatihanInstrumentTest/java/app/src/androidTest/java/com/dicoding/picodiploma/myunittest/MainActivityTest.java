@@ -1,9 +1,9 @@
 package com.dicoding.picodiploma.myunittest;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
-import androidx.test.rule.ActivityTestRule;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,8 +29,10 @@ public class MainActivityTest {
     private final String emptyInput = "";
     private final String fieldEmpty = "Field ini tidak boleh kosong";
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+    @Before
+    public void setup(){
+        ActivityScenario.launch(MainActivity.class);
+    }
 
     @Test
     public void assertGetCircumference() {

@@ -1,11 +1,13 @@
 package com.dicoding.picodiploma.myunittest
 
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import androidx.test.rule.ActivityTestRule
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,11 +23,13 @@ class MainActivityTest {
     private val emptyInput = ""
     private val fieldEmpty = "Field ini tidak boleh kosong"
 
-    @get:Rule
-    var mActivityRule = ActivityTestRule(MainActivity::class.java)
+    @Before
+    fun setup(){
+        ActivityScenario.launch(MainActivity::class.java)
+    }
 
     @Test
-    fun getCircumference() {
+    fun assertGetCircumference() {
         onView(withId(R.id.edt_length)).perform(typeText(dummyLength), closeSoftKeyboard())
         onView(withId(R.id.edt_width)).perform(typeText(dummyWidth), closeSoftKeyboard())
         onView(withId(R.id.edt_height)).perform(typeText(dummyHeight), closeSoftKeyboard())
@@ -41,7 +45,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun getSurfaceArea() {
+    fun assertGetSurfaceArea() {
         onView(withId(R.id.edt_length)).perform(typeText(dummyLength), closeSoftKeyboard())
         onView(withId(R.id.edt_width)).perform(typeText(dummyWidth), closeSoftKeyboard())
         onView(withId(R.id.edt_height)).perform(typeText(dummyHeight), closeSoftKeyboard())
@@ -57,7 +61,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun getVolume() {
+    fun assertGetVolume() {
         onView(withId(R.id.edt_length)).perform(typeText(dummyLength), closeSoftKeyboard())
         onView(withId(R.id.edt_width)).perform(typeText(dummyWidth), closeSoftKeyboard())
         onView(withId(R.id.edt_height)).perform(typeText(dummyHeight), closeSoftKeyboard())
@@ -74,7 +78,7 @@ class MainActivityTest {
 
     //Pengecekan untuk empty input
     @Test
-    fun emptyInput() {
+    fun assertEmptyInput() {
         // pengecekan input untuk length
         onView(withId(R.id.edt_length)).perform(typeText(emptyInput), closeSoftKeyboard())
 

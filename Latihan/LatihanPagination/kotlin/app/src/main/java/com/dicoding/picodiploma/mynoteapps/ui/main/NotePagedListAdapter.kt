@@ -12,7 +12,7 @@ import com.dicoding.picodiploma.mynoteapps.database.Note
 import com.dicoding.picodiploma.mynoteapps.databinding.ItemNoteBinding
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity
 
-class NotePagedListAdapter internal constructor(private val activity: Activity) : PagedListAdapter<Note, NotePagedListAdapter.NoteViewHolder>(DIFF_CALLBACK) {
+class NotePagedListAdapter(private val activity: Activity) : PagedListAdapter<Note, NotePagedListAdapter.NoteViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotePagedListAdapter.NoteViewHolder {
         val binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)

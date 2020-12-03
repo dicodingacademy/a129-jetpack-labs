@@ -9,25 +9,26 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-
-import com.dicoding.academies.R
 import com.dicoding.academies.data.CourseEntity
-import kotlinx.android.synthetic.main.fragment_bookmark.*
+import com.dicoding.academies.databinding.FragmentBookmarkBinding
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
+    lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false)
+        fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
+        return fragmentBookmarkBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         if (activity != null) {
             val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[BookmarkViewModel::class.java]
             val courses = viewModel.getBookmarks()
@@ -35,9 +36,11 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
             val adapter = BookmarkAdapter(this)
             adapter.setCourses(courses)
 
-            rv_bookmark.layoutManager = LinearLayoutManager(context)
-            rv_bookmark.setHasFixedSize(true)
-            rv_bookmark.adapter = adapter
+            with(fragmentBookmarkBinding.rvBookmark) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                this.adapter = adapter
+            }
         }
     }
 
@@ -45,7 +48,7 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         if (activity != null) {
             val mimeType = "text/plain"
             ShareCompat.IntentBuilder
-                    .from(activity)
+                    .from(requireActivity())
                     .setType(mimeType)
                     .setChooserTitle("Bagikan aplikasi ini sekarang.")
                     .setText("Segera daftar kelas ${course.title} di dicoding.com")

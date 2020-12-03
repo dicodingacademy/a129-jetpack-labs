@@ -10,18 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.databinding.ItemsModuleListCustomBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-interface MyAdapterClickListener {
-    void onItemClicked(int position, String moduleId);
-}
-
 public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.ModuleViewHolder> {
 
     private final MyAdapterClickListener listener;
-    private List<ModuleEntity> listModules = new ArrayList<>();
+    private final List<ModuleEntity> listModules = new ArrayList<>();
 
     ModuleListAdapter(MyAdapterClickListener listener) {
         this.listener = listener;
@@ -36,7 +33,8 @@ public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.Mo
     @NonNull
     @Override
     public ModuleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ModuleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.items_module_list_custom, parent, false));
+        ItemsModuleListCustomBinding binding = ItemsModuleListCustomBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ModuleViewHolder(binding);
     }
 
     @Override
@@ -53,19 +51,21 @@ public class ModuleListAdapter extends RecyclerView.Adapter<ModuleListAdapter.Mo
         return listModules.size();
     }
 
-    class ModuleViewHolder extends RecyclerView.ViewHolder {
-        final TextView textTitle;
-        final TextView textLastSeen;
+    static class ModuleViewHolder extends RecyclerView.ViewHolder {
+        private final ItemsModuleListCustomBinding binding;
 
-        ModuleViewHolder(View itemView) {
-            super(itemView);
-            textTitle = itemView.findViewById(R.id.text_module_title);
-            textLastSeen = itemView.findViewById(R.id.text_last_seen);
+        ModuleViewHolder(ItemsModuleListCustomBinding binding) {
+            super(binding.getRoot());
+
+            this.binding = binding;
         }
 
         void bind(ModuleEntity module) {
-            textTitle.setText(module.getTitle());
+            binding.textModuleTitle.setText(module.getTitle());
         }
     }
 }
 
+interface MyAdapterClickListener {
+    void onItemClicked(int position, String moduleId);
+}

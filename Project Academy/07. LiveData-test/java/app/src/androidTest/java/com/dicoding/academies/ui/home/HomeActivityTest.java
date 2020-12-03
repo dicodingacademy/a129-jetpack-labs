@@ -1,13 +1,13 @@
 package com.dicoding.academies.ui.home;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.DataDummy;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -23,21 +23,23 @@ public class HomeActivityTest {
 
     private ArrayList<CourseEntity> dummyCourse = DataDummy.generateDummyCourses();
 
-    @Rule
-    public ActivityTestRule activityRule = new ActivityTestRule<>(HomeActivity.class);
+    @Before
+    public void setup() {
+        ActivityScenario.launch(HomeActivity.class);
+    }
 
     @Test
     public void loadCourses() {
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.rv_academy)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.scrollToPosition(dummyCourse.size()));
     }
 
     @Test
     public void loadDetailCourse() {
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.text_title)).check(matches(isDisplayed()));
         onView(withId(R.id.text_title)).check(matches(withText(dummyCourse.get(0).getTitle())));
         onView(withId(R.id.text_date)).check(matches(isDisplayed()));
@@ -46,35 +48,35 @@ public class HomeActivityTest {
 
     @Test
     public void loadModule() {
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.btn_start)).perform(click());
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.rv_module)).check(matches(isDisplayed()));
     }
 
     @Test
     public void loadDetailModule() {
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.rv_academy)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.btn_start)).perform(click());
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.rv_module)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.web_view)).check(matches(isDisplayed()));
     }
 
     @Test
     public void loadBookmarks() {
         onView(withText("Bookmark")).perform(click());
-        delay2seconds();
+        delayTwoSecond();
         onView(withId(R.id.rv_bookmark)).check(matches(isDisplayed()));
         onView(withId(R.id.rv_bookmark)).perform(RecyclerViewActions.scrollToPosition(dummyCourse.size()));
     }
 
-    private void delay2seconds() {
+    private void delayTwoSecond() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

@@ -39,7 +39,7 @@ class FakeAcademyRepository(private val remoteDataSource: RemoteDataSource) : Ac
 
         remoteDataSource.getAllCourses(object : RemoteDataSource.LoadCoursesCallback {
             override fun onAllCoursesReceived(courseResponses: List<CourseResponse>) {
-                val courseList = java.util.ArrayList<CourseEntity>()
+                val courseList = ArrayList<CourseEntity>()
                 for (response in courseResponses) {
                     val course = CourseEntity(response.id,
                             response.title,

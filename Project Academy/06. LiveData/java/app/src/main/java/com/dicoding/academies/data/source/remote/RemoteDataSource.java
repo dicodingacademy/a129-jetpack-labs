@@ -1,6 +1,7 @@
 package com.dicoding.academies.data.source.remote;
 
 import android.os.Handler;
+import android.os.Looper;
 
 import com.dicoding.academies.data.source.remote.response.ContentResponse;
 import com.dicoding.academies.data.source.remote.response.CourseResponse;
@@ -13,7 +14,7 @@ public class RemoteDataSource {
 
     private static RemoteDataSource INSTANCE;
     private JsonHelper jsonHelper;
-    private Handler handler = new Handler();
+    private Handler handler = new Handler(Looper.getMainLooper());
     private final long SERVICE_LATENCY_IN_MILLIS = 2000;
 
     private RemoteDataSource(JsonHelper jsonHelper) {
@@ -28,15 +29,15 @@ public class RemoteDataSource {
     }
 
     public void getAllCourses(LoadCoursesCallback callback) {
-        handler.postDelayed(()-> callback.onAllCoursesReceived(jsonHelper.loadCourses()), SERVICE_LATENCY_IN_MILLIS);
+        handler.postDelayed(() -> callback.onAllCoursesReceived(jsonHelper.loadCourses()), SERVICE_LATENCY_IN_MILLIS);
     }
 
     public void getModules(String courseId, LoadModulesCallback callback) {
-        handler.postDelayed(()-> callback.onAllModulesReceived(jsonHelper.loadModule(courseId)), SERVICE_LATENCY_IN_MILLIS);
+        handler.postDelayed(() -> callback.onAllModulesReceived(jsonHelper.loadModule(courseId)), SERVICE_LATENCY_IN_MILLIS);
     }
 
     public void getContent(String moduleId, LoadContentCallback callback) {
-        handler.postDelayed(()-> callback.onContentReceived(jsonHelper.loadContent(moduleId)), SERVICE_LATENCY_IN_MILLIS);
+        handler.postDelayed(() -> callback.onContentReceived(jsonHelper.loadContent(moduleId)), SERVICE_LATENCY_IN_MILLIS);
     }
 
     public interface LoadCoursesCallback {

@@ -13,7 +13,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -43,7 +44,7 @@ class AcademyViewModelTest {
 
         `when`(academyRepository.getAllCourses()).thenReturn(courses)
         val courseEntities = viewModel.getCourses().value
-        verify<AcademyRepository>(academyRepository).getAllCourses()
+        verify(academyRepository).getAllCourses()
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 

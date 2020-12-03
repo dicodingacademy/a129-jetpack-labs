@@ -12,6 +12,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.ArrayList
 
 @RunWith(MockitoJUnitRunner::class)
 class BookmarkViewModelTest {
@@ -27,7 +28,7 @@ class BookmarkViewModelTest {
 
     @Test
     fun getBookmark() {
-        Mockito.`when`<ArrayList<CourseEntity>>(academyRepository.getBookmarkedCourses()).thenReturn(DataDummy.generateDummyCourses())
+        Mockito.`when`(academyRepository.getBookmarkedCourses()).thenReturn(DataDummy.generateDummyCourses() as ArrayList<CourseEntity>?)
         val courseEntities = viewModel.getBookmarks()
         Mockito.verify<AcademyRepository>(academyRepository).getBookmarkedCourses()
         assertNotNull(courseEntities)

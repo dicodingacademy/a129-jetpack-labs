@@ -1,6 +1,5 @@
 package com.dicoding.academies.ui.bookmark
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,36 +11,40 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.academies.R
 import com.dicoding.academies.data.source.local.entity.CourseEntity
+import com.dicoding.academies.databinding.FragmentBookmarkBinding
 import com.dicoding.academies.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_bookmark.*
-
 
 /**
  * A simple [Fragment] subclass.
  */
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
+    lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false)
+        fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
+        return fragmentBookmarkBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[BookmarkViewModel::class.java]
 
             val adapter = BookmarkAdapter(this)
-            progress_bar.visibility = View.VISIBLE
-            viewModel.getBookmarks().observe(this, Observer{ courses ->
-                progress_bar.visibility = View.GONE
+
+            fragmentBookmarkBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getBookmarks().observe(this, { courses ->
+                fragmentBookmarkBinding.progressBar.visibility = View.GONE
                 adapter.setCourses(courses)
                 adapter.notifyDataSetChanged()
             })
 
-            with(rv_bookmark) {
+            with(fragmentBookmarkBinding.rvBookmark) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 this.adapter = adapter
@@ -52,13 +55,11 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
     override fun onShareClick(course: CourseEntity) {
         if (activity != null) {
             val mimeType = "text/plain"
-            ShareCompat.IntentBuilder
-                    .from(activity)
-                    .setType(mimeType)
-                    .setChooserTitle("Bagikan aplikasi ini sekarang.")
-                    .setText("Segera daftar kelas ${course.title} di dicoding.com")
-                    .startChooser()
+            ShareCompat.IntentBuilder.from(requireActivity()).apply {
+                setType(mimeType)
+                setChooserTitle("Bagikan aplikasi ini sekarang.")
+                setText("Segera daftar kelas ${course.title} di dicoding.com")
+            }.startChooser()
         }
     }
 }
-

@@ -1,6 +1,7 @@
 package com.dicoding.academies.data.source.remote;
 
 import android.os.Handler;
+import android.os.Looper;
 
 import com.dicoding.academies.data.source.remote.response.ContentResponse;
 import com.dicoding.academies.data.source.remote.response.CourseResponse;
@@ -14,7 +15,7 @@ public class RemoteDataSource {
 
     private static RemoteDataSource INSTANCE;
     private JsonHelper jsonHelper;
-    private Handler handler = new Handler();
+    private Handler handler = new Handler(Looper.getMainLooper());
     private final long SERVICE_LATENCY_IN_MILLIS = 2000;
 
     private RemoteDataSource(JsonHelper jsonHelper) {

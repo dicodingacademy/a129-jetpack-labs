@@ -20,7 +20,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

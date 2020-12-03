@@ -39,19 +39,16 @@ public abstract class NoteRoomDatabase extends RoomDatabase {
     }
 
     private static void add() {
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                final List<Note> list = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
-                    Note dummyNote = new Note();
-                    dummyNote.setTitle("Tugas " + i);
-                    dummyNote.setDescription("Belajar Modul " + i);
-                    dummyNote.setDate("2019/09/09 09:09:0"+i);
-                    list.add(dummyNote);
-                }
-                INSTANCE.noteDao().insertAll(list);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            final List<Note> list = new ArrayList<>();
+            for (int i = 0; i < 40; i++) {
+                Note dummyNote = new Note();
+                dummyNote.setTitle("Tugas " + i);
+                dummyNote.setDescription("Belajar Modul " + i);
+                dummyNote.setDate("2019/09/09 09:09:0"+i);
+                list.add(dummyNote);
             }
+            INSTANCE.noteDao().insertAll(list);
         });
     }
 }

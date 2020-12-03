@@ -1,11 +1,9 @@
 package com.dicoding.academies.ui.bookmark;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,16 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.databinding.FragmentBookmarkBinding;
 import com.dicoding.academies.viewmodel.ViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BookmarkFragment extends Fragment implements BookmarkFragmentCallback {
-    private RecyclerView rvBookmark;
-    private ProgressBar progressBar;
+
+    private FragmentBookmarkBinding fragmentBookmarkBinding;
+
     private BookmarkViewModel viewModel;
     private BookmarkAdapter adapter;
 
@@ -36,38 +35,33 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false);
+        fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater);
+        return fragmentBookmarkBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvBookmark = view.findViewById(R.id.rv_bookmark);
-        progressBar = view.findViewById(R.id.progress_bar);
-        itemTouchHelper.attachToRecyclerView(rvBookmark);
-    }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        itemTouchHelper.attachToRecyclerView(fragmentBookmarkBinding.rvBookmark);
+
         if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
             viewModel = new ViewModelProvider(this, factory).get(BookmarkViewModel.class);
 
             adapter = new BookmarkAdapter(this);
-            progressBar.setVisibility(View.VISIBLE);
+            fragmentBookmarkBinding.progressBar.setVisibility(View.VISIBLE);
             viewModel.getBookmarks().observe(this, courses -> {
-                progressBar.setVisibility(View.GONE);
+                fragmentBookmarkBinding.progressBar.setVisibility(View.GONE);
                 adapter.submitList(courses);
-                adapter.notifyDataSetChanged();
             });
 
-            rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
-            rvBookmark.setHasFixedSize(true);
-            rvBookmark.setAdapter(adapter);
+            fragmentBookmarkBinding.rvBookmark.setLayoutManager(new LinearLayoutManager(getContext()));
+            fragmentBookmarkBinding.rvBookmark.setHasFixedSize(true);
+            fragmentBookmarkBinding.rvBookmark.setAdapter(adapter);
         }
     }
 
@@ -84,7 +78,14 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentBookmarkBinding = null;
+    }
+
     private ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+
         @Override
         public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
             return makeMovementFlags(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
@@ -108,4 +109,3 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
         }
     });
 }
-

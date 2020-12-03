@@ -1,28 +1,21 @@
 package com.dicoding.picodiploma.mynoteapps.ui.main;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
 
 import com.dicoding.picodiploma.mynoteapps.R;
 import com.dicoding.picodiploma.mynoteapps.database.Note;
+import com.dicoding.picodiploma.mynoteapps.databinding.ActivityMainBinding;
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory;
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -30,32 +23,29 @@ import static com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivit
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private MainViewModel mainViewModel;
+    private ActivityMainBinding binding;
     private NoteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mainViewModel = obtainViewModel(MainActivity.this);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        MainViewModel mainViewModel = obtainViewModel(MainActivity.this);
         mainViewModel.getAllNotes().observe(this, noteObserver);
 
         adapter = new NoteAdapter(MainActivity.this);
 
-        recyclerView = findViewById(R.id.rv_notes);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        binding.rvNotes.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvNotes.setHasFixedSize(true);
+        binding.rvNotes.setAdapter(adapter);
 
-        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (view.getId() == R.id.fab_add) {
-                    Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
-                    startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
-                }
+        binding.fabAdd.setOnClickListener(view -> {
+            if (view.getId() == R.id.fab_add) {
+                Intent intent = new Intent(MainActivity.this, NoteAddUpdateActivity.class);
+                startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD);
             }
         });
     }
@@ -94,7 +84,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
+
     private void showSnackbarMessage(String message) {
-        Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT).show();
     }
 }

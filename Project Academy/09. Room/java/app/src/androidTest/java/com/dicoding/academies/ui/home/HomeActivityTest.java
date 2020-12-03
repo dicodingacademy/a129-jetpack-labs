@@ -3,7 +3,6 @@ package com.dicoding.academies.ui.home;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.rule.ActivityTestRule;
 
 import com.dicoding.academies.R;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
@@ -12,7 +11,6 @@ import com.dicoding.academies.utils.EspressoIdlingResource;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;

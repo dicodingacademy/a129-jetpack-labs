@@ -2,20 +2,29 @@ package com.dicoding.academies.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.academies.R
-import kotlinx.android.synthetic.main.activity_home.*
+import com.dicoding.academies.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
+    private var _activityHomeBinding: ActivityHomeBinding? = null
+    private val binding get() = _activityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+
+        _activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        view_pager.adapter = sectionsPagerAdapter
-        tabs.setupWithViewPager(view_pager)
+        binding?.viewPager?.adapter = sectionsPagerAdapter
+        binding?.tabs?.setupWithViewPager(binding?.viewPager)
 
         supportActionBar?.elevation = 0f
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _activityHomeBinding = null
     }
 }

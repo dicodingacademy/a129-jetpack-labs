@@ -1,15 +1,17 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.dicoding.academies"
-        minSdkVersion 17
-        targetSdkVersion 29
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -26,40 +28,43 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$coreVersion"
 
     //ui
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
 
     //testing
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
-    androidTestImplementation "androidx.test:rules:$androidXTestVersion"
+    androidTestImplementation "androidx.test:rules:$androidTestVersion"
+    androidTestImplementation "androidx.test.ext:junit:$junitExtversion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
-    testImplementation "androidx.arch.core:core-testing:$archLifecycleVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
-    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
+    testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
 
     //architecture component
     implementation "androidx.lifecycle:lifecycle-viewmodel:$archLifecycleVersion"
-    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-runtime:$roomRuntimeVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.paging:paging-runtime:$pagingVersion"
-}
-repositories {
-    mavenCentral()
 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer;
 import com.dicoding.academies.data.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
 import com.dicoding.academies.utils.DataDummy;
-import com.dicoding.academies.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,7 +20,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

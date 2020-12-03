@@ -7,24 +7,35 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/content_detail_course" />
+        <include
+            android:id="@+id/detail_content"
+            layout="@layout/content_detail_course" />
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/content"
+        app:layout_anchorGravity="center_horizontal|center_vertical" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

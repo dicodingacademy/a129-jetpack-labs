@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,32 +12,36 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.picodiploma.mynoteapps.R
 import com.dicoding.picodiploma.mynoteapps.database.Note
+import com.dicoding.picodiploma.mynoteapps.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.mynoteapps.helper.SortUtils
 import com.dicoding.picodiploma.mynoteapps.helper.ViewModelFactory
 import com.dicoding.picodiploma.mynoteapps.ui.insert.NoteAddUpdateActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var adapter: NotePagedListAdapter
 
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         mainViewModel = obtainViewModel(this@MainActivity)
         mainViewModel.getAllNotes(SortUtils.NEWEST).observe(this, noteObserver)
 
         adapter = NotePagedListAdapter(this@MainActivity)
 
-        rv_notes.layoutManager = LinearLayoutManager(this)
-        rv_notes.setHasFixedSize(true)
-        rv_notes.adapter = adapter
+        binding?.rvNotes?.layoutManager = LinearLayoutManager(this)
+        binding?.rvNotes?.setHasFixedSize(true)
+        binding?.rvNotes?.adapter = adapter
 
-        fab_add.setOnClickListener { view ->
+        binding?.fabAdd?.setOnClickListener { view ->
             if (view.id == R.id.fab_add) {
                 val intent = Intent(this@MainActivity, NoteAddUpdateActivity::class.java)
                 startActivityForResult(intent, NoteAddUpdateActivity.REQUEST_ADD)
@@ -73,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSnackbarMessage(message: String) {
-        Snackbar.make(rv_notes, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding?.root as ViewGroup, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -83,13 +88,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var sort = ""
-        when (item.getItemId()) {
+        when (item.itemId) {
             R.id.action_newest -> sort = SortUtils.NEWEST
             R.id.action_oldest -> sort = SortUtils.OLDEST
             R.id.action_random -> sort = SortUtils.RANDOM
         }
         mainViewModel.getAllNotes(sort).observe(this, noteObserver)
-        item.setChecked(true)
+        item.isChecked = true
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

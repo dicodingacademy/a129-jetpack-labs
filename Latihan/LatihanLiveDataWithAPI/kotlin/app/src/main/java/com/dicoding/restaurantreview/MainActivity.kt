@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        mainViewModel.findRestaurant()
         mainViewModel.restaurant.observe(this, { restaurant ->
             activityMainBinding.tvTitle.text = restaurant.name
             activityMainBinding.tvDescription.text = "${restaurant.description.take(100)}..."

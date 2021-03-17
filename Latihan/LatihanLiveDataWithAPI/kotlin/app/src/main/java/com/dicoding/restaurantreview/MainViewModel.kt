@@ -22,6 +22,10 @@ class MainViewModel : ViewModel() {
         private const val RESTAURANT_ID = "uewq1zg2zlskfw1e867"
     }
 
+    init{
+        findRestaurant()
+    }
+
     fun findRestaurant() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getRestaurant(RESTAURANT_ID)

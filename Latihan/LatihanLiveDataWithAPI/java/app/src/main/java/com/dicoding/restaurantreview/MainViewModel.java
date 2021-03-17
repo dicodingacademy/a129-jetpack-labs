@@ -39,7 +39,11 @@ public class MainViewModel extends ViewModel {
     private static final String TAG = "MainViewModel";
     private static final String RESTAURANT_ID = "uewq1zg2zlskfw1e867";
 
-    public final void findRestaurant() {
+    public MainViewModel() {
+        findRestaurant();
+    }
+
+    public void findRestaurant(){
         _isLoading.setValue(true);
         Call<RestaurantResponse> client = ApiConfig.getApiService().getRestaurant(RESTAURANT_ID);
         client.enqueue(new Callback<RestaurantResponse>() {

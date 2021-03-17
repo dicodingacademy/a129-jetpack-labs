@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mainViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainViewModel.class);
-        mainViewModel.findRestaurant();
 
         mainViewModel.getRestaurant().observe(this, restaurant -> {
             activityMainBinding.tvTitle.setText(restaurant.getName());

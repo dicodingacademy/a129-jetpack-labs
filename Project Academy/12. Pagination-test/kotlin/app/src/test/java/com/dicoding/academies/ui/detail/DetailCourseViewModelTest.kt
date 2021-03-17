@@ -7,6 +7,7 @@ import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseWithModule
 import com.dicoding.academies.utils.DataDummy
 import com.dicoding.academies.vo.Resource
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +22,6 @@ class DetailCourseViewModelTest {
     private lateinit var viewModel: DetailCourseViewModel
     private val dummyCourse = DataDummy.generateDummyCourses()[0]
     private val courseId = dummyCourse.courseId
-    private val dummyModules = DataDummy.generateDummyModules(courseId)
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -39,15 +39,37 @@ class DetailCourseViewModelTest {
     }
 
     @Test
-    fun getCourseWithModule() {
-        val dummyCourseWithModule = Resource.success(DataDummy.generateDummyCourseWithModules(dummyCourse, true))
-        val course = MutableLiveData<Resource<CourseWithModule>>()
-        course.value = dummyCourseWithModule
+    fun `setSelectedCourse should be success`() {
+        val expected = MutableLiveData<Resource<CourseWithModule>>()
+        expected.value = Resource.success(DataDummy.generateDummyCourseWithModules(dummyCourse, true))
 
-        `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(course)
+        `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(expected)
 
         viewModel.courseModule.observeForever(observer)
 
-        verify(observer).onChanged(dummyCourseWithModule)
+        verify(observer).onChanged(expected.value)
+
+        val expectedValue = expected.value
+        val actualValue = viewModel.courseModule.value
+
+        assertEquals(expectedValue, actualValue)
+    }
+
+    @Test
+    fun `setBookmark should be success trigger courseModule observer`() {
+        val expected = MutableLiveData<Resource<CourseWithModule>>()
+        expected.value = Resource.success(DataDummy.generateDummyCourseWithModules(dummyCourse, true))
+
+        `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(expected)
+
+        viewModel.setBookmark()
+        viewModel.courseModule.observeForever(observer)
+
+        verify(observer).onChanged(expected.value)
+
+        val expectedValue = expected.value
+        val actualValue = viewModel.courseModule.value
+
+        assertEquals(expectedValue, actualValue)
     }
 }

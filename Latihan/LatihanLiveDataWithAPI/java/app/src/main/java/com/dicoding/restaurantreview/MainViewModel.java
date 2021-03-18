@@ -22,16 +22,19 @@ import retrofit2.Response;
 public class MainViewModel extends ViewModel {
 
     private final MutableLiveData<Restaurant> _restaurant = new MutableLiveData<>();
+
     public LiveData<Restaurant> getRestaurant() {
         return _restaurant;
     }
 
     private final MutableLiveData<List<CustomerReviewsItem>> _listReview = new MutableLiveData<>();
+
     public LiveData<List<CustomerReviewsItem>> getListReview() {
         return _listReview;
     }
 
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
+
     public LiveData<Boolean> isLoading() {
         return _isLoading;
     }
@@ -43,7 +46,7 @@ public class MainViewModel extends ViewModel {
         findRestaurant();
     }
 
-    public void findRestaurant(){
+    public void findRestaurant() {
         _isLoading.setValue(true);
         Call<RestaurantResponse> client = ApiConfig.getApiService().getRestaurant(RESTAURANT_ID);
         client.enqueue(new Callback<RestaurantResponse>() {
@@ -56,7 +59,9 @@ public class MainViewModel extends ViewModel {
                         _listReview.setValue(response.body().getRestaurant().getCustomerReviews());
                     }
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}");
+                    if (response.body() != null) {
+                        Log.e(TAG, "onFailure: " + response.body().getMessage());
+                    }
                 }
             }
 
@@ -80,7 +85,9 @@ public class MainViewModel extends ViewModel {
                         _listReview.setValue(response.body().getCustomerReviews());
                     }
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}");
+                    if (response.body() != null) {
+                        Log.e(TAG, "onFailure: " + response.body().getMessage());
+                    }
                 }
             }
 

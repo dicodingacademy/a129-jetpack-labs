@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel.getRestaurant().observe(this, restaurant -> {
             activityMainBinding.tvTitle.setText(restaurant.getName());
-            activityMainBinding.tvDescription.setText(restaurant.getDescription().substring(0, 100) + "...");
+            activityMainBinding.tvDescription.setText(restaurant.getDescription());
             Glide.with(this).
                     load("https://restaurant-api.dicoding.dev/images/large/" + restaurant.getPictureId())
                     .into(activityMainBinding.ivPicture);

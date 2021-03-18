@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.restaurant.observe(this, { restaurant ->
             activityMainBinding.tvTitle.text = restaurant.name
-            activityMainBinding.tvDescription.text = "${restaurant.description.take(100)}..."
+            activityMainBinding.tvDescription.text = restaurant.description
             Glide.with(this)
                 .load("https://restaurant-api.dicoding.dev/images/large/${restaurant.pictureId}")
                 .into(activityMainBinding.ivPicture)

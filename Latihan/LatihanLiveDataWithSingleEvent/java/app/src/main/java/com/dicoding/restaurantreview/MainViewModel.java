@@ -40,6 +40,7 @@ public class MainViewModel extends ViewModel {
 //    public LiveData<String> snackbarText() {
 //        return _snackbarText;
 //    }
+
     private final MutableLiveData<Event<String>> _snackbarText = new MutableLiveData<>();
     public LiveData<Event<String>> snackbarText() {
         return _snackbarText;

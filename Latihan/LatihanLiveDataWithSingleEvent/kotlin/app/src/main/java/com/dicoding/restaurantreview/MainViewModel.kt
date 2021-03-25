@@ -65,7 +65,7 @@ class MainViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _listReview.value = response.body()?.customerReviews
 //                    _snackbarText.value = response.body()?.message
-                    _snackbarText.value = Event("Update Success")
+                    _snackbarText.value = Event(response.body()?.message.toString())
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }

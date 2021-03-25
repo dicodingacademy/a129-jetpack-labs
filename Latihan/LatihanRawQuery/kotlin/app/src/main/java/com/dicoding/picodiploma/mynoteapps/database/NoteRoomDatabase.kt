@@ -40,7 +40,7 @@ abstract class NoteRoomDatabase : RoomDatabase() {
         fun add() {
             Executors.newSingleThreadExecutor().execute {
                 val list: MutableList<Note> = ArrayList()
-                for (i in 0..39) {
+                for (i in 0..9) {
                     val dummyNote = Note()
                     dummyNote.title = "Tugas $i"
                     dummyNote.description = "Belajar Modul $i"

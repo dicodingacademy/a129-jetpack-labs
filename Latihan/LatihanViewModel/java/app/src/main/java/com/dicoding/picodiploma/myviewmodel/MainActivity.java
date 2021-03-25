@@ -1,7 +1,6 @@
 package com.dicoding.picodiploma.myviewmodel;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,27 +22,24 @@ public class MainActivity extends AppCompatActivity {
 
         displayResult();
 
-        findViewById(R.id.btn_calculate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        activityMainBinding.btnCalculate.setOnClickListener(v -> {
 
-                String width = activityMainBinding.edtWidth.getText().toString();
-                String height = activityMainBinding.edtHeight.getText().toString();
-                String length = activityMainBinding.edtLength.getText().toString();
+            String width = activityMainBinding.edtWidth.getText().toString();
+            String height = activityMainBinding.edtHeight.getText().toString();
+            String length = activityMainBinding.edtLength.getText().toString();
 
-                // Melakukan pengecekan apakah empty atau tidak
-                if (width.isEmpty()) {
-                    activityMainBinding.edtWidth.setError("Masih kosong");
-                } else if (height.isEmpty()) {
-                    activityMainBinding.edtHeight.setError("Masih kosong");
-                } else if (length.isEmpty()) {
-                    activityMainBinding.edtLength.setError("Masih kosong");
-                } else {
+            // Melakukan pengecekan apakah empty atau tidak
+            if (width.isEmpty()) {
+                activityMainBinding.edtWidth.setError("Masih kosong");
+            } else if (height.isEmpty()) {
+                activityMainBinding.edtHeight.setError("Masih kosong");
+            } else if (length.isEmpty()) {
+                activityMainBinding.edtLength.setError("Masih kosong");
+            } else {
 
-                    viewModel.calculate(width, height, length);
+                viewModel.calculate(width, height, length);
 
-                    displayResult();
-                }
+                displayResult();
             }
         });
     }

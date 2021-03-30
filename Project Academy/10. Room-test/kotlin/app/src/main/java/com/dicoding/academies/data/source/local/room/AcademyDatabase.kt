@@ -18,17 +18,15 @@ abstract class AcademyDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AcademyDatabase? = null
 
-        fun getInstance(context: Context): AcademyDatabase {
-            if (INSTANCE == null) {
-                synchronized(AcademyDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext,
-                                AcademyDatabase::class.java, "Academies.db")
-                                .build()
+        fun getInstance(context: Context): AcademyDatabase =
+                INSTANCE ?: synchronized(this) {
+                    Room.databaseBuilder(
+                            context.applicationContext,
+                            AcademyDatabase::class.java,
+                            "Academies.db"
+                    ).build().apply {
+                        INSTANCE = this
                     }
                 }
-            }
-            return INSTANCE as AcademyDatabase
-        }
     }
 }

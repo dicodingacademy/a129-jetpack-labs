@@ -5,16 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.dicoding.academies.R;
 import com.dicoding.academies.data.ModuleEntity;
+import com.dicoding.academies.databinding.FragmentModuleContentBinding;
 import com.dicoding.academies.ui.reader.CourseReaderViewModel;
 
 /**
@@ -22,8 +20,7 @@ import com.dicoding.academies.ui.reader.CourseReaderViewModel;
  */
 public class ModuleContentFragment extends Fragment {
     public static final String TAG = ModuleContentFragment.class.getSimpleName();
-    private WebView webView;
-    private ProgressBar progressBar;
+    private FragmentModuleContentBinding fragmentModuleContentBinding;
 
     public ModuleContentFragment() {
         // Required empty public constructor
@@ -34,15 +31,11 @@ public class ModuleContentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_module_content, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        webView = view.findViewById(R.id.web_view);
-        progressBar = view.findViewById(R.id.progress_bar);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        fragmentModuleContentBinding = FragmentModuleContentBinding.inflate(inflater, container, false);
+        return fragmentModuleContentBinding.getRoot();
     }
 
     @Override
@@ -56,6 +49,6 @@ public class ModuleContentFragment extends Fragment {
     }
 
     private void populateWebView(ModuleEntity module) {
-        webView.loadData(module.contentEntity.getContent(), "text/html", "UTF-8");
+        fragmentModuleContentBinding.webView.loadData(module.contentEntity.getContent(), "text/html", "UTF-8");
     }
 }

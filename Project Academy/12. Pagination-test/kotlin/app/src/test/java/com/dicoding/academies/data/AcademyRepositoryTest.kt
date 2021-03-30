@@ -19,6 +19,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 
@@ -101,5 +102,21 @@ class AcademyRepositoryTest {
         assertNotNull(courseEntities.data)
         assertNotNull(courseEntities.data?.mCourse?.title)
         assertEquals(courseResponses[0].title, courseEntities.data?.mCourse?.title)
+    }
+
+    @Test
+    fun setCourseBookmark() {
+        val dummy = DataDummy.generateDummyCourses()[0]
+
+        academyRepository.setCourseBookmark(dummy, true)
+        verify(local, Mockito.times(1)).setCourseBookmark(dummy, true)
+    }
+
+    @Test
+    fun setReadModule() {
+        val dummy = DataDummy.generateDummyModules("a")[0]
+
+        academyRepository.setReadModule(dummy)
+        verify(local, Mockito.times(1)).setReadModule(dummy)
     }
 }

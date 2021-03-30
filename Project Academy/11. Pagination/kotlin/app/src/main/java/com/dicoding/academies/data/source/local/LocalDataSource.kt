@@ -13,9 +13,11 @@ class LocalDataSource private constructor(private val mAcademyDao: AcademyDao) {
     companion object {
         private var INSTANCE: LocalDataSource? = null
 
-        fun getInstance(academyDao: AcademyDao): LocalDataSource {
-            return INSTANCE ?: LocalDataSource(academyDao)
-        }
+        fun getInstance(academyDao: AcademyDao): LocalDataSource =
+            INSTANCE ?: LocalDataSource(academyDao).apply {
+                INSTANCE = this
+            }
+
     }
 
     fun getAllCourses(): DataSource.Factory<Int, CourseEntity> = mAcademyDao.getCourses()

@@ -21,7 +21,7 @@ class ModuleContentFragment : Fragment() {
     private lateinit var fragmentModuleContentBinding: FragmentModuleContentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         fragmentModuleContentBinding = FragmentModuleContentBinding.inflate(inflater, container, false)
         return fragmentModuleContentBinding.root

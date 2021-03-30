@@ -31,14 +31,14 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
     private lateinit var courseReaderCallback: CourseReaderCallback
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         fragmentModuleListBinding = FragmentModuleListBinding.inflate(inflater, container, false)
         return fragmentModuleListBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         adapter = ModuleListAdapter(this)
         populateRecyclerView(DataDummy.generateDummyModules("a14"))
     }

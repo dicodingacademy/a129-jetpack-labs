@@ -18,10 +18,10 @@ import com.dicoding.academies.utils.DataDummy
  */
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
-    lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
+    private lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
         return fragmentBookmarkBinding.root

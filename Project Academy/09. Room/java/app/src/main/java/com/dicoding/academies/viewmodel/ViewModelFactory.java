@@ -25,9 +25,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public static ViewModelFactory getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (ViewModelFactory.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ViewModelFactory(Injection.provideRepository(context));
-                }
+                INSTANCE = new ViewModelFactory(Injection.provideRepository(context));
             }
         }
         return INSTANCE;

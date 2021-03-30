@@ -43,7 +43,7 @@ class BookmarkViewModelTest {
 
         `when`(academyRepository.getBookmarkedCourses()).thenReturn(courses)
         val courseEntities = viewModel.getBookmarks().value
-        verify<AcademyRepository>(academyRepository).getBookmarkedCourses()
+        verify(academyRepository).getBookmarkedCourses()
         assertNotNull(courseEntities)
         assertEquals(5, courseEntities?.size)
 

@@ -14,7 +14,7 @@ class AcademyRepository private constructor(private val remoteDataSource: Remote
 
         fun getInstance(remoteData: RemoteDataSource): AcademyRepository =
                 instance ?: synchronized(this) {
-                    instance ?: AcademyRepository(remoteData).apply { instance = this }
+                    AcademyRepository(remoteData).apply { instance = this }
                 }
     }
 

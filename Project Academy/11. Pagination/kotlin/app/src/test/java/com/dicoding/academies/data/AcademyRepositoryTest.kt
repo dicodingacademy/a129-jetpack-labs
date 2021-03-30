@@ -16,8 +16,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.Mockito.*
+import java.util.concurrent.Executor
 
 class AcademyRepositoryTest {
 
@@ -26,7 +26,8 @@ class AcademyRepositoryTest {
 
     private val remote = mock(RemoteDataSource::class.java)
     private val local = mock(LocalDataSource::class.java)
-    private val appExecutors = mock(AppExecutors::class.java)
+    private val exercutor = Executor { it.run() }
+    private val appExecutors = AppExecutors(exercutor, exercutor, exercutor)
 
     private val academyRepository = FakeAcademyRepository(remote, local, appExecutors)
 
@@ -98,5 +99,21 @@ class AcademyRepositoryTest {
         assertNotNull(courseEntities.data)
         assertNotNull(courseEntities.data?.mCourse?.title)
         assertEquals(courseResponses[0].title, courseEntities.data?.mCourse?.title)
+    }
+
+    @Test
+    fun setCourseBookmark() {
+        val dummy = DataDummy.generateDummyCourses()[0]
+
+        academyRepository.setCourseBookmark(dummy, true)
+        verify(local, times(1)).setCourseBookmark(dummy, true)
+    }
+
+    @Test
+    fun setReadModule() {
+        val dummy = DataDummy.generateDummyModules("a")[0]
+
+        academyRepository.setReadModule(dummy)
+        verify(local, times(1)).setReadModule(dummy)
     }
 }

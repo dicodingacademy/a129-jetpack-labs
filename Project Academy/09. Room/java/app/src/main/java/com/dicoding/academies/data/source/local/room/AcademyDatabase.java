@@ -20,12 +20,9 @@ public abstract class AcademyDatabase extends RoomDatabase {
     public static AcademyDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (AcademyDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AcademyDatabase.class, "Academies.db")
-                            .build();
-                }
-
+                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                        AcademyDatabase.class, "Academies.db")
+                        .build();
             }
         }
         return INSTANCE;

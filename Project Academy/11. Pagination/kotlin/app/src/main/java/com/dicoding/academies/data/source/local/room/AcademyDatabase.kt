@@ -20,9 +20,13 @@ abstract class AcademyDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): AcademyDatabase =
                 INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: Room.databaseBuilder(context.applicationContext,
+                    Room.databaseBuilder(
+                            context.applicationContext,
                             AcademyDatabase::class.java,
-                            "Academies.db").build()
+                            "Academies.db"
+                    ).build().apply {
+                        INSTANCE = this
+                    }
                 }
     }
 }

@@ -25,7 +25,9 @@ class AcademyRepository private constructor(
 
         fun getInstance(remoteData: RemoteDataSource, localData: LocalDataSource, appExecutors: AppExecutors): AcademyRepository =
                 instance ?: synchronized(this) {
-                    instance ?: AcademyRepository(remoteData, localData, appExecutors)
+                    AcademyRepository(remoteData, localData, appExecutors).apply {
+                        instance = this
+                    }
                 }
     }
 

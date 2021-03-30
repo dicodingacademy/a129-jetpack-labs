@@ -26,8 +26,8 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         return inflater.inflate(R.layout.fragment_bookmark, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
             val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[BookmarkViewModel::class.java]
             val courses = viewModel.getBookmarks()

@@ -25,9 +25,7 @@ public class AcademyRepository implements AcademyDataSource {
     public static AcademyRepository getInstance(RemoteDataSource remoteData) {
         if (INSTANCE == null) {
             synchronized (AcademyRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new AcademyRepository(remoteData);
-                }
+                INSTANCE = new AcademyRepository(remoteData);
             }
         }
         return INSTANCE;

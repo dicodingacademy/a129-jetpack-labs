@@ -21,9 +21,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
         if (INSTANCE == null) {
             synchronized (ViewModelFactory.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ViewModelFactory(application);
-                }
+                INSTANCE = new ViewModelFactory(application);
             }
         }
         return INSTANCE;

@@ -18,11 +18,9 @@ abstract class NoteRoomDatabase : RoomDatabase() {
         fun getDatabase(context: Context): NoteRoomDatabase {
             if (INSTANCE == null) {
                 synchronized(NoteRoomDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext,
-                                NoteRoomDatabase::class.java, "note_database")
-                                .build()
-                    }
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
+                            NoteRoomDatabase::class.java, "note_database")
+                            .build()
                 }
             }
             return INSTANCE as NoteRoomDatabase

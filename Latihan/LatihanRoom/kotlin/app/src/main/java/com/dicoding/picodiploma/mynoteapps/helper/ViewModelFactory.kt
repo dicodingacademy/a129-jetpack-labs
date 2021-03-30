@@ -16,9 +16,7 @@ class ViewModelFactory private constructor(private val mApplication: Application
         fun getInstance(application: Application): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = ViewModelFactory(application)
-                    }
+                    INSTANCE = ViewModelFactory(application)
                 }
             }
             return INSTANCE as ViewModelFactory

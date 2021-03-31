@@ -1,7 +1,6 @@
 package com.dicoding.academies.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dicoding.academies.data.source.local.LocalDataSource
 import com.dicoding.academies.data.source.local.entity.CourseEntity
@@ -26,8 +25,9 @@ class AcademyRepositoryTest {
 
     private val remote = mock(RemoteDataSource::class.java)
     private val local = mock(LocalDataSource::class.java)
-    private val exercutor = Executor { it.run() }
-    private val appExecutors = AppExecutors(exercutor, exercutor, exercutor)
+
+    private val executor = Executor { it.run() }
+    private val appExecutors = AppExecutors(executor, executor, executor)
 
     private val academyRepository = FakeAcademyRepository(remote, local, appExecutors)
 

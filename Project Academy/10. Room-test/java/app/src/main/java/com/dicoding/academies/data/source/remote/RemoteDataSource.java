@@ -17,7 +17,7 @@ public class RemoteDataSource {
 
     private static RemoteDataSource INSTANCE;
     private JsonHelper jsonHelper;
-    private Handler handler = new Handler();
+    private Handler handler = new Handler(Looper.getMainLooper());
     private final long SERVICE_LATENCY_IN_MILLIS = 2000;
 
     private RemoteDataSource(JsonHelper jsonHelper) {

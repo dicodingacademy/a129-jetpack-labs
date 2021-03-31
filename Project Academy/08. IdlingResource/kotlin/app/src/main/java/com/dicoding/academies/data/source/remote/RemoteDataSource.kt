@@ -10,7 +10,7 @@ import com.dicoding.academies.utils.JsonHelper
 
 class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
 
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
     companion object {
         private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000

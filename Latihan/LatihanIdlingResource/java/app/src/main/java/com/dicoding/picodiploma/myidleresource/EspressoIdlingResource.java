@@ -5,7 +5,7 @@ import androidx.test.espresso.idling.CountingIdlingResource;
 
 public class EspressoIdlingResource {
     private static final String RESOURCE = "GLOBAL";
-    private static CountingIdlingResource espressoTestIdlingResource = new CountingIdlingResource(RESOURCE);
+    private static final CountingIdlingResource espressoTestIdlingResource = new CountingIdlingResource(RESOURCE);
 
     static void increment() {
         espressoTestIdlingResource.increment();

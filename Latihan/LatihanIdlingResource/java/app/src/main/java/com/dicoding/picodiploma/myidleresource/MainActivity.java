@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.myidleresource;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void delay1() {
         EspressoIdlingResource.increment();
-        new Handler().postDelayed(() -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             activityMainBinding.textView.setText(getString(R.string.delay1));
 
             if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow()) {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void delay2() {
         EspressoIdlingResource.increment();
-        new Handler().postDelayed(() -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             activityMainBinding.textView.setText(getString(R.string.delay2));
 
             if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow()) {

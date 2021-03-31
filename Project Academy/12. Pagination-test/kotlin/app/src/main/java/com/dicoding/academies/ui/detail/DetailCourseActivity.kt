@@ -12,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.dicoding.academies.R
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.databinding.ActivityDetailCourseBinding
+import com.dicoding.academies.databinding.ContentDetailCourseBinding
 import com.dicoding.academies.ui.reader.CourseReaderActivity
 import com.dicoding.academies.viewmodel.ViewModelFactory
 import com.dicoding.academies.vo.Status
@@ -26,10 +28,8 @@ class DetailCourseActivity : AppCompatActivity() {
         const val EXTRA_COURSE = "extra_course"
     }
 
-    private var _activityDetailCourseBinding: ActivityDetailCourseBinding? = null
-
-    private val mainBinding get() = _activityDetailCourseBinding
-    private val contentBinding get() = _activityDetailCourseBinding?.detailContent
+    private lateinit var activityDetailCourseBinding: ActivityDetailCourseBinding
+    private lateinit var detailContentBinding: ContentDetailCourseBinding
 
     private lateinit var viewModel: DetailCourseViewModel
     private var menu: Menu? = null
@@ -37,10 +37,10 @@ class DetailCourseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _activityDetailCourseBinding = ActivityDetailCourseBinding.inflate(layoutInflater)
-        setContentView(mainBinding?.root)
+        activityDetailCourseBinding = ActivityDetailCourseBinding.inflate(layoutInflater)
+        detailContentBinding = activityDetailCourseBinding.detailContent
 
-        setSupportActionBar(mainBinding?.toolbar)
+        setContentView(activityDetailCourseBinding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val adapter = DetailCourseAdapter()
@@ -57,17 +57,17 @@ class DetailCourseActivity : AppCompatActivity() {
                 viewModel.courseModule.observe(this, { courseWithModuleResource ->
                     if (courseWithModuleResource != null) {
                         when (courseWithModuleResource.status) {
-                            Status.LOADING -> mainBinding?.progressBar?.visibility = View.VISIBLE
+                            Status.LOADING -> activityDetailCourseBinding.progressBar.visibility = View.VISIBLE
                             Status.SUCCESS -> if (courseWithModuleResource.data != null) {
-                                mainBinding?.progressBar?.visibility = View.GONE
-                                mainBinding?.content?.visibility = View.VISIBLE
+                                activityDetailCourseBinding.progressBar.visibility = View.GONE
+                                activityDetailCourseBinding.content.visibility = View.VISIBLE
 
                                 adapter.setModules(courseWithModuleResource.data.mModules)
                                 adapter.notifyDataSetChanged()
                                 populateCourse(courseWithModuleResource.data.mCourse)
                             }
                             Status.ERROR -> {
-                                mainBinding?.progressBar?.visibility = View.GONE
+                                activityDetailCourseBinding.progressBar.visibility = View.GONE
                                 Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -76,30 +76,29 @@ class DetailCourseActivity : AppCompatActivity() {
             }
         }
 
-        with(contentBinding?.rvModule) {
-            this?.isNestedScrollingEnabled = false
-            this?.layoutManager = LinearLayoutManager(this@DetailCourseActivity)
-            this?.setHasFixedSize(true)
-            this?.adapter = adapter
+        with(detailContentBinding.rvModule) {
+            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(this@DetailCourseActivity)
+            setHasFixedSize(true)
+            this.adapter = adapter
             val dividerItemDecoration = DividerItemDecoration(this?.context, DividerItemDecoration.VERTICAL)
-            this?.addItemDecoration(dividerItemDecoration)
+            this.addItemDecoration(dividerItemDecoration)
         }
     }
 
     private fun populateCourse(courseEntity: CourseEntity) {
-        contentBinding?.textTitle?.text = courseEntity.title
-        contentBinding?.textDescription?.text = courseEntity.description
-        contentBinding?.textDate?.text = resources.getString(R.string.deadline_date, courseEntity.deadline)
+        detailContentBinding.textTitle.text = courseEntity.title
+        detailContentBinding.textDescription.text = courseEntity.description
+        detailContentBinding.textDate.text = resources.getString(R.string.deadline_date, courseEntity.deadline)
 
-        contentBinding?.imagePoster?.let {
-            Glide.with(this)
-                    .load(courseEntity.imagePath)
-                    .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
-                            .error(R.drawable.ic_error))
-                    .into(it)
-        }
+        Glide.with(this)
+                .load(courseEntity.imagePath)
+                .transform(RoundedCorners(20))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
+                        .error(R.drawable.ic_error))
+                .into(detailContentBinding.imagePoster)
 
-        contentBinding?.btnStart?.setOnClickListener {
+        detailContentBinding.btnStart.setOnClickListener {
             val intent = Intent(this@DetailCourseActivity, CourseReaderActivity::class.java)
             intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID, courseEntity.courseId)
             startActivity(intent)
@@ -112,14 +111,14 @@ class DetailCourseActivity : AppCompatActivity() {
         viewModel.courseModule.observe(this, { courseWithModule ->
             if (courseWithModule != null) {
                 when (courseWithModule.status) {
-                    Status.LOADING -> mainBinding?.progressBar?.visibility = View.VISIBLE
+                    Status.LOADING -> activityDetailCourseBinding.progressBar.visibility = View.VISIBLE
                     Status.SUCCESS -> if (courseWithModule.data != null) {
-                        mainBinding?.progressBar?.visibility = View.GONE
+                        activityDetailCourseBinding.progressBar.visibility = View.GONE
                         val state = courseWithModule.data.mCourse.bookmarked
                         setBookmarkState(state)
                     }
                     Status.ERROR -> {
-                        mainBinding?.progressBar?.visibility = View.GONE
+                        activityDetailCourseBinding.progressBar.visibility = View.GONE
                         Toast.makeText(applicationContext, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                     }
                 }

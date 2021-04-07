@@ -13,8 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -56,20 +55,37 @@ class DetailCourseViewModelTest {
     }
 
     @Test
-    fun `setBookmark should be success trigger courseModule observer`() {
+    fun `setBookmark should not add favorite when courseModule is empty`() {
+        viewModel.setBookmark()
+        verify(academyRepository, times(0)).setCourseBookmark(dummyCourse, true)
+    }
+
+    @Test
+    fun `setBookmark should add favorite when courseModule is not empty and not bookmarked`() {
+        val expected = MutableLiveData<Resource<CourseWithModule>>()
+        expected.value = Resource.success(DataDummy.generateDummyCourseWithModules(dummyCourse, false))
+
+        `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(expected)
+        viewModel.courseModule.observeForever(observer)
+
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, true)
+
+        viewModel.setBookmark()
+        verify(academyRepository, times(1)).setCourseBookmark(dummyCourse, true)
+    }
+
+    @Test
+    fun `setBookmark should remove from favorite when courseModule is not empty and already bookmarked`() {
         val expected = MutableLiveData<Resource<CourseWithModule>>()
         expected.value = Resource.success(DataDummy.generateDummyCourseWithModules(dummyCourse, true))
 
         `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(expected)
-
-        viewModel.setBookmark()
         viewModel.courseModule.observeForever(observer)
 
-        verify(observer).onChanged(expected.value)
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, false)
 
-        val expectedValue = expected.value
-        val actualValue = viewModel.courseModule.value
-
-        assertEquals(expectedValue, actualValue)
+        viewModel.setBookmark()
+        verify(academyRepository, times(1)).setCourseBookmark(dummyCourse, false)
     }
+
 }

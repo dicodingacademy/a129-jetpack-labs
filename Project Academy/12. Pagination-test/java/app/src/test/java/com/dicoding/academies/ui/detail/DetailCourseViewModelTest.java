@@ -20,6 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -57,4 +58,21 @@ public class DetailCourseViewModelTest {
 
         verify(observer).onChanged(dummyCourseWithModule);
     }
+
+    @Test
+    public void setBookmark() {
+        Resource<CourseWithModule> dummyCourseWithModule = Resource.success(DataDummy.generateDummyCourseWithModules(dummyCourse, false));
+        MutableLiveData<Resource<CourseWithModule>> course = new MutableLiveData<>();
+        course.setValue(dummyCourseWithModule);
+
+        when(academyRepository.getCourseWithModules(courseId)).thenReturn(course);
+        viewModel.courseModule.observeForever(observer);
+
+        doNothing().when(academyRepository).setCourseBookmark(dummyCourse, true);
+
+        viewModel.setBookmark();
+
+        verify(academyRepository).setCourseBookmark(dummyCourse, true);
+    }
+
 }

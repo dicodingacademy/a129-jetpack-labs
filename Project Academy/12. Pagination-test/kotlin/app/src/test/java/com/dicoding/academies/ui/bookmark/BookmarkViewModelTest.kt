@@ -8,6 +8,7 @@ import androidx.paging.PositionalDataSource
 import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseEntity
 import com.dicoding.academies.utils.DataDummy
+import com.nhaarman.mockitokotlin2.doNothing
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -67,6 +68,23 @@ class BookmarkViewModelTest {
 
         val actualValueDataSize = viewModel.getBookmarks().value?.size
         Assert.assertTrue("size of data should be 0, actual is $actualValueDataSize", actualValueDataSize == 0)
+    }
+
+    @Test
+    fun `setBookmark should add favorite to database`() {
+        val dummyCourse = DataDummy.generateDummyCourses()[0]
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, true)
+        viewModel.setBookmark(dummyCourse)
+        verify(academyRepository).setCourseBookmark(dummyCourse, true)
+    }
+
+    @Test
+    fun `setBookmark should remove favorite from database`(){
+        val dummyCourse = DataDummy.generateDummyCourses()[0]
+        dummyCourse.bookmarked = true
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, false)
+        viewModel.setBookmark(dummyCourse)
+        verify(academyRepository).setCourseBookmark(dummyCourse, false)
     }
 
     class PagedTestDataSources private constructor(private val items: List<CourseEntity>) : PositionalDataSource<CourseEntity>() {

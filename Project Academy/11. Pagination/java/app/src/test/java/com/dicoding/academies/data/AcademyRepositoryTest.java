@@ -14,6 +14,7 @@ import com.dicoding.academies.data.source.remote.response.ModuleResponse;
 import com.dicoding.academies.utils.AppExecutors;
 import com.dicoding.academies.utils.DataDummy;
 import com.dicoding.academies.utils.LiveDataTestUtil;
+import com.dicoding.academies.utils.TestExecutor;
 import com.dicoding.academies.vo.Resource;
 
 import org.junit.Rule;
@@ -22,9 +23,11 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +38,9 @@ public class AcademyRepositoryTest {
 
     private RemoteDataSource remote = Mockito.mock(RemoteDataSource.class);
     private LocalDataSource local = Mockito.mock(LocalDataSource.class);
-    private AppExecutors appExecutors = Mockito.mock(AppExecutors.class);
+    private Executor executor = new TestExecutor();
+
+    private AppExecutors appExecutors = new AppExecutors(executor, executor, executor);
 
     private FakeAcademyRepository academyRepository = new FakeAcademyRepository(remote, local, appExecutors);
 
@@ -107,5 +112,21 @@ public class AcademyRepositoryTest {
         assertNotNull(courseEntities.data);
         assertNotNull(courseEntities.data.mCourse.getTitle());
         assertEquals(courseResponses.get(0).getTitle(), courseEntities.data.mCourse.getTitle());
+    }
+
+    @Test
+    public void setCourseBookmark() {
+        CourseEntity dummy = DataDummy.generateDummyCourses().get(0);
+
+        academyRepository.setCourseBookmark(dummy, true);
+        verify(local, times(1)).setCourseBookmark(dummy, true);
+    }
+
+    @Test
+    public void setReadModule() {
+        ModuleEntity dummy = DataDummy.generateDummyModules("a").get(0);
+
+        academyRepository.setReadModule(dummy);
+        verify(local, times(1)).setReadModule(dummy);
     }
 }

@@ -7,6 +7,9 @@ import androidx.paging.PagedList;
 
 import com.dicoding.academies.data.AcademyRepository;
 import com.dicoding.academies.data.source.local.entity.CourseEntity;
+import com.dicoding.academies.data.source.local.entity.CourseWithModule;
+import com.dicoding.academies.utils.DataDummy;
+import com.dicoding.academies.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,6 +22,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -58,5 +63,15 @@ public class BookmarkViewModelTest {
 
         viewModel.getBookmarks().observeForever(observer);
         verify(observer).onChanged(dummyCourses);
+    }
+
+    @Test
+    public void setBookmark() {
+        CourseEntity entity = DataDummy.generateDummyCourses().get(0);
+        doNothing().when(academyRepository).setCourseBookmark(entity, true);
+
+        viewModel.setBookmark(entity);
+
+        verify(academyRepository).setCourseBookmark(entity, true);
     }
 }

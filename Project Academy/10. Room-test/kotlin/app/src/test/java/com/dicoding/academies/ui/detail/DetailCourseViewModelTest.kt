@@ -7,11 +7,13 @@ import com.dicoding.academies.data.AcademyRepository
 import com.dicoding.academies.data.source.local.entity.CourseWithModule
 import com.dicoding.academies.utils.DataDummy
 import com.dicoding.academies.vo.Resource
+import com.nhaarman.mockitokotlin2.doNothing
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
@@ -48,5 +50,21 @@ class DetailCourseViewModelTest {
         viewModel.courseModule.observeForever(observer)
 
         verify(observer).onChanged(dummyCourseWithModule)
+    }
+
+    @Test
+    fun setBookmark() {
+        val dummyCourseWithModule = Resource.success(DataDummy.generateDummyCourseWithModules(dummyCourse, false))
+        val course = MutableLiveData<Resource<CourseWithModule>>()
+        course.value = dummyCourseWithModule
+
+        `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(course)
+        viewModel.courseModule.observeForever(observer)
+
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, true)
+
+        viewModel.setBookmark()
+
+        verify(academyRepository).setCourseBookmark(dummyCourse, true)
     }
 }

@@ -68,8 +68,7 @@ class DetailCourseViewModelTest {
         `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(expected)
         viewModel.courseModule.observeForever(observer)
 
-        val data = viewModel.courseModule.value!!.data
-        doNothing().`when`(academyRepository).setCourseBookmark(data!!.mCourse, true)
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, true)
 
         viewModel.setBookmark()
         verify(academyRepository, times(1)).setCourseBookmark(dummyCourse, true)
@@ -83,8 +82,7 @@ class DetailCourseViewModelTest {
         `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(expected)
         viewModel.courseModule.observeForever(observer)
 
-        val data = viewModel.courseModule.value!!.data
-        doNothing().`when`(academyRepository).setCourseBookmark(data!!.mCourse, false)
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, false)
 
         viewModel.setBookmark()
         verify(academyRepository, times(1)).setCourseBookmark(dummyCourse, false)

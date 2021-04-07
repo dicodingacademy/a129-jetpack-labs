@@ -61,9 +61,7 @@ class DetailCourseViewModelTest {
         `when`(academyRepository.getCourseWithModules(courseId)).thenReturn(course)
         viewModel.courseModule.observeForever(observer)
 
-        val courseFromViewModel = viewModel.courseModule.value!!.data
-
-        doNothing().`when`(academyRepository).setCourseBookmark(courseFromViewModel!!.mCourse, true)
+        doNothing().`when`(academyRepository).setCourseBookmark(dummyCourse, true)
 
         viewModel.setBookmark()
 

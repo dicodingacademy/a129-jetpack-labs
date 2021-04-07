@@ -68,9 +68,7 @@ public class DetailCourseViewModelTest {
         when(academyRepository.getCourseWithModules(courseId)).thenReturn(course);
         viewModel.courseModule.observeForever(observer);
 
-        CourseWithModule courseFromViewModel = viewModel.courseModule.getValue().data;
-
-        doNothing().when(academyRepository).setCourseBookmark(courseFromViewModel.mCourse, true);
+        doNothing().when(academyRepository).setCourseBookmark(dummyCourse, true);
 
         viewModel.setBookmark();
 

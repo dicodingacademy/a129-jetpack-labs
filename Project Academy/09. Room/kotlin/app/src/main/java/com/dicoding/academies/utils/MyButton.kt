@@ -36,7 +36,6 @@ class MyButton : AppCompatButton {
     }
 
     private fun init() {
-        val resources = resources
         enabledBackground = ContextCompat.getDrawable(context, R.drawable.bg_button)
         disabledBackground = ContextCompat.getDrawable(context, R.drawable.bg_button_disable)
         textColour = ContextCompat.getColor(context, android.R.color.background_light)
